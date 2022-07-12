@@ -1,15 +1,33 @@
 import { DefaultTheme } from 'styled-components';
 
-const colors = {
-  black: '#1e1f1d',
-  yellow: '#edb83c',
-  orange: '#eb7952',
-  gray: '#6e6e6e',
-  gray_background: '#f5f5f5',
+const fontSizes = {
+  fontSizeS: '0.8rem',
+  fontSizeM: '1rem',
+  fontSizeL: '1.2rem',
 };
 
-export type ColorsTypes = typeof colors;
+const deviceSizes = {
+  mobile: '375px',
+  tablet: '768px',
+  tabletL: '1024px',
+  laptop: '1440px',
+  laptopL: '1919px',
+};
+
+const device = {
+  mobile: `screen and (max-width:${deviceSizes.mobile})`,
+  tablet: `screen and (max-width:${deviceSizes.tablet})`,
+  tabletL: `screen and (max-width:${deviceSizes.tabletL})`,
+  laptop: `screen and (max-width:${deviceSizes.laptop})`,
+  laptopL: `screen and (max-width:${deviceSizes.laptopL})`,
+};
+
+export type FontSizesTypes = typeof fontSizes;
+export type DeviceSizesTypes = typeof deviceSizes;
+export type DeviceTypes = typeof device;
 
 export const theme: DefaultTheme = {
-  colors,
+  fontSizes,
+  deviceSizes,
+  device,
 };

@@ -4,6 +4,7 @@ export const HeaderWrap = styled.div`
   width: 100%;
   height: 100px;
   background-color: #f8f9fa;
+  font-size: ${({ theme }) => theme.fontSizes.fontSizeL};
 `;
 
 export const Header = styled.div`
@@ -13,6 +14,10 @@ export const Header = styled.div`
   width: 1800px;
   height: 100%;
   margin: 0 auto;
+
+  @media ${({ theme }) => theme.device.laptopL} {
+    width: 1390px;
+  }
 `;
 
 export const WriteBtn = styled.span`
@@ -32,4 +37,15 @@ export const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   gap: 30px;
+  font-size: ${({ theme }) => theme.fontSizes.fontSizeM};
+`;
+
+export const MyPageWrap = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+  img {
+    border-radius: 100%;
+  }
 `;
