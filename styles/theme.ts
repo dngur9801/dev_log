@@ -1,9 +1,36 @@
 import { DefaultTheme } from 'styled-components';
 
+const calcRem = (size: number) => `${size / 16}rem`;
+
 const fontSizes = {
-  fontSizeS: '0.8rem',
-  fontSizeM: '1rem',
-  fontSizeL: '1.2rem',
+  xs: calcRem(12),
+  small: calcRem(14),
+  base: calcRem(16),
+  lg: calcRem(18),
+  xl: calcRem(20),
+  xxl: calcRem(22),
+  xxxl: calcRem(24),
+  title: calcRem(28),
+  titleL: calcRem(32),
+};
+
+const fontWeights = {
+  small: 300,
+  base: 400,
+  lg: 500,
+  xl: 700,
+};
+
+const colors = {
+  black1: '#353535',
+  gray1: '#495057',
+  gray2: '#959595',
+};
+const deviceWrapSizes = {
+  tabletL: 'calc(100% - 2rem)',
+  laptop: '1024px',
+  laptopL: '1376px',
+  default: '1728px',
 };
 
 const deviceSizes = {
@@ -23,11 +50,19 @@ const device = {
 };
 
 export type FontSizesTypes = typeof fontSizes;
+export type FontWeightsTypes = typeof fontWeights;
 export type DeviceSizesTypes = typeof deviceSizes;
 export type DeviceTypes = typeof device;
+export type DeviceWrapSizesTypes = typeof deviceWrapSizes;
+export type ColorsTypes = typeof colors;
+export type CalcRemTypes = typeof calcRem;
 
 export const theme: DefaultTheme = {
   fontSizes,
+  fontWeights,
   deviceSizes,
   device,
+  deviceWrapSizes,
+  colors,
+  calcRem,
 };
