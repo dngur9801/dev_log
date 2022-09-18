@@ -25,7 +25,13 @@ const colors = {
   black1: '#353535',
   gray1: '#495057',
   gray2: '#959595',
+  blue1: '#49c7f6',
 };
+
+const backgroundColors = {
+  gray1: '#eee',
+};
+
 const deviceWrapSizes = {
   tabletL: 'calc(100% - 2rem)',
   laptop: '1024px',
@@ -55,6 +61,7 @@ export type DeviceSizesTypes = typeof deviceSizes;
 export type DeviceTypes = typeof device;
 export type DeviceWrapSizesTypes = typeof deviceWrapSizes;
 export type ColorsTypes = typeof colors;
+export type BackgroundColorsTypes = typeof backgroundColors;
 export type CalcRemTypes = typeof calcRem;
 
 export const theme: DefaultTheme = {
@@ -64,5 +71,6 @@ export const theme: DefaultTheme = {
   device,
   deviceWrapSizes,
   colors,
+  backgroundColors,
   calcRem,
 };

@@ -7,6 +7,7 @@ import {
   ColorsTypes,
   FontWeightsTypes,
   CalcRemTypes,
+  BackgroundColorsTypes,
 } from './theme';
 
 declare module 'styled-components' {
@@ -18,5 +19,6 @@ declare module 'styled-components' {
     deviceWrapSizes: DeviceWrapSizesTypes;
     colors: ColorsTypes;
     calcRem: CalcRemTypes;
+    backgroundColors: BackgroundColorsTypes;
   }
 }

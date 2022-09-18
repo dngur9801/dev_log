@@ -1,8 +1,13 @@
 import ContentHeader from '../components/ContentHeader';
-import ContentContainer from '../container/ContentContainer';
+import ContentView from '../components/ContentView';
 
 const Latest = () => {
-  return <ContentContainer></ContentContainer>;
+  return (
+    <>
+      <ContentHeader />
+      <ContentView />
+    </>
+  );
 };
 
 export default Latest;

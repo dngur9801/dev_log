@@ -66,11 +66,37 @@ export const HeaderRight = styled.div`
 `;
 
 export const MyPageWrap = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
   gap: 10px;
+
   img {
     border-radius: 100%;
+  }
+
+  .my_list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 20px;
+    z-index: 1000;
+    box-shadow: 2px 4px 10px 0px rgba(0, 0, 0, 0.58);
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+
+    div {
+      a {
+        display: inline-block;
+        width: 200px;
+        padding: 1rem;
+        background-color: white;
+
+        &:hover {
+          background-color: ${({ theme }) => theme.backgroundColors.gray1};
+          color: ${({ theme }) => theme.colors.blue1};
+        }
+      }
+    }
   }
 `;
