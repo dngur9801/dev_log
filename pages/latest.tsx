@@ -1,11 +1,14 @@
-import ContentHeader from '../components/ContentHeader';
-import ContentView from '../components/ContentView';
+import { NextPage } from 'next';
+import MainContentHeader from '../components/Main/MainContentHeader';
+import MainContentView from '../components/Main/MainContentView';
+import Seo from '../components/Seo';
 
-const Latest = () => {
+const Latest: NextPage = () => {
   return (
     <>
-      <ContentHeader />
-      <ContentView />
+      <Seo>Devlog</Seo>
+      <MainContentHeader />
+      <MainContentView />
     </>
   );
 };

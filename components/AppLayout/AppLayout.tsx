@@ -1,6 +1,6 @@
 import { FaSearch, FaSun, FaListUl } from 'react-icons/fa';
 import Image from 'next/image';
-import * as S from '../styles/AppLayout.style';
+import * as S from './AppLayout.style';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -38,6 +38,11 @@ const AppLayout = ({ children }: Props) => {
                   <div>
                     <Link href="/mypage">
                       <a>새 글 작성</a>
+                    </Link>
+                  </div>
+                  <div>
+                    <Link href="/setting">
+                      <a>설정</a>
                     </Link>
                   </div>
                   <div>

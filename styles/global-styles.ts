@@ -18,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
   body{
     margin:0;
     padding:0;
-    background-color:#f8f9fa;
     font-family: ‘Noto Sans’, sans-serif;
     color: ${({ theme }) => theme.colors.black1};
   }
@@ -26,6 +25,11 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration:none;
     color:inherit;
+  }
+
+  button {
+    cursor:pointer;
+    border: 0;
   }
 `;
 

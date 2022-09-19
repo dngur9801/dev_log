@@ -1,17 +1,14 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import ContentHeader from '../components/ContentHeader';
-import ContentView from '../components/ContentView';
+import MainContentHeader from '../components/Main/MainContentHeader';
+import MainContentView from '../components/Main/MainContentView';
+import Seo from '../components/Seo';
 
 const Home: NextPage = () => {
   return (
     <>
-      <Head>
-        <title>Devlog</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <ContentHeader />
-      <ContentView />
+      <Seo>Devlog</Seo>
+      <MainContentHeader />
+      <MainContentView />
     </>
   );
 };

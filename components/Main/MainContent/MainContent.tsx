@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import * as S from '../styles/Contents.style';
+import * as S from './MainContent.style';
 
 const Contents = () => {
   return (

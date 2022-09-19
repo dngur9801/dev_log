@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import * as S from '../styles/ContentHeader.style';
+import * as S from './MainContentHeader.style';
 
-const ContentHeader = () => {
+const MainContentHeader = () => {
   const router = useRouter();
 
   return (
@@ -17,4 +17,4 @@ const ContentHeader = () => {
   );
 };
 
-export default ContentHeader;
+export default MainContentHeader;

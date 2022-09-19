@@ -25,14 +25,19 @@ const colors = {
   black1: '#353535',
   gray1: '#495057',
   gray2: '#959595',
+  gray3: '#eeeeee',
   blue1: '#49c7f6',
 };
 
 const backgroundColors = {
   gray1: '#eee',
+  blue1: '#a1e3fc',
+  blue2: '#58d1ff',
+  red1: '#ff4e4e',
 };
 
 const deviceWrapSizes = {
+  tablet: '768px',
   tabletL: 'calc(100% - 2rem)',
   laptop: '1024px',
   laptopL: '1376px',
