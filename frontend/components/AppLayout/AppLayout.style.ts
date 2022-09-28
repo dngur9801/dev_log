@@ -63,6 +63,14 @@ export const HeaderRight = styled.div`
   align-items: center;
   gap: 30px;
   font-size: ${({ theme }) => theme.fontSizes.base};
+
+  .login {
+    padding: 8px 20px;
+    font-size: ${({ theme }) => theme.fontSizes.base};
+    background-color: ${({ theme }) => theme.colors.black1};
+    color: white;
+    border-radius: 10px;
+  }
 `;
 
 export const MyPageWrap = styled.div`

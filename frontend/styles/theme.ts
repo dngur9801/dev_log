@@ -30,10 +30,13 @@ const colors = {
 };
 
 const backgroundColors = {
+  black1: '#353535',
   gray1: '#eee',
   blue1: '#a1e3fc',
   blue2: '#58d1ff',
+  blue3: '#4b53e5',
   red1: '#ff4e4e',
+  purple1: '#7e2db2',
 };
 
 const deviceWrapSizes = {
