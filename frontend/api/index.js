@@ -10,5 +10,5 @@ const request = axios.create({
 });
 
 export const userAPI = {
-  signUp: (data) => request.post('/user', data),
+  signUp: (data) => request.post('/user/signup', data),
 };
