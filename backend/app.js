@@ -1,52 +1,45 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
 
 const db = require('./models');
 const { User } = require('./models');
+const passportConfig = require('./passport');
+const userRouter = require('./routes/user');
 
+passportConfig();
 const app = express();
 const port = 5000;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
+app.use(cookieParser('12341234'));
+app.use(
+  session({
+    saveUninitialized: false,
+    resave: false,
+    secret: '12341234',
+  })
+);
+app.use(passport.initialize()); //초기화
+app.use(passport.session()); //세션에서 로그인정보 복구
 
-db.sequelize.sync();
+db.sequelize.sync().then(() => console.log('db connect'));
 
-app.post('/user/signup', async (req, res, next) => {
-  try {
-    const { email, password, re_password } = req.body;
-    const emailCheck =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+app.use('/user', userRouter);
 
-    if (!emailCheck.test(email)) {
-      return res.status(401).json('이메일 형식이 맞지 않습니다.');
-    }
-
-    if (password !== re_password) {
-      return res.status(401).json('동일한 패스워드를 입력해주세요.');
-    }
-
-    const exUser = await User.findOne({
-      where: {
-        email,
-      },
-    });
-
-    if (exUser) {
-      return res.status(403).send('이미 사용 중인 아이디입니다.');
-    }
-
-    await User.create({
-      email,
-      password,
-    });
-    res.status(201).send('ok');
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
+app.get('/', (req, res, next) => {
+  res.status(200);
 });
 
 app.listen(port, () => {
