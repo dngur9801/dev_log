@@ -7,7 +7,33 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
-router.post('/signup', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const userInfo = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          exclude: ['password', 'createdAt', 'updatedAt'],
+        },
+      });
+
+      res.status(200).json(userInfo);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post('/logout', isLoggedIn, (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send('ok');
+});
+
+router.post('/signup', isNotLoggedIn, async (req, res, next) => {
   try {
     const { email, password, re_password } = req.body;
     const emailCheck =
@@ -32,7 +58,6 @@ router.post('/signup', async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    console.log(hashedPassword);
     await User.create({
       email,
       password: hashedPassword,
@@ -60,7 +85,6 @@ router.post('/login', (req, res, next) => {
       const UserWithPost = await User.findOne({
         where: { id: user.id },
       });
-      console.log('user.id : ', user.id);
       return res.status(200).json(UserWithPost);
     });
   })(req, res, next);

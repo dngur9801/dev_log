@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
       subject: {
         type: Sequelize.STRING(30),
       },
+      provider: {
+        type: Sequelize.STRING(30),
+      },
     },
     {
       tableName: 'user',
