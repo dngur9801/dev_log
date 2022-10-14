@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SignUpTypes, LocalLoginTypes } from '../interfaces';
 
 const request = axios.create({
   baseURL: 'http://localhost:5000',
@@ -11,8 +12,8 @@ const request = axios.create({
 });
 
 export const userAPI = {
-  signUp: (data) => request.post('/user/signup', data),
-  localLogin: (data) => request.post('/user/login', data),
+  signUp: (data: SignUpTypes) => request.post('/user/signup', data),
+  localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
   googleLogin: () => request.get('/auth/google'),
   getInfo: () => request.get('/user'),
 };

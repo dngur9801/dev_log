@@ -12,9 +12,7 @@ router.get('/', async (req, res, next) => {
     if (req.user) {
       const userInfo = await User.findOne({
         where: { id: req.user.id },
-        attributes: {
-          exclude: ['password', 'createdAt', 'updatedAt'],
-        },
+        attributes: ['email', 'name'],
       });
 
       res.status(200).json(userInfo);

@@ -4,23 +4,20 @@ import AppLayout from '../components/AppLayout';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { userAPI } from '../api';
+import { RecoilRoot } from 'recoil';
 
 const queryClient = new QueryClient();
-
-(async () => {
-  const response = await userAPI.getInfo();
-  console.log(response);
-})();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <GlobalStyle />
-        <AppLayout>
-          <Component {...pageProps} />
-        </AppLayout>
+        <RecoilRoot>
+          <GlobalStyle />
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
+        </RecoilRoot>
       </QueryClientProvider>
     </ThemeProvider>
   );

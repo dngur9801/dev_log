@@ -6,6 +6,7 @@ import { useMutation } from 'react-query';
 import { userAPI } from '../../../api';
 import Loading from '../../common/Loading';
 import Link from 'next/link';
+import { LocalLoginTypes } from '../../../interfaces';
 
 interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;
@@ -46,7 +47,7 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
   //   console.log('github');
   // };
 
-  const { mutate, isLoading }: any = useMutation((data) => userAPI.localLogin(data));
+  const { mutate, isLoading }: any = useMutation((data: LocalLoginTypes) => userAPI.localLogin(data));
 
   return (
     <S.Wrap>
@@ -64,9 +65,6 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
                 </Link>
                 <Link href="http://localhost:5000/auth/github">
                   <a>GitHub 계정으로 로그인</a>
-                </Link>
-                <Link href="http://localhost:5000/auth/kakao">
-                  <a>Kakao 계정으로 로그인</a>
                 </Link>
                 <div className="line_wrap">
                   <div className="line"></div>

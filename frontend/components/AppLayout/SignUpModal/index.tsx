@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { userAPI } from '../../../api';
 import Loading from '../../common/Loading';
+import { SignUpTypes } from '../../../interfaces';
 
 interface SignUpModalProps {
   setIsSignUp: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,7 +11,7 @@ interface SignUpModalProps {
 const SignUpModal = ({ setIsSignUp }: SignUpModalProps) => {
   const [formData, setFormData] = useState({});
 
-  const { mutate, isLoading }: any = useMutation((data) => userAPI.signUp(data));
+  const { mutate, isLoading }: any = useMutation((data: SignUpTypes) => userAPI.signUp(data));
 
   // 회원가입 데이터 저장
   const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
