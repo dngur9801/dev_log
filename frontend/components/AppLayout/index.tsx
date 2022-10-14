@@ -8,7 +8,8 @@ import { useRecoilState } from 'recoil';
 import { userInfo } from '../../store/atom';
 import { userAPI } from '../../api';
 import { UserInfoTypes } from '../../interfaces';
-
+import { useMutation } from 'react-query';
+import { useRouter } from 'next/router';
 type Props = {
   children: JSX.Element;
 };
@@ -17,6 +18,20 @@ const AppLayout = ({ children }: Props) => {
   const [toggle, setToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
+
+  const { mutate }: any = useMutation(() => userAPI.logout());
+
+  const router = useRouter();
+
+  // 로그아웃
+  const onClickLogout = () => {
+    mutate('', {
+      onSuccess: () => {
+        router.replace('/');
+        setUser(null);
+      },
+    });
+  };
 
   useEffect(() => {
     // 유저 정보 요청
@@ -75,7 +90,7 @@ const AppLayout = ({ children }: Props) => {
                         </Link>
                       </div>
                       <div>
-                        <a>로그아웃</a>
+                        <a onClick={onClickLogout}>로그아웃</a>
                       </div>
                     </div>
                   )}

@@ -14,6 +14,6 @@ const request = axios.create({
 export const userAPI = {
   signUp: (data: SignUpTypes) => request.post('/user/signup', data),
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
-  googleLogin: () => request.get('/auth/google'),
   getInfo: () => request.get('/user'),
+  logout: () => request.post('/user/logout'),
 };

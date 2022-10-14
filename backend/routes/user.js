@@ -26,9 +26,10 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/logout', isLoggedIn, (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.send('ok');
+  req.session.destroy(function (err) {
+    if (err) throw err;
+    res.send('ok');
+  });
 });
 
 router.post('/signup', isNotLoggedIn, async (req, res, next) => {
