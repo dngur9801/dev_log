@@ -35,9 +35,6 @@ const SignUpModal = ({ setIsSignUp }: SignUpModalProps) => {
     });
   };
 
-  //   if (error) {
-  //     alert(error.response.data);
-  //   }
   return (
     <>
       <input type="text" placeholder="이메일" name="email" onChange={(e) => onChangeForm(e)} />

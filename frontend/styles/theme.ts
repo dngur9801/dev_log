@@ -37,6 +37,7 @@ const backgroundColors = {
   blue3: '#4b53e5',
   red1: '#ff4e4e',
   purple1: '#7e2db2',
+  yellow1: '#f9e000',
 };
 
 const deviceWrapSizes = {

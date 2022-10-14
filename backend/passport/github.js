@@ -1,5 +1,5 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 const { User } = require('../models');
 const dotenv = require('dotenv');
 
@@ -7,24 +7,26 @@ dotenv.config();
 
 module.exports = () => {
   passport.use(
-    new GoogleStrategy(
+    new GitHubStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:5000/auth/google/callback',
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: 'http://localhost:5000/auth/github/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
+          console.log(22222222222);
+          console.log('profile : ', profile);
           const exUser = await User.findOne({
-            where: { email: profile?.emails[0].value, provider: 'google' },
+            where: { email: profile.username, provider: 'github' },
           });
 
           if (exUser) {
             done(null, exUser);
           } else {
             const newUser = await User.create({
-              email: profile?.emails[0].value,
-              provider: 'google',
+              email: profile.username,
+              provider: 'github',
             });
             done(null, newUser);
           }

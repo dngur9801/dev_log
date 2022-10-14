@@ -1,5 +1,5 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const KakaoStrategy = require('passport-kakao').Strategy;
 const { User } = require('../models');
 const dotenv = require('dotenv');
 
@@ -7,16 +7,17 @@ dotenv.config();
 
 module.exports = () => {
   passport.use(
-    new GoogleStrategy(
+    new KakaoStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:5000/auth/google/callback',
+        clientID: process.env.KAKAO_ID,
+        callbackURL: 'http://localhost:5000/auth/kakao/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
+        console.log(123124);
+        console.log('profile : ', profile);
         try {
           const exUser = await User.findOne({
-            where: { email: profile?.emails[0].value, provider: 'google' },
+            where: { email: profile?.emails[0].value, provider: 'kakao' },
           });
 
           if (exUser) {
@@ -24,7 +25,7 @@ module.exports = () => {
           } else {
             const newUser = await User.create({
               email: profile?.emails[0].value,
-              provider: 'google',
+              provider: 'kakao',
             });
             done(null, newUser);
           }

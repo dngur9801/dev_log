@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrap = styled.div`
   position: fixed;
+  z-index: 9999;
   width: 100%;
   height: 100vh;
   left: 0;
@@ -45,7 +46,8 @@ export const Content = styled.div`
   .right_content {
     flex: 5;
 
-    button {
+    a {
+      display: block;
       width: 100%;
       margin-bottom: 15px;
       border-radius: 5px;
@@ -53,6 +55,7 @@ export const Content = styled.div`
       color: white;
       font-size: ${({ theme }) => theme.fontSizes.lg};
       font-weight: ${({ theme }) => theme.fontWeights.lg};
+      text-align: center;
 
       &:nth-of-type(1) {
         background-color: ${({ theme }) => theme.backgroundColors.purple1};
@@ -63,7 +66,7 @@ export const Content = styled.div`
       }
 
       &:nth-of-type(3) {
-        background-color: ${({ theme }) => theme.backgroundColors.black1};
+        background-color: ${({ theme }) => theme.backgroundColors.yellow1};
       }
     }
     .line_wrap {

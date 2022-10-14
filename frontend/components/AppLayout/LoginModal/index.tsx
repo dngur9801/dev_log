@@ -2,6 +2,10 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import * as S from './LoginModal.style';
 import { FaRegWindowClose } from 'react-icons/fa';
 import SignUpModal from '../SignUpModal';
+import { useMutation } from 'react-query';
+import { userAPI } from '../../../api';
+import Loading from '../../common/Loading';
+import Link from 'next/link';
 
 interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;
@@ -9,6 +13,40 @@ interface LoginModalProps {
 
 const LoginModal = ({ setLoginModal }: LoginModalProps) => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  // 로그인 데이터 저장
+  const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // local 로그인 클릭 시
+  const onClickLocalLogin = () => {
+    mutate(formData, {
+      onSuccess: () => {
+        window.location.reload();
+      },
+      onError: (error: any, variables: any, context: any) => {
+        alert(error.response.data);
+      },
+    });
+  };
+
+  // // google 로그인 클릭 시
+  // const onClickGoogleLogin = () => {
+  //   console.log('google');
+  // };
+
+  // // github 로그인 클릭 시
+  // const onClickGitHubLogin = () => {
+  //   console.log('github');
+  // };
+
+  const { mutate, isLoading }: any = useMutation((data) => userAPI.localLogin(data));
 
   return (
     <S.Wrap>
@@ -21,15 +59,30 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
           <div className="right_content">
             {!isSignUp ? (
               <>
-                <button type="button">Google 계정으로 로그인</button>
-                <button type="button">GitHub 계정으로 로그인</button>
+                <Link href="http://localhost:5000/auth/google">
+                  <a>Google 계정으로 로그인</a>
+                </Link>
+                <Link href="http://localhost:5000/auth/github">
+                  <a>GitHub 계정으로 로그인</a>
+                </Link>
+                <Link href="http://localhost:5000/auth/kakao">
+                  <a>Kakao 계정으로 로그인</a>
+                </Link>
                 <div className="line_wrap">
                   <div className="line"></div>
                   <span>또는</span>
                 </div>
-                <input type="text" placeholder="이메일을 입력하세요" />
-                <input type="password" placeholder="비밀번호를 입력하세요" />
-                <button type="button">Devlog 아이디로 로그인</button>
+                <input type="text" placeholder="이메일을 입력하세요" name="email" onChange={(e) => onChangeForm(e)} />
+                <input
+                  type="password"
+                  placeholder="비밀번호를 입력하세요"
+                  name="password"
+                  onChange={(e) => onChangeForm(e)}
+                />
+                {isLoading && <Loading width="36px" />}
+                <button type="button" onClick={onClickLocalLogin}>
+                  Devlog 아이디로 로그인
+                </button>
                 <div className="not_member_text">
                   <span onClick={() => setIsSignUp(true)}>아직 회원이 아니신가요?</span>
                 </div>
