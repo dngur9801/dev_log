@@ -12,6 +12,7 @@ const fontSizes = {
   xxxl: calcRem(24),
   title: calcRem(28),
   titleL: calcRem(32),
+  titleXL: calcRem(36),
 };
 
 const fontWeights = {

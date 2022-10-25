@@ -28,7 +28,7 @@ const AppLayout = ({ children }: Props) => {
     mutate('', {
       onSuccess: () => {
         router.replace('/');
-        setUser(null);
+        setUser({ email: '', name: '' });
       },
     });
   };
@@ -36,8 +36,8 @@ const AppLayout = ({ children }: Props) => {
   useEffect(() => {
     // 유저 정보 요청
     (async () => {
-      const response = await userAPI.getInfo();
-      const data: UserInfoTypes = response.data;
+      const { data } = await userAPI.getInfo();
+      // const data: UserInfoTypes = response.data;
       setUser(data);
     })();
   }, []);
@@ -53,7 +53,7 @@ const AppLayout = ({ children }: Props) => {
             </Link>
           </div>
           <S.MyTitle>
-            {user && (
+            {user?.email && (
               <Link href="/mypage">
                 <a>{user?.name ? user?.name : 'member'}.log</a>
               </Link>
@@ -62,7 +62,7 @@ const AppLayout = ({ children }: Props) => {
           <S.HeaderRight>
             <FaSun size="24px" cursor="pointer" />
             <FaSearch size="24px" cursor="pointer" />
-            {user ? (
+            {user?.email ? (
               <>
                 <S.WriteBtn>
                   <Link href="/write">

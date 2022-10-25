@@ -66,7 +66,7 @@ export const Content = styled.div`
       }
 
       &:nth-of-type(3) {
-        background-color: ${({ theme }) => theme.backgroundColors.yellow1};
+        background-color: ${({ theme }) => theme.backgroundColors.black1};
       }
     }
     .line_wrap {

@@ -37,16 +37,6 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
     });
   };
 
-  // // google 로그인 클릭 시
-  // const onClickGoogleLogin = () => {
-  //   console.log('google');
-  // };
-
-  // // github 로그인 클릭 시
-  // const onClickGitHubLogin = () => {
-  //   console.log('github');
-  // };
-
   const { mutate, isLoading }: any = useMutation((data: LocalLoginTypes) => userAPI.localLogin(data));
 
   return (
@@ -78,9 +68,9 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
                   onChange={(e) => onChangeForm(e)}
                 />
                 {isLoading && <Loading width="36px" />}
-                <button type="button" onClick={onClickLocalLogin}>
+                <a type="button" onClick={onClickLocalLogin}>
                   Devlog 아이디로 로그인
-                </button>
+                </a>
                 <div className="not_member_text">
                   <span onClick={() => setIsSignUp(true)}>아직 회원이 아니신가요?</span>
                 </div>
