@@ -9,6 +9,7 @@ const EditorBox = dynamic(() => import('../components/Write/EditorBox'), {
 
 const Write = () => {
   const [fileName, setFileName] = useState('');
+  const [title, setTitle] = useState('');
 
   const onUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
@@ -19,7 +20,13 @@ const Write = () => {
   return (
     <Styled.Wrap>
       <Styled.Subject>
-        <input type="text" placeholder="제목을 입력하세요." className="subject_input" />
+        <input
+          type="text"
+          placeholder="제목을 입력하세요."
+          className="subject_input"
+          maxLength={100}
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <div className="subject_img">
           <input className="upload_name" defaultValue={fileName} readOnly />
           <label htmlFor="file">
@@ -29,7 +36,7 @@ const Write = () => {
           <input type="file" accept="image/*" id="file" onChange={(e) => onUploadImage(e)} />
         </div>
       </Styled.Subject>
-      <EditorBox />
+      <EditorBox title={title} />
     </Styled.Wrap>
   );
 };
@@ -47,6 +54,7 @@ const Styled = {
     padding: 30px;
 
     .subject_input {
+      width: 100%;
       font-size: ${({ theme }) => theme.fontSizes.titleXL};
       border: 0;
       background: transparent;

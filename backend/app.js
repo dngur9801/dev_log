@@ -10,6 +10,7 @@ const db = require('./models');
 const passportConfig = require('./passport');
 const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
 
 dotenv.config();
 passportConfig();
@@ -39,6 +40,7 @@ db.sequelize.sync().then(() => console.log('db connect'));
 
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/post', postRouter);
 
 app.listen(port, () => {
   console.log(`server runing port:${port}`);

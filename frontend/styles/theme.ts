@@ -41,6 +41,8 @@ const backgroundColors = {
   yellow1: '#f9e000',
 };
 
+// 보라색 계열로
+
 const deviceWrapSizes = {
   tablet: '768px',
   tabletL: 'calc(100% - 2rem)',

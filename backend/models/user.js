@@ -18,8 +18,13 @@ module.exports = (sequelize, Sequelize) => {
     },
     {
       tableName: 'user',
+      underscored: true,
     }
   );
+
+  User.associate = db => {
+    db.User.hasMany(db.Post);
+  };
 
   return User;
 };

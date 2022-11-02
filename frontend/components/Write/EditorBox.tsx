@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useRef } from 'react';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
@@ -7,14 +8,34 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import styled from 'styled-components';
+import { useMutation } from 'react-query';
+import { postAPI } from '../../api';
 
-const EditorBox = () => {
+interface EditorBoxTypes {
+  title: string;
+}
+
+const EditorBox = ({ title }: EditorBoxTypes) => {
   const editorRef = useRef<Editor>(null);
 
+  const { mutate }: any = useMutation((data) => postAPI.regist(data));
+
+  // 글 발행하기 클릭 시
   const onClickRegist = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getInstance().getMarkdown());
-    }
+    console.log(editorRef.current.getInstance().getHTML());
+    const content = editorRef.current.getInstance().getHTML();
+    const data = {
+      title,
+      content,
+    };
+    mutate(data, {
+      onSuccess: (data: any, variables: any, context: any) => {
+        alert(data);
+      },
+      onError: (error: any, variables: any, context: any) => {
+        alert(error.response.data);
+      },
+    });
   };
   return (
     <>
