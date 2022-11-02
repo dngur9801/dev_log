@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -16,12 +15,14 @@ dotenv.config();
 passportConfig();
 const app = express();
 const port = 5000;
+const location =
+  process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: location,
     credentials: true,
   })
 );
@@ -35,6 +36,7 @@ app.use(
 );
 app.use(passport.initialize()); //초기화
 app.use(passport.session()); //세션에서 로그인정보 복구
+app.use('/uploads', express.static('uploads'));
 
 db.sequelize.sync().then(() => console.log('db connect'));
 

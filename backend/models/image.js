@@ -9,6 +9,7 @@ module.exports = (sequelize, Sequelize) => {
     {
       tableName: 'image',
       underscored: true,
+      allowNull: false,
     }
   );
 
