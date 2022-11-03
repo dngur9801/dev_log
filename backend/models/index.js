@@ -9,6 +9,7 @@ const sequelize = new Sequelize(
     host: dbConfig.host,
     dialect: dbConfig.dialect,
     operatorsAliases: false,
+    timezone: '+09:00',
   }
 );
 

@@ -13,8 +13,6 @@ module.exports = () => {
         callbackURL: 'http://localhost:5000/auth/kakao/callback',
       },
       async (accessToken, refreshToken, profile, done) => {
-        console.log(123124);
-        console.log('profile : ', profile);
         try {
           const exUser = await User.findOne({
             where: { email: profile?.emails[0].value, provider: 'kakao' },
@@ -25,6 +23,7 @@ module.exports = () => {
           } else {
             const newUser = await User.create({
               email: profile?.emails[0].value,
+              name: profile?.emails[0].value.split('@')[0],
               provider: 'kakao',
             });
             done(null, newUser);

@@ -23,16 +23,17 @@ router.post(
   upload.single('file'),
   async (req, res, next) => {
     try {
-      console.log(req.body);
-      console.log('req.file:', req.file);
       const { title, content } = req.body;
       if (title === '') {
         return res.status(401).json('제목을 입력하세요.');
       }
+      console.log('req.user: ', req.user);
       const post = await Post.create({
         title,
         content,
         userId: req.user.id,
+        writer: req.user.email.split('@')[0],
+        viewCnt: 0,
       });
       if (req.file) {
         const image = await Image.create({
@@ -40,12 +41,28 @@ router.post(
           postId: post.id,
         });
       }
-      return res.status(200);
+      return res.status(200).json(post);
     } catch (error) {
       console.error(error);
       next(error);
     }
   }
 );
+router.get('/:postId', async (req, res, next) => {
+  try {
+    console.log(req.params.postId);
+    const post = await Post.findOne({
+      where: { id: req.params.postId },
+    });
+    await Post.increment(
+      { view_cnt: +1 },
+      { where: { id: req.params.postId } }
+    );
+    return res.status(200).json(post);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
 module.exports = router;

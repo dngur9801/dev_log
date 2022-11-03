@@ -15,8 +15,6 @@ module.exports = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log(22222222222);
-          console.log('profile : ', profile);
           const exUser = await User.findOne({
             where: { email: profile.username, provider: 'github' },
           });
@@ -26,6 +24,7 @@ module.exports = () => {
           } else {
             const newUser = await User.create({
               email: profile.username,
+              name: profile?.emails[0].value.split('@')[0],
               provider: 'github',
             });
             done(null, newUser);

@@ -4,6 +4,7 @@ const { isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 
+// google 로그인
 router.get(
   '/google',
   isNotLoggedIn,
@@ -18,6 +19,7 @@ router.get(
   }
 );
 
+// github 로그인
 router.get(
   '/github',
   isNotLoggedIn,
@@ -32,6 +34,7 @@ router.get(
   }
 );
 
+// kakao 로그인
 router.get(
   '/kakao',
   isNotLoggedIn,
