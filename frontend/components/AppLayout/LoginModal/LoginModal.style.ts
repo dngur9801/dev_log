@@ -46,7 +46,8 @@ export const Content = styled.div`
   .right_content {
     flex: 5;
 
-    a {
+    a,
+    button {
       display: block;
       width: 100%;
       margin-bottom: 15px;
@@ -57,15 +58,13 @@ export const Content = styled.div`
       font-weight: ${({ theme }) => theme.fontWeights.lg};
       text-align: center;
 
-      &:nth-of-type(1) {
+      &.purple {
         background-color: ${({ theme }) => theme.backgroundColors.purple1};
       }
-
-      &:nth-of-type(2) {
+      &.blue {
         background-color: ${({ theme }) => theme.backgroundColors.blue3};
       }
-
-      &:nth-of-type(3) {
+      &.black {
         background-color: ${({ theme }) => theme.backgroundColors.black1};
       }
     }

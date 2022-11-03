@@ -51,10 +51,10 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
             {!isSignUp ? (
               <>
                 <Link href="http://localhost:5000/auth/google">
-                  <a>Google 계정으로 로그인</a>
+                  <a className="purple">Google 계정으로 로그인</a>
                 </Link>
                 <Link href="http://localhost:5000/auth/github">
-                  <a>GitHub 계정으로 로그인</a>
+                  <a className="blue">GitHub 계정으로 로그인</a>
                 </Link>
                 <div className="line_wrap">
                   <div className="line"></div>
@@ -68,9 +68,9 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
                   onChange={(e) => onChangeForm(e)}
                 />
                 {isLoading && <Loading width="36px" />}
-                <a type="button" onClick={onClickLocalLogin}>
+                <button type="button" className="black" onClick={onClickLocalLogin}>
                   Devlog 아이디로 로그인
-                </a>
+                </button>
                 <div className="not_member_text">
                   <span onClick={() => setIsSignUp(true)}>아직 회원이 아니신가요?</span>
                 </div>

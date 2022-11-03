@@ -10,9 +10,10 @@ const fontSizes = {
   xl: calcRem(20),
   xxl: calcRem(22),
   xxxl: calcRem(24),
-  title: calcRem(28),
-  titleL: calcRem(32),
-  titleXL: calcRem(36),
+  title: calcRem(32),
+  titleL: calcRem(40),
+  titleXL: calcRem(48),
+  titleXXL: calcRem(60),
 };
 
 const fontWeights = {

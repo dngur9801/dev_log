@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const HeaderWrap = styled.div`
   width: 100%;
-  height: 100px;
+  height: 80px;
   font-size: ${({ theme }) => theme.fontSizes.xl};
 
   @media ${({ theme }) => theme.device.laptop} {

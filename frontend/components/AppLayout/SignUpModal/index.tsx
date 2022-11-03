@@ -42,7 +42,7 @@ const SignUpModal = ({ setIsSignUp }: SignUpModalProps) => {
       <input type="password" placeholder="비밀번호" name="password" onChange={(e) => onChangeForm(e)} />
       <input type="password" placeholder="비밀번호 확인 " name="re_password" onChange={(e) => onChangeForm(e)} />
       {isLoading && <Loading width="32px" />}
-      <button type="button" className="signup_btn" onClick={onClickSignUp}>
+      <button type="button" className="signup_btn black" onClick={onClickSignUp}>
         회원가입
       </button>
       <div className="not_member_text">

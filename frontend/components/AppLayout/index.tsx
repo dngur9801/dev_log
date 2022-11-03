@@ -37,7 +37,6 @@ const AppLayout = ({ children }: Props) => {
     // 유저 정보 요청
     (async () => {
       const { data } = await userAPI.getInfo();
-      // const data: UserInfoTypes = response.data;
       setUser(data);
     })();
   }, []);
@@ -75,7 +74,7 @@ const AppLayout = ({ children }: Props) => {
                   {toggle && (
                     <div className="my_list">
                       <div>
-                        <Link href="/mypage">
+                        <Link href={`@${user?.name}`}>
                           <a>마이페이지</a>
                         </Link>
                       </div>

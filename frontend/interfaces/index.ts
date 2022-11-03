@@ -11,5 +11,11 @@ export interface LocalLoginTypes {
 
 export interface UserInfoTypes {
   email: string;
-  name: null | string;
+  name: string;
+}
+
+export interface RegistTypes {
+  file: HTMLInputElement['files'];
+  title: string;
+  content: string;
 }

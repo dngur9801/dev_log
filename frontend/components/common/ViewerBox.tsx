@@ -7,10 +7,11 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
-const test = `# markdown`;
-
-const ViewerBox = () => {
-  return <Viewer initialValue={test} plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]} />;
+interface ViewrBoxTypes {
+  content: string;
+}
+const ViewerBox = ({ content }: ViewrBoxTypes) => {
+  return <Viewer initialValue={content} plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]} />;
 };
 
 export default ViewerBox;
