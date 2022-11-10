@@ -6,13 +6,18 @@ import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useEffect } from 'react';
+import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
 interface EditorBoxTypes {
   editorRef: MutableRefObject<Editor>;
+  value?: string;
 }
 
-const EditorBox = ({ editorRef }: EditorBoxTypes) => {
+const EditorBox = ({ editorRef, value }: EditorBoxTypes) => {
+  useEffect(() => {
+    editorRef.current?.getInstance().setHTML(value);
+  }, []);
   return (
     <>
       <Editor
@@ -23,7 +28,7 @@ const EditorBox = ({ editorRef }: EditorBoxTypes) => {
         previewStyle="vertical"
         useCommandShortcut={true}
         // theme="dark"
-        plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+        plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
       />
     </>
   );

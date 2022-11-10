@@ -7,6 +7,7 @@ import { userAPI } from '../../../api';
 import Loading from '../../common/Loading';
 import Link from 'next/link';
 import { LocalLoginTypes } from '../../../interfaces';
+import { apiAddress } from '../../../config';
 
 interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;
@@ -50,10 +51,10 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
           <div className="right_content">
             {!isSignUp ? (
               <>
-                <Link href="http://localhost:5000/auth/google">
+                <Link href={`${apiAddress()}/auth/google`}>
                   <a className="purple">Google 계정으로 로그인</a>
                 </Link>
-                <Link href="http://localhost:5000/auth/github">
+                <Link href={`${apiAddress()}/auth/github`}>
                   <a className="blue">GitHub 계정으로 로그인</a>
                 </Link>
                 <div className="line_wrap">

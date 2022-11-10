@@ -36,7 +36,7 @@ const AppLayout = ({ children }: Props) => {
   useEffect(() => {
     // 유저 정보 요청
     (async () => {
-      const { data } = await userAPI.getInfo();
+      const { data } = await userAPI.info();
       setUser(data);
     })();
   }, []);

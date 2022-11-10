@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
+import { apiAddress } from '../../../config';
 import { reg } from '../../../utils';
 import * as S from './MainContent.style';
 
@@ -9,6 +10,9 @@ interface MainContentProps {
     title: string;
     content: string;
     writer: string;
+    image: null | {
+      src: string;
+    };
   }[];
 }
 
@@ -22,7 +26,10 @@ const MainContent = ({ data }: MainContentProps) => {
             <Link href={`@${item.writer}/${item.id}`}>
               <a>
                 <div className="content_img">
-                  <img src="/image/test.jpeg" alt="test" />
+                  <img
+                    src={item?.image?.src ? `${apiAddress()}/${item?.image?.src}` : '/image/noimg.jpeg'}
+                    alt="test"
+                  />
                 </div>
               </a>
             </Link>

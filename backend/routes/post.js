@@ -16,7 +16,7 @@ let storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// 게시물 등록
+// 게시글 등록
 router.post(
   '/regist',
   isLoggedIn,
@@ -27,7 +27,6 @@ router.post(
       if (title === '') {
         return res.status(401).json('제목을 입력하세요.');
       }
-      console.log('req.user: ', req.user);
       const post = await Post.create({
         title,
         content,
@@ -36,29 +35,83 @@ router.post(
         viewCnt: 0,
       });
       if (req.file) {
-        const image = await Image.create({
+        await Image.create({
           src: req.file.path,
           postId: post.id,
         });
       }
-      return res.status(200).json(post);
+      res.status(200).json(post);
     } catch (error) {
       console.error(error);
       next(error);
     }
   }
 );
+
+// 게시글 상세페이지
 router.get('/:postId', async (req, res, next) => {
   try {
     console.log(req.params.postId);
     const post = await Post.findOne({
       where: { id: req.params.postId },
+      include: [
+        {
+          model: Image,
+          attributes: ['src'],
+        },
+      ],
     });
     await Post.increment(
       { view_cnt: +1 },
       { where: { id: req.params.postId } }
     );
     return res.status(200).json(post);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 게시글 수정
+router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
+  try {
+    const { title, content, id } = req.body;
+    if (title === '') {
+      return res.status(401).json('제목을 입력하세요.');
+    }
+    const post = await Post.update(
+      {
+        title,
+        content,
+      },
+      { where: { id } }
+    );
+    if (req.file) {
+      const image = await Image.update(
+        {
+          src: req.file.path,
+        },
+        { where: { postId: id } }
+      );
+    }
+    res.status(201).json(null);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 게시글 삭제
+router.delete('/:postId', isLoggedIn, async (req, res, next) => {
+  try {
+    console.log('req.body', req.params.postId);
+    await Post.destroy({
+      where: {
+        id: req.params.postId,
+        userId: req.user.id,
+      },
+    });
+    res.status(200).json({ postId: parseInt(req.params.postId) });
   } catch (error) {
     console.error(error);
     next(error);

@@ -14,8 +14,9 @@ export interface UserInfoTypes {
   name: string;
 }
 
-export interface RegistTypes {
-  file: HTMLInputElement['files'];
+export interface RegistOrEditTypes {
+  file?: HTMLInputElement['files'];
   title: string;
   content: string;
+  id?: string;
 }

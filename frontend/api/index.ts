@@ -1,26 +1,23 @@
 import axios from 'axios';
-import { SignUpTypes, LocalLoginTypes, RegistTypes } from '../interfaces';
+import { apiAddress } from '../config';
+import { SignUpTypes, LocalLoginTypes, RegistOrEditTypes } from '../interfaces';
 
 const request = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: apiAddress(),
   withCredentials: true,
 });
-
-const registConfig = {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-  },
-};
 
 export const userAPI = {
   signUp: (data: SignUpTypes) => request.post('/user/signup', data),
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
-  getInfo: () => request.get('/user'),
+  info: () => request.get('/user'),
   logout: () => request.post('/user/logout'),
 };
 
 export const postAPI = {
-  regist: (data: RegistTypes) => request.post('/post/regist', data),
-  getDetail: (data: string | string[]) => request.get(`/post/${data}`),
-  getList: () => request.get('/posts'),
+  regist: (data: RegistOrEditTypes) => request.post('/post/regist', data),
+  detail: (data: string | string[]) => request.get(`/post/${data}`),
+  edit: (data: RegistOrEditTypes) => request.put('/post', data),
+  delete: (data: any) => request.delete(`/post/${data}`),
+  lists: () => request.get('/posts'),
 };

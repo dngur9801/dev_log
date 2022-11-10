@@ -1,7 +1,16 @@
-import React from 'react';
+import { NextPage } from 'next';
+import MypageContent from '../../components/Mypage/MypageContent';
+import MypageHeader from '../../components/Mypage/MypageHeader';
+import Seo from '../../components/Seo';
 
-const index = () => {
-  return <div>index</div>;
+const Mypage: NextPage = () => {
+  return (
+    <>
+      <Seo>마이페이지 - Devlog</Seo>
+      <MypageHeader />
+      <MypageContent />
+    </>
+  );
 };
 
-export default index;
+export default Mypage;

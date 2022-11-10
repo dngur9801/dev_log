@@ -4,7 +4,7 @@ import { postAPI } from '../../../api';
 import { useQuery } from 'react-query';
 
 const MainContentView = () => {
-  const { data, error, status } = useQuery('lists', postAPI.getList);
+  const { data, error, status } = useQuery('lists', postAPI.lists);
   if (status === 'error') {
     return <span>Error: {(error as any).message}</span>;
   }
