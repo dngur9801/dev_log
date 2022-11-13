@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiAddress } from '../config';
-import { SignUpTypes, LocalLoginTypes, RegistOrEditTypes } from '../interfaces';
+import { SignUpTypes, LocalLoginTypes, RegistOrEditTypes, registCommentTypes } from '../interfaces';
 
 const request = axios.create({
   baseURL: apiAddress(),
@@ -20,4 +20,8 @@ export const postAPI = {
   edit: (data: RegistOrEditTypes) => request.put('/post', data),
   delete: (data: any) => request.delete(`/post/${data}`),
   lists: () => request.get('/posts'),
+};
+
+export const commentAPI = {
+  regist: (data: registCommentTypes) => request.post(`/comment/regist`, data),
 };

@@ -23,7 +23,7 @@ interface WriteTypes {
 const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');
-  const [title, setTitle] = useState(modifyTitle);
+  const [title, setTitle] = useState('');
   const [user] = useRecoilState(userInfo);
 
   const editorRef = useRef<Editor>(null);
@@ -81,7 +81,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   };
 
   useEffect(() => {
-    setTitle(modifyTitle);
+    setTitle(modifyTitle || '');
   }, [modifyTitle]);
   return (
     <Styled.Wrap>
@@ -173,7 +173,7 @@ const Styled = {
       padding: 10px 15px;
       margin-right: 30px;
       border-radius: 10px;
-      background-color: ${({ theme }) => theme.backgroundColors.blue3};
+      background-color: ${({ theme }) => theme.backgroundColors.basic1};
       color: white;
       font-size: ${({ theme }) => theme.fontSizes.xl};
     }

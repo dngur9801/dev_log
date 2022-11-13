@@ -23,6 +23,7 @@ module.exports = (sequelize, Sequelize) => {
 
   Post.associate = db => {
     db.Post.belongsTo(db.User);
+    db.Post.hasMany(db.Comment);
     db.Post.hasOne(db.Image);
   };
 

@@ -5,6 +5,7 @@ import { postAPI } from '../../../api';
 import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { apiAddress } from '../../../config';
+import Comment from '../../../components/DetailPost/Comment';
 
 const DetailPost = () => {
   const Viewer = dynamic(() => import('../../../components/common/ViewerBox'), {
@@ -22,7 +23,9 @@ const DetailPost = () => {
   if (status === 'error') {
     alert((error as any).message);
   }
-  console.log(data);
+
+  console.log('Detail:', data);
+
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
@@ -62,6 +65,7 @@ const DetailPost = () => {
         <Styled.Content>
           <Viewer content={data?.data?.content} />
         </Styled.Content>
+        <Comment commentDatas={data?.data?.comments} />
       </Styled.ContentWrap>
     </>
   );
@@ -108,7 +112,7 @@ const Styled = {
     }
   `,
   ContentWrap: styled.div`
-    max-width: ${({ theme }) => theme.deviceWrapSizes.laptop};
+    max-width: ${({ theme }) => theme.deviceWrapSizes.tablet};
     margin: 0 auto;
   `,
   ContentBtn: styled.div`
@@ -117,7 +121,7 @@ const Styled = {
     button {
       padding: 10px 20px;
       margin-right: 10px;
-      background-color: ${({ theme }) => theme.backgroundColors.blue3};
+      background-color: ${({ theme }) => theme.backgroundColors.basic1};
       color: white;
       border-radius: 5px;
     }

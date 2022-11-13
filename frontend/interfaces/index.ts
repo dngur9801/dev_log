@@ -20,3 +20,8 @@ export interface RegistOrEditTypes {
   content: string;
   id?: string;
 }
+
+export interface registCommentTypes {
+  postId: string;
+  comment: string;
+}

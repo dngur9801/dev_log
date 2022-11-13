@@ -11,6 +11,7 @@ const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
+const commentRouter = require('./routes/comment');
 
 dotenv.config();
 passportConfig();
@@ -46,6 +47,7 @@ app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/post', postRouter);
 app.use('/posts', postsRouter);
+app.use('/comment', commentRouter);
 
 app.listen(port, () => {
   console.log(`server runing port:${port}`);

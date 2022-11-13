@@ -62,7 +62,7 @@ export const Content = styled.div`
         background-color: ${({ theme }) => theme.backgroundColors.purple1};
       }
       &.blue {
-        background-color: ${({ theme }) => theme.backgroundColors.blue3};
+        background-color: ${({ theme }) => theme.backgroundColors.basic1};
       }
       &.black {
         background-color: ${({ theme }) => theme.backgroundColors.black1};

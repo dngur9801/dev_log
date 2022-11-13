@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { User, Post, Image } = require('../models');
+const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
@@ -25,7 +25,7 @@ router.post(
     try {
       const { title, content } = req.body;
       if (title === '') {
-        return res.status(401).json('제목을 입력하세요.');
+        return res.status(401).send('제목을 입력하세요.');
       }
       const post = await Post.create({
         title,
@@ -58,6 +58,18 @@ router.get('/:postId', async (req, res, next) => {
         {
           model: Image,
           attributes: ['src'],
+        },
+        {
+          model: Comment,
+          attributes: {
+            exclude: ['updatedAt', 'postId', 'userId'],
+          },
+          include: [
+            {
+              model: User,
+              attributes: ['name'],
+            },
+          ],
         },
       ],
     });
