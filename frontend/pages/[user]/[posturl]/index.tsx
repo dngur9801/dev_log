@@ -5,7 +5,7 @@ import { postAPI } from '../../../api';
 import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { apiAddress } from '../../../config';
-import Comment from '../../../components/DetailPost/Comment';
+import CommentBox from '../../../components/DetailPost/CommentBox';
 
 const DetailPost = () => {
   const Viewer = dynamic(() => import('../../../components/common/ViewerBox'), {
@@ -48,7 +48,7 @@ const DetailPost = () => {
         <Styled.Title>
           <p>{data?.data?.title}</p>
           <span>
-            {data?.data?.writer} | {data?.data?.createdAt?.split('T')[0]}
+            {data?.data?.user?.name} | {data?.data?.createdAt?.split('T')[0]}
           </span>
           <span>조회 수 : {data?.data?.viewCnt}</span>
         </Styled.Title>
@@ -65,7 +65,7 @@ const DetailPost = () => {
         <Styled.Content>
           <Viewer content={data?.data?.content} />
         </Styled.Content>
-        <Comment commentDatas={data?.data?.comments} />
+        <CommentBox commentDatas={data?.data?.comments} />
       </Styled.ContentWrap>
     </>
   );
@@ -75,7 +75,6 @@ export default DetailPost;
 
 const Styled = {
   Header: styled.div<{ image: string }>`
-    posiiton: relative;
     margin-bottom: 5rem;
     .back_img {
       background-image: url(${({ image }) => (image ? `${apiAddress()}/${image}` : '/image/noimg.jpeg')});
@@ -96,19 +95,19 @@ const Styled = {
     }
   `,
   Title: styled.div`
-    position:absolute;
-    top:500px;
-    left:200px;
-    color:white;
+    position: absolute;
+    top: 500px;
+    left: 200px;
+    color: white;
     p {
       font-size: ${({ theme }) => theme.fontSizes.titleXXL};
-      font-weight ${({ theme }) => theme.fontWeights.xl};
-      margin-bottom:2rem;
-      }
+      font-weight: ${({ theme }) => theme.fontWeights.xl};
+      margin-bottom: 2rem;
+    }
     span {
-      display:block;
+      display: block;
       font-size: ${({ theme }) => theme.fontSizes.lg};
-      margin-bottom:1.5rem;
+      margin-bottom: 1.5rem;
     }
   `,
   ContentWrap: styled.div`

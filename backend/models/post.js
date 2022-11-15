@@ -8,9 +8,6 @@ module.exports = (sequelize, Sequelize) => {
       content: {
         type: Sequelize.TEXT,
       },
-      writer: {
-        type: Sequelize.STRING(50),
-      },
       viewCnt: {
         type: Sequelize.INTEGER,
       },

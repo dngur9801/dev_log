@@ -23,5 +23,7 @@ export const postAPI = {
 };
 
 export const commentAPI = {
-  regist: (data: registCommentTypes) => request.post(`/comment/regist`, data),
+  regist: (data: registCommentTypes) => request.post('/comment/regist', data),
+  edit: (data: string) => request.put('/comment', data),
+  delete: (data: any) => request.delete(`/comment/${data}`),
 };

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import { apiAddress } from '../../../config';
+import { apiAddress, defaultProfileImage } from '../../../config';
 import { reg } from '../../../utils';
 import * as S from './MainContent.style';
 
@@ -10,26 +10,26 @@ interface MainContentProps {
     title: string;
     content: string;
     writer: string;
+    createdAt: string;
     image: null | {
       src: string;
     };
+    user: { name: string; profileImage: string };
+    comments: { content: string }[];
   }[];
 }
 
 const MainContent = ({ data }: MainContentProps) => {
-  console.log(data);
+  console.log('main:', data);
   return (
     <>
       {data?.map((item) => (
         <S.Content key={item.id}>
           <S.ContentTop>
-            <Link href={`@${item.writer}/${item.id}`}>
+            <Link href={`@${item.user?.name}/${item.id}`}>
               <a>
                 <div className="content_img">
-                  <img
-                    src={item?.image?.src ? `${apiAddress()}/${item?.image?.src}` : '/image/noimg.jpeg'}
-                    alt="test"
-                  />
+                  <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : '/image/noimg.jpeg'} alt="test" />
                 </div>
               </a>
             </Link>
@@ -41,13 +41,15 @@ const MainContent = ({ data }: MainContentProps) => {
                 <p className="write">{reg.removeTag(item.content)}</p>
               </a>
             </Link>
-            <div className="sub_info">7일전 | 0개의 댓글</div>
+            <div className="sub_info">
+              {item.createdAt} | {item.comments.length}개의 댓글
+            </div>
           </S.ContentMiddle>
           <S.ContentBottom>
             <Link href="/">
               <a className="profile">
-                <img src="/image/test.jpeg" alt="test" />
-                <span>{item.writer}</span>
+                <img src={item.user?.profileImage ? item.user?.profileImage : defaultProfileImage()} alt="test" />
+                <span>{item.user?.name}</span>
               </a>
             </Link>
             <span className="like">

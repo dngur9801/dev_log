@@ -1,106 +1,142 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery } from 'react-query';
+import React, { useState } from 'react';
 import { FaPlusSquare } from 'react-icons/fa';
-import { commentAPI, postAPI } from '../../api';
-import { registCommentTypes } from '../../interfaces';
-import * as Styled from './Comment.style';
+import { useRecoilState } from 'recoil';
+import { useMutation } from 'react-query';
+import { userInfo } from '../../store/atom';
+import { defaultProfileImage } from '../../config';
+import { commentAPI } from '../../api';
+import styled from 'styled-components';
 
 interface CommentTypes {
-  commentDatas: {
+  item: {
     id: string;
     content: string;
     createdAt: string;
     user: {
       name: string;
+      profileImage: string;
     };
-  }[];
-}
-
-const Comment = ({ commentDatas }: CommentTypes) => {
-  const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
-
-  const router = useRouter();
-  const { posturl } = router.query;
-  const textRef = useRef<HTMLTextAreaElement>(null);
-  const { mutate }: any = useMutation((data: registCommentTypes) => commentAPI.regist(data));
-
-  // 댓글 입력 시
-  const onInputComment = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    if (e.target instanceof HTMLTextAreaElement) {
-      setComment(e.target.value);
-    }
-    // 댓글 입력창 자동 높이조절,
-    textRef.current.style.height = '100px';
-    textRef.current.style.height =
-      Number(textRef.current.style.height.split('px')[0]) < textRef.current.scrollHeight &&
-      textRef.current.scrollHeight + 'px';
   };
+  idx: number;
+  isSelected: boolean;
+  setSelectedCommentIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setComments: React.Dispatch<React.SetStateAction<any[]>>;
+}
+const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setComments }: CommentTypes) => {
+  const [editComment, setEditComment] = useState('');
+  const [user] = useRecoilState(userInfo);
 
-  // 댓글 작성 클릭 시
-  const onClickRegistComment = () => {
+  const { mutate: edit }: any = useMutation((data: string) => commentAPI.edit(data));
+  const { mutate: remove }: any = useMutation((data: string) => commentAPI.delete(data));
+  // 댓글 수정 클릭 시
+  const onClickModify = (id: string, prevContent: string) => {
     const data = {
-      postId: posturl,
-      content: comment,
+      commentId: id,
+      content: editComment || prevContent,
     };
-    mutate(data, {
+    edit(data, {
       onSuccess: (data: any) => {
-        alert('댓글이 작성되었습니다.');
-        setComments((prev) => [...prev, data?.data]);
-        textRef.current.value = '';
+        setSelectedCommentIndex(null);
+        item.content = editComment;
+      },
+      onError: (error: any, variables: any, context: any) => {
+        alert(error.response.data);
       },
     });
   };
 
-  useEffect(() => {
-    setComments(commentDatas);
-  }, [commentDatas]);
-
+  // 댓글 삭제 클릭 시
+  const onClickDelete = (id: string) => {
+    if (confirm('댓글을 삭제하시겠습니까?')) {
+      alert('삭제되었습니다.');
+    }
+    remove(id, {
+      onSuccess: (data: any) => {
+        console.log(data);
+        setComments((prev) => [...prev.filter((item) => item.id !== id)]);
+      },
+      onError: (error: any, variables: any, context: any) => {
+        alert(error.response.data);
+      },
+    });
+  };
   return (
-    <Styled.Wrap>
-      <h4>
-        <span className="count">{comments?.length}</span>개의 댓글
-      </h4>
-      <textarea ref={textRef} placeholder="댓글을 작성하세요" maxLength={400} onInput={onInputComment}></textarea>
-      <div className="button_wrap">
-        <button type="button" onClick={onClickRegistComment}>
-          댓글 작성
-        </button>
-      </div>
-      <Styled.Comments>
-        {comments?.length === 0 ? (
-          <div className="none_comment">
-            <span>작성된 댓글이 없습니다.</span>
+    <div className="comment" key={item.id}>
+      <div className="profile_info">
+        <div className="profile">
+          <Link href={`/@${item?.user?.name}`}>
+            <a>
+              <img src={item?.user?.profileImage ? item?.user?.profileImage : defaultProfileImage()} />
+            </a>
+          </Link>
+          <div className="comment_info">
+            <Link href={`/@${item?.user?.name}`}>
+              <a className="name">{item?.user?.name}</a>
+            </Link>
+            <div className="date">{item.createdAt}</div>
           </div>
-        ) : (
-          comments?.map((item) => (
-            <div className="comment" key={item.id}>
-              <div className="profile">
-                <Link href={`/@${item?.user?.name}`}>
-                  <a>
-                    <img src="/image/profile.png" />
-                  </a>
-                </Link>
-                <div className="comment_info">
-                  <Link href={`/@${item?.user?.name}`}>
-                    <a className="name">{item?.user?.name}</a>
-                  </Link>
-                  <div className="date">{item.createdAt}</div>
-                </div>
-              </div>
-              <div className="content">{item.content}</div>
-              <button type="button" className="reply">
-                <FaPlusSquare />
-                <span>답글 달기</span>
-              </button>
-            </div>
-          ))
+        </div>
+        {user?.name === item.user?.name && (
+          <div className="actions">
+            <button onClick={() => setSelectedCommentIndex(idx)}>수정</button>
+            <button onClick={() => onClickDelete(item.id)}>삭제</button>
+          </div>
         )}
-      </Styled.Comments>
-    </Styled.Wrap>
+      </div>
+      {isSelected ? (
+        <Styled.EditForm>
+          <textarea
+            defaultValue={item.content}
+            maxLength={400}
+            onChange={(e) => setEditComment(e.target.value)}
+          ></textarea>
+          <div className="actions">
+            <button type="button" onClick={() => setSelectedCommentIndex(null)}>
+              취소
+            </button>
+            <button type="button" onClick={() => onClickModify(item.id, item.content)}>
+              수정 완료
+            </button>
+          </div>
+        </Styled.EditForm>
+      ) : (
+        <div className="content">{item.content}</div>
+      )}
+
+      <button type="button" className="reply">
+        <FaPlusSquare />
+        <span>답글 달기</span>
+      </button>
+    </div>
   );
 };
 
+const Styled = {
+  EditForm: styled.div`
+    textarea {
+      margin-top: 15px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      gap: 30px;
+
+      button:nth-child(1) {
+        background-color: white;
+        padding: 8px 10px;
+      }
+
+      button:nth-child(2) {
+        background-color: ${({ theme }) => theme.backgroundColors.basic2};
+        color: white;
+        border-radius: 5px;
+        padding: 8px 10px;
+      }
+    }
+  `,
+};
 export default Comment;

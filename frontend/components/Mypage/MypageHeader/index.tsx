@@ -1,11 +1,12 @@
 import React from 'react';
+import { defaultProfileImage } from '../../../config';
 import * as S from './MypageHeader.style';
 
 const MypageHeader = () => {
   return (
     <S.Container>
       <div className="profile">
-        <img src="/image/profile.png" alt="" />
+        <img src={defaultProfileImage()} alt="" />
         <div className="profile_text">
           <p>aaa</p>
           <span>bbb</span>

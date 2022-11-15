@@ -18,13 +18,14 @@ module.exports = () => {
           const exUser = await User.findOne({
             where: { email: profile.username, provider: 'github' },
           });
-
+          console.log('profile: ', profile);
           if (exUser) {
             done(null, exUser);
           } else {
             const newUser = await User.create({
               email: profile.username,
-              name: profile?.emails[0].value.split('@')[0],
+              name: profile.username,
+              profileImage: profile.photos[0].value,
               provider: 'github',
             });
             done(null, newUser);

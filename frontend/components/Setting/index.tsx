@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { defaultProfileImage } from '../../config';
 import * as S from './Setting.style';
 
 const Setting = () => {
@@ -12,7 +13,7 @@ const Setting = () => {
     <S.Container>
       <div className="modify_profile">
         <div className="modify_img">
-          <img src="/image/profile.png" />
+          <img src={defaultProfileImage()} />
           <button type="button">이미지 업로드</button>
         </div>
         <div className="modify_info">

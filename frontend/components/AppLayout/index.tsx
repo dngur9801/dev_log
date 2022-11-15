@@ -7,9 +7,9 @@ import LoginModal from './LoginModal';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../../store/atom';
 import { userAPI } from '../../api';
-import { UserInfoTypes } from '../../interfaces';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
+import { defaultProfileImage } from '../../config';
 type Props = {
   children: JSX.Element;
 };
@@ -28,7 +28,11 @@ const AppLayout = ({ children }: Props) => {
     mutate('', {
       onSuccess: () => {
         router.replace('/');
-        setUser({ email: '', name: '' });
+        setUser({ email: '', name: '', profileImage: '' });
+      },
+      onError: (error: any, variables: any, context: any) => {
+        router.replace('/');
+        setUser({ email: '', name: '', profileImage: '' });
       },
     });
   };
@@ -40,7 +44,7 @@ const AppLayout = ({ children }: Props) => {
       setUser(data);
     })();
   }, []);
-  console.log(user);
+  console.log('AppLayout:', user);
 
   return (
     <>
@@ -69,7 +73,12 @@ const AppLayout = ({ children }: Props) => {
                   </Link>
                 </S.WriteBtn>
                 <S.MyPageWrap onClick={() => setToggle(!toggle)}>
-                  <Image src="/image/default_profile_img.png" alt="profile_img" width={50} height={50} />
+                  <Image
+                    src={user?.profileImage ? user?.profileImage : defaultProfileImage()}
+                    alt="profile_img"
+                    width={50}
+                    height={50}
+                  />
                   <FaListUl size="24px" />
                   {toggle && (
                     <div className="my_list">

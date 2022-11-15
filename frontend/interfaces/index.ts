@@ -9,11 +9,6 @@ export interface LocalLoginTypes {
   password: string;
 }
 
-export interface UserInfoTypes {
-  email: string;
-  name: string;
-}
-
 export interface RegistOrEditTypes {
   file?: HTMLInputElement['files'];
   title: string;

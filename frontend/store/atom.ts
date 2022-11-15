@@ -1,10 +1,11 @@
 import { atom } from 'recoil';
-import { UserInfoTypes } from '../interfaces';
 
-export const userInfo = atom<UserInfoTypes>({
+export const userInfo = atom({
   key: 'userInfo',
   default: {
     email: '',
     name: '',
+    profileImage: '',
+    blogName: '',
   },
 });

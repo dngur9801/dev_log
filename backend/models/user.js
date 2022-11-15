@@ -15,6 +15,12 @@ module.exports = (sequelize, Sequelize) => {
       provider: {
         type: Sequelize.STRING(30),
       },
+      profileImage: {
+        type: Sequelize.STRING(200),
+      },
+      blogName: {
+        type: Sequelize.STRING(30),
+      },
     },
     {
       tableName: 'user',

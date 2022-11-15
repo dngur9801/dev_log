@@ -57,18 +57,32 @@ export const Comments = styled.div`
     padding: 40px 0;
     border-bottom: 1px solid #eee;
 
-    .profile {
-      margin-bottom: 30px;
+    .profile_info {
       display: flex;
+      height: 54px;
+      justify-content: space-between;
       align-items: center;
 
-      a {
-        width: 50px;
-        margin-right: 10px;
+      .profile {
+        display: flex;
+        align-items: center;
 
-        img {
-          width: 100%;
-          border-radius: 100%;
+        & > a {
+          width: 50px;
+          margin-right: 10px;
+
+          img {
+            width: 100%;
+            border-radius: 100%;
+          }
+        }
+      }
+
+      .actions {
+        button {
+          font-size: ${({ theme }) => theme.fontSizes.small};
+          color: ${({ theme }) => theme.colors.gray2};
+          background: transparent;
         }
       }
     }

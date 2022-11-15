@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const { User, Post, Image, Comment } = require('../models');
+const utils = require('../utils');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
@@ -67,9 +68,13 @@ router.get('/:postId', async (req, res, next) => {
           include: [
             {
               model: User,
-              attributes: ['name'],
+              attributes: ['name', 'profileImage'],
             },
           ],
+        },
+        {
+          model: User,
+          attributes: ['name'],
         },
       ],
     });
@@ -77,6 +82,11 @@ router.get('/:postId', async (req, res, next) => {
       { view_cnt: +1 },
       { where: { id: req.params.postId } }
     );
+    // 날짜 변환
+    post.dataValues.createdAt = utils.elapsedTime(post.dataValues.createdAt);
+    post.dataValues.comments.forEach((item, idx) => {
+      item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
+    });
     return res.status(200).json(post);
   } catch (error) {
     console.error(error);
