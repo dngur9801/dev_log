@@ -20,3 +20,13 @@ export interface registCommentTypes {
   postId: string;
   comment: string;
 }
+
+export interface CommentTypes {
+  id: string;
+  content: string;
+  createdAt: string;
+  user: {
+    name: string;
+    profileImage: string;
+  };
+}

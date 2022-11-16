@@ -20,6 +20,8 @@ export const postAPI = {
   edit: (data: RegistOrEditTypes) => request.put('/post', data),
   delete: (data: any) => request.delete(`/post/${data}`),
   lists: () => request.get('/posts'),
+  addLike: (data: any) => request.post(`/post/${data}/like`),
+  removeLike: (data: any) => request.delete(`/post/${data}/like`),
 };
 
 export const commentAPI = {

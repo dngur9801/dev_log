@@ -7,23 +7,16 @@ import { userInfo } from '../../store/atom';
 import { defaultProfileImage } from '../../config';
 import { commentAPI } from '../../api';
 import styled from 'styled-components';
+import { CommentTypes } from '../../interfaces';
 
-interface CommentTypes {
-  item: {
-    id: string;
-    content: string;
-    createdAt: string;
-    user: {
-      name: string;
-      profileImage: string;
-    };
-  };
+interface CommentPropTypes {
+  item: CommentTypes;
   idx: number;
   isSelected: boolean;
   setSelectedCommentIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setComments: React.Dispatch<React.SetStateAction<any[]>>;
+  setCommentDatas: React.Dispatch<React.SetStateAction<any[]>>;
 }
-const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setComments }: CommentTypes) => {
+const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDatas }: CommentPropTypes) => {
   const [editComment, setEditComment] = useState('');
   const [user] = useRecoilState(userInfo);
 
@@ -53,8 +46,7 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setComments }
     }
     remove(id, {
       onSuccess: (data: any) => {
-        console.log(data);
-        setComments((prev) => [...prev.filter((item) => item.id !== id)]);
+        setCommentDatas((prev) => [...prev.filter((item) => item.id !== id)]);
       },
       onError: (error: any, variables: any, context: any) => {
         alert(error.response.data);

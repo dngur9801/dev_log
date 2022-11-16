@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Wrap = styled.div`
+  margin-top: 300px;
+
   h4 {
     font-weight: ${({ theme }) => theme.fontWeights.xl};
     font-size: ${({ theme }) => theme.fontSizes.xxl};

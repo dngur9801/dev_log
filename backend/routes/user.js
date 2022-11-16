@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
     if (req.user) {
       const userInfo = await User.findOne({
         where: { id: req.user.id },
-        attributes: ['email', 'name', 'profileImage'],
+        attributes: ['id', 'email', 'name', 'profileImage', 'blogName'],
       });
 
       res.status(200).json(userInfo);

@@ -18,7 +18,9 @@ passportConfig();
 const app = express();
 const port = 5000;
 const location =
-  process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
+  process.env.NODE_ENV === 'production'
+    ? process.env.API_ADDRESS
+    : 'http://localhost:3000';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +36,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
+    },
   })
 );
 app.use(passport.initialize()); //초기화
