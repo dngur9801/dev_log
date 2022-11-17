@@ -30,3 +30,30 @@ export interface CommentTypes {
     profileImage: string;
   };
 }
+
+export interface PostTypes {
+  Likers: {
+    id: number;
+    Like: {
+      userId: number;
+    };
+  }[];
+  id: number;
+  comments: CommentTypes[];
+  content: string;
+  createdAt: string;
+  image: null | {
+    src: string;
+  };
+  title: string;
+  user: {
+    name: string;
+    profileImage: string;
+  };
+  viewCnt: string;
+}
+
+export interface UserRegistTypes {
+  nickName: string;
+  inputId: string;
+}

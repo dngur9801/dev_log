@@ -21,6 +21,11 @@ router.get('/', async (req, res, next) => {
           model: Comment,
           attributes: ['content'],
         },
+        {
+          model: User,
+          as: 'Likers',
+          attributes: ['id'],
+        },
       ],
     });
     // 날짜 변환

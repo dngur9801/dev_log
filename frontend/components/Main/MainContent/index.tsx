@@ -1,22 +1,12 @@
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
 import { apiAddress, defaultProfileImage } from '../../../config';
+import { PostTypes } from '../../../interfaces';
 import { reg } from '../../../utils';
 import * as S from './MainContent.style';
 
 interface MainContentProps {
-  data: {
-    id: number;
-    title: string;
-    content: string;
-    writer: string;
-    createdAt: string;
-    image: null | {
-      src: string;
-    };
-    user: { name: string; profileImage: string };
-    comments: { content: string }[];
-  }[];
+  data: PostTypes[];
 }
 
 const MainContent = ({ data }: MainContentProps) => {
@@ -42,19 +32,19 @@ const MainContent = ({ data }: MainContentProps) => {
               </a>
             </Link>
             <div className="sub_info">
-              {item.createdAt} | {item.comments.length}개의 댓글
+              {item.createdAt} | {item.comments.length}개의 댓글 | 조회수 : {item.viewCnt}
             </div>
           </S.ContentMiddle>
           <S.ContentBottom>
             <Link href="/">
               <a className="profile">
-                <img src={item.user?.profileImage ? item.user?.profileImage : defaultProfileImage()} alt="test" />
+                <img src={item.user.profileImage ? item.user.profileImage : defaultProfileImage()} alt="test" />
                 <span>{item.user?.name}</span>
               </a>
             </Link>
             <span className="like">
               <FaHeart color="red" />
-              <span>3</span>
+              <span>{item.Likers.length}</span>
             </span>
           </S.ContentBottom>
         </S.Content>

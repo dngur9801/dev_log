@@ -28,11 +28,11 @@ const AppLayout = ({ children }: Props) => {
     mutate('', {
       onSuccess: () => {
         router.replace('/');
-        setUser({ email: '', name: '', profileImage: '' });
+        setUser({ id: '', email: '', name: '', profileImage: '', blogName: '' });
       },
       onError: (error: any, variables: any, context: any) => {
         router.replace('/');
-        setUser({ email: '', name: '', profileImage: '' });
+        setUser({ id: '', email: '', name: '', profileImage: '', blogName: '' });
       },
     });
   };

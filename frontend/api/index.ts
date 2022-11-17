@@ -1,6 +1,13 @@
 import axios from 'axios';
 import { apiAddress } from '../config';
-import { SignUpTypes, LocalLoginTypes, RegistOrEditTypes, registCommentTypes } from '../interfaces';
+import {
+  SignUpTypes,
+  LocalLoginTypes,
+  RegistOrEditTypes,
+  registCommentTypes,
+  PostTypes,
+  UserRegistTypes,
+} from '../interfaces';
 
 const request = axios.create({
   baseURL: apiAddress(),
@@ -12,6 +19,8 @@ export const userAPI = {
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
   info: () => request.get('/user'),
   logout: () => request.post('/user/logout'),
+  mypage: (): Promise<PostTypes> => request.get('/user/mypage'),
+  regist: (data: UserRegistTypes) => request.post('/user/regist', data),
 };
 
 export const postAPI = {

@@ -12,22 +12,23 @@ module.exports = () => {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: 'http://localhost:5000/auth/github/callback',
+        passReqToCallback: true,
       },
-      async (accessToken, refreshToken, profile, done) => {
+      async (req, accessToken, refreshToken, profile, done) => {
         try {
           const exUser = await User.findOne({
             where: { email: profile.username, provider: 'github' },
           });
-          console.log('profile: ', profile);
           if (exUser) {
+            req._user = exUser;
             done(null, exUser);
           } else {
             const newUser = await User.create({
               email: profile.username,
-              name: profile.username,
               profileImage: profile.photos[0].value,
               provider: 'github',
             });
+            req._user = newUser;
             done(null, newUser);
           }
         } catch (error) {

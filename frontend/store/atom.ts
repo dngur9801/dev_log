@@ -1,7 +1,8 @@
 import { atom } from 'recoil';
+import { v1 } from 'uuid';
 
 export const userInfo = atom({
-  key: 'userInfo',
+  key: `userInfo/${v1()}`,
   default: {
     id: null,
     email: '',

@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-const { User } = require('../models');
+const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -14,6 +14,24 @@ router.get('/', async (req, res, next) => {
       const userInfo = await User.findOne({
         where: { id: req.user.id },
         attributes: ['id', 'email', 'name', 'profileImage', 'blogName'],
+      });
+
+      res.status(200).json(userInfo);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get('/:userId', async (req, res, next) => {
+  try {
+    if (req.params.userId) {
+      const userInfo = await User.findOne({
+        where: { id: req.params.userId },
+        attributes: ['id'],
       });
 
       res.status(200).json(userInfo);
@@ -94,4 +112,55 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+// 회원 기본정보
+router.post('/regist', isNotLoggedIn, async (req, res, next) => {
+  try {
+    const { userId, nickName, name } = req.body;
+    await User.update(
+      {
+        nickName,
+        name,
+      },
+      {
+        where: { id: userId },
+      }
+    );
+    res.status(200).json(null);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 마이페이지 정보
+router.get('/mypage', isLoggedIn, async (req, res, next) => {
+  try {
+    const posts = await Post.findAll({
+      where: { id: req.user.id },
+      include: [
+        {
+          model: Image,
+          attributes: ['src'],
+        },
+        {
+          model: User,
+          attributes: ['profileImage', 'name'],
+        },
+        {
+          model: Comment,
+          attributes: ['content'],
+        },
+        {
+          model: User,
+          as: 'Likers',
+          attributes: ['id'],
+        },
+      ],
+    });
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 module.exports = router;

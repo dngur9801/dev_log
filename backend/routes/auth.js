@@ -15,7 +15,13 @@ router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
   (req, res) => {
-    res.redirect('http://localhost:3000'); // 로그인 인증후 돌아올 주소
+    if (!req._user.name) {
+      res.redirect(
+        `http://localhost:3000/register?auth=google&id=${req._user.id}`
+      );
+    } else {
+      res.redirect('http://localhost:3000');
+    }
   }
 );
 
@@ -28,9 +34,17 @@ router.get(
 
 router.get(
   '/github/callback',
-  passport.authenticate('github', { failureRedirect: 'http://localhost:3000' }),
+  passport.authenticate('github', {
+    failureRedirect: 'http://localhost:3000',
+  }),
   (req, res) => {
-    res.redirect('http://localhost:3000'); // 로그인 인증후 돌아올 주소
+    if (!req._user.name) {
+      res.redirect(
+        `http://localhost:3000/register?auth=github&id=${req._user.id}`
+      );
+    } else {
+      res.redirect('http://localhost:3000');
+    }
   }
 );
 

@@ -9,6 +9,9 @@ module.exports = (sequelize, Sequelize) => {
       password: {
         type: Sequelize.STRING(100),
       },
+      nickName: {
+        type: Sequelize.STRING(30),
+      },
       name: {
         type: Sequelize.STRING(30),
       },
@@ -17,6 +20,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       profileImage: {
         type: Sequelize.STRING(200),
+      },
+      blogName: {
+        type: Sequelize.STRING(30),
       },
       blogName: {
         type: Sequelize.STRING(30),

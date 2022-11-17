@@ -11,29 +11,10 @@ import { postAPI } from '../../../api';
 import { apiAddress } from '../../../config';
 import CommentBox from '../../../components/DetailPost/CommentBox';
 import { userInfo } from '../../../store/atom';
-import { CommentTypes } from '../../../interfaces';
+import { PostTypes } from '../../../interfaces';
 
 interface DataTypes {
-  data: {
-    Likers: {
-      id: number;
-      Like: {
-        userId: number;
-      };
-    }[];
-    id: number;
-    comments: CommentTypes[];
-    content: string;
-    createdAt: string;
-    image: null | {
-      src: string;
-    };
-    title: string;
-    user: {
-      name: string;
-    };
-    viewCnt: string;
-  };
+  data: PostTypes;
 }
 
 const DetailPost = () => {
