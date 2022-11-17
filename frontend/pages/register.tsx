@@ -30,18 +30,24 @@ const Register = () => {
       nickName,
       name,
     };
-    regist(data, {
-      onSuccess: (data: any, variables: any, context: any) => {
-        if (auth === 'github') {
-          window.location.href = `${apiAddress()}/auth/github`;
-        } else if (auth === 'google') {
-          window.location.href = `${apiAddress()}/auth/google`;
-        }
-      },
-      onError: (error: any, variables: any, context: any) => {
-        alert(error.response.data);
-      },
-    });
+    if (nickName === '') {
+      alert('닉네임을 입력해주세요');
+    } else if (name === '') {
+      alert('아이디를 입력해주세요');
+    } else {
+      regist(data, {
+        onSuccess: (data: any, variables: any, context: any) => {
+          if (auth === 'github') {
+            window.location.href = `${apiAddress()}/auth/github`;
+          } else if (auth === 'google') {
+            window.location.href = `${apiAddress()}/auth/google`;
+          }
+        },
+        onError: (error: any, variables: any, context: any) => {
+          alert(error.response.data);
+        },
+      });
+    }
   };
   return (
     <Styled.Wrap>

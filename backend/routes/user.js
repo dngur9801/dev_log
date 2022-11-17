@@ -116,6 +116,15 @@ router.post('/login', (req, res, next) => {
 router.post('/regist', isNotLoggedIn, async (req, res, next) => {
   try {
     const { userId, nickName, name } = req.body;
+    const user = await User.findOne({
+      where: { name },
+    });
+    if (nickName !== '' || name !== '') {
+      return res.status(400).send('필수값을 입력해주세요');
+    }
+    if (user) {
+      return res.status(401).send('이미 사용중인 아이디 입니다.');
+    }
     await User.update(
       {
         nickName,
