@@ -1,8 +1,8 @@
 import React from 'react';
 import { defaultProfileImage } from '../../../config';
-import * as S from './MypageHeader.style';
+import * as S from './UserBlogHeader.style';
 
-const MypageHeader = () => {
+const UserBlogHeader = () => {
   return (
     <S.Container>
       <div className="profile">
@@ -16,4 +16,4 @@ const MypageHeader = () => {
   );
 };
 
-export default MypageHeader;
+export default UserBlogHeader;

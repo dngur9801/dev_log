@@ -5,8 +5,8 @@ import {
   LocalLoginTypes,
   RegistOrEditTypes,
   registCommentTypes,
-  PostTypes,
   UserRegistTypes,
+  ResponsePostTypes,
 } from '../interfaces';
 
 const request = axios.create({
@@ -15,21 +15,21 @@ const request = axios.create({
 });
 
 export const userAPI = {
+  info: () => request.get('/user'),
+  posts: (data: string): Promise<ResponsePostTypes> => request.get(`/user/posts?name=${data}`),
   signUp: (data: SignUpTypes) => request.post('/user/signup', data),
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
-  info: () => request.get('/user'),
   logout: () => request.post('/user/logout'),
-  mypage: (): Promise<PostTypes> => request.get('/user/mypage'),
   regist: (data: UserRegistTypes) => request.post('/user/regist', data),
 };
 
 export const postAPI = {
-  regist: (data: RegistOrEditTypes) => request.post('/post/regist', data),
   detail: (data: string | string[]) => request.get(`/post/${data}`),
+  lists: () => request.get('/posts'),
+  regist: (data: RegistOrEditTypes) => request.post('/post/regist', data),
+  addLike: (data: any) => request.post(`/post/${data}/like`),
   edit: (data: RegistOrEditTypes) => request.put('/post', data),
   delete: (data: any) => request.delete(`/post/${data}`),
-  lists: () => request.get('/posts'),
-  addLike: (data: any) => request.post(`/post/${data}/like`),
   removeLike: (data: any) => request.delete(`/post/${data}/like`),
 };
 

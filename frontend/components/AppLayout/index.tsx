@@ -57,8 +57,8 @@ const AppLayout = ({ children }: Props) => {
           </div>
           <S.MyTitle>
             {user?.email && (
-              <Link href="/mypage">
-                <a>{user?.name ? user?.name : 'member'}.log</a>
+              <Link href="/[user]" as={`/@${user.name}`}>
+                <a>{user?.name}.log</a>
               </Link>
             )}
           </S.MyTitle>
@@ -83,7 +83,7 @@ const AppLayout = ({ children }: Props) => {
                   {toggle && (
                     <div className="my_list">
                       <div>
-                        <Link href={`@${user?.name}`}>
+                        <Link href="/[user]" as={`/@${user.name}`}>
                           <a>마이페이지</a>
                         </Link>
                       </div>

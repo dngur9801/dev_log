@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
       name: {
         type: Sequelize.STRING(30),
       },
+      introduce: {
+        type: Sequelize.STRING(50),
+      },
       provider: {
         type: Sequelize.STRING(30),
       },

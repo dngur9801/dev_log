@@ -1,23 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  width: ${({ theme }) => theme.deviceWrapSizes.tablet};
-  margin: 0 auto;
-  margin-top: 60px;
-
-  .taps {
-    text-align: center;
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-
-    span {
-      display: inline-block;
-      width: 120px;
-      padding: 10px 0;
-      border-bottom: 2px solid ${({ theme }) => theme.colors.blue1};
-      color: ${({ theme }) => theme.colors.blue1};
-    }
-  }
-
+export const Content = styled.div`
   .my_content {
     margin-top: 50px;
 
@@ -42,8 +25,21 @@ export const Container = styled.div`
 
   .subinfo {
     display: flex;
+    align-items: center;
     gap: 10px;
     margin-top: 30px;
     color: ${({ theme }) => theme.colors.gray2};
+
+    .likes {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      svg {
+        margin-bottom: 4px;
+        color: red;
+        vertical-align: 1px;
+      }
+    }
   }
 `;

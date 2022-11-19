@@ -4,6 +4,7 @@ const passport = require('passport');
 
 const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const utils = require('../utils');
 
 const router = express.Router();
 
@@ -14,24 +15,6 @@ router.get('/', async (req, res, next) => {
       const userInfo = await User.findOne({
         where: { id: req.user.id },
         attributes: ['id', 'email', 'name', 'profileImage', 'blogName'],
-      });
-
-      res.status(200).json(userInfo);
-    } else {
-      res.status(200).json(null);
-    }
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-router.get('/:userId', async (req, res, next) => {
-  try {
-    if (req.params.userId) {
-      const userInfo = await User.findOne({
-        where: { id: req.params.userId },
-        attributes: ['id'],
       });
 
       res.status(200).json(userInfo);
@@ -112,14 +95,14 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-// 회원 기본정보
+// 회원 기본정보 등록
 router.post('/regist', isNotLoggedIn, async (req, res, next) => {
   try {
-    const { userId, nickName, name } = req.body;
+    const { userId, nickName, name, introduce } = req.body;
     const user = await User.findOne({
       where: { name },
     });
-    if (nickName !== '' || name !== '') {
+    if (nickName === '' || name === '') {
       return res.status(400).send('필수값을 입력해주세요');
     }
     if (user) {
@@ -129,6 +112,7 @@ router.post('/regist', isNotLoggedIn, async (req, res, next) => {
       {
         nickName,
         name,
+        introduce,
       },
       {
         where: { id: userId },
@@ -141,11 +125,15 @@ router.post('/regist', isNotLoggedIn, async (req, res, next) => {
   }
 });
 
-// 마이페이지 정보
-router.get('/mypage', isLoggedIn, async (req, res, next) => {
+// 유저블로그 정보
+router.get('/posts', async (req, res, next) => {
   try {
+    const user = await User.findOne({
+      where: { name: req.query.name },
+    });
+    console.log('user : ', user.id);
     const posts = await Post.findAll({
-      where: { id: req.user.id },
+      where: { userId: user.id },
       include: [
         {
           model: Image,
@@ -166,10 +154,14 @@ router.get('/mypage', isLoggedIn, async (req, res, next) => {
         },
       ],
     });
+    posts.forEach((item, idx) => {
+      item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
+    });
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
+
 module.exports = router;

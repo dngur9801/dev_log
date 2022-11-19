@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { AxiosError } from 'axios';
 import { postAPI } from '../../../api';
-import { apiAddress } from '../../../config';
+import { apiAddress, defaultTitleImage } from '../../../config';
 import CommentBox from '../../../components/DetailPost/CommentBox';
 import { userInfo } from '../../../store/atom';
 import { PostTypes } from '../../../interfaces';
@@ -158,7 +158,7 @@ const Styled = {
   Header: styled.div<{ image: string }>`
     margin-bottom: 5rem;
     .back_img {
-      background-image: url(${({ image }) => (image ? `${apiAddress()}/${image}` : '/image/noimg.jpeg')});
+      background-image: url(${({ image }) => (image ? `${apiAddress()}/${image}` : defaultTitleImage())});
       background-attachment: fixed;
       background-repeat: no-repeat;
       background-position: 50%;

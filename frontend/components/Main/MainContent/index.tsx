@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import { apiAddress, defaultProfileImage } from '../../../config';
+import { apiAddress, defaultProfileImage, defaultTitleImage } from '../../../config';
 import { PostTypes } from '../../../interfaces';
 import { reg } from '../../../utils';
 import * as S from './MainContent.style';
@@ -16,16 +16,16 @@ const MainContent = ({ data }: MainContentProps) => {
       {data?.map((item) => (
         <S.Content key={item.id}>
           <S.ContentTop>
-            <Link href={`@${item.user?.name}/${item.id}`}>
+            <Link href="/[user]/[posturl]" as={`/@${item.user?.name}/${item.id}`}>
               <a>
                 <div className="content_img">
-                  <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : '/image/noimg.jpeg'} alt="test" />
+                  <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : defaultTitleImage()} alt="test" />
                 </div>
               </a>
             </Link>
           </S.ContentTop>
           <S.ContentMiddle>
-            <Link href="/">
+            <Link href="/[user]/[posturl]" as={`/@${item.user?.name}/${item.id}`}>
               <a>
                 <h4 className="title">{item.title}</h4>
                 <p className="write">{reg.removeTag(item.content)}</p>
@@ -36,7 +36,7 @@ const MainContent = ({ data }: MainContentProps) => {
             </div>
           </S.ContentMiddle>
           <S.ContentBottom>
-            <Link href="/">
+            <Link href="/[user]" as={`/@${item.user?.name}`}>
               <a className="profile">
                 <img src={item.user.profileImage ? item.user.profileImage : defaultProfileImage()} alt="test" />
                 <span>{item.user?.name}</span>

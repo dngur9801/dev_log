@@ -53,6 +53,9 @@ export interface PostTypes {
   viewCnt: string;
 }
 
+export interface ResponsePostTypes {
+  data: PostTypes[];
+}
 export interface UserRegistTypes {
   nickName: string;
   inputId: string;

@@ -5,3 +5,7 @@ export function apiAddress() {
 export function defaultProfileImage() {
   return '/image/profile.png';
 }
+
+export function defaultTitleImage() {
+  return '/image/noimg.jpeg';
+}

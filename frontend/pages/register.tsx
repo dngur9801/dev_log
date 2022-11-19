@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import { userAPI } from '../api';
-import { UserRegistTypes } from '../interfaces';
+import { UserRegistTypes } from '../interfaces/index';
 import { apiAddress } from '../config';
 import styled from 'styled-components';
+import { reg } from '../utils';
 
 // interface RegisterPropTypes {
 //   data: {
@@ -17,6 +18,7 @@ import styled from 'styled-components';
 const Register = () => {
   const [nickName, setNickName] = useState('');
   const [name, setName] = useState('');
+  const [introduce, setIntroduce] = useState('');
   const router = useRouter();
 
   const { auth, id } = router.query;
@@ -29,11 +31,14 @@ const Register = () => {
       userId: id,
       nickName,
       name,
+      introduce,
     };
     if (nickName === '') {
       alert('닉네임을 입력해주세요');
     } else if (name === '') {
       alert('아이디를 입력해주세요');
+    } else if (!reg.isId(name)) {
+      alert('아이디는 영문자로 시작하는 영문자 또는 숫자 6~20자를 입력하세요');
     } else {
       regist(data, {
         onSuccess: (data: any, variables: any, context: any) => {
@@ -62,6 +67,13 @@ const Register = () => {
       />
       <p>아이디</p>
       <input type="text" placeholder="아이디를 입력하세요" maxLength={30} onChange={(e) => setName(e.target.value)} />
+      <p>블로그 소개</p>
+      <input
+        type="text"
+        placeholder="소개글을 입력하세요"
+        maxLength={50}
+        onChange={(e) => setIntroduce(e.target.value)}
+      />
       <div className="actions">
         <button type="button" onClick={() => router.push('/')}>
           취소
