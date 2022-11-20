@@ -5,14 +5,14 @@ import Seo from '../../components/Seo';
 import { userAPI } from '../../api';
 import { useQuery } from 'react-query';
 import { AxiosError } from 'axios';
-import { ResponsePostTypes } from '../../interfaces';
+import { ResponsePostsTypes } from '../../interfaces';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 const UserBlog: NextPage = () => {
   const route = useRouter();
   const userName = (route.query.user as string)?.replace('@', '');
-  const { data, error, status } = useQuery<ResponsePostTypes, AxiosError>(
+  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError>(
     ['userPosts', userName],
     () => userAPI.posts(userName),
     {

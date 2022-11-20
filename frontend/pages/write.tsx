@@ -47,7 +47,16 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
     const formData = commonFormData();
     regist(formData, {
       onSuccess: (data: any, variables: any, context: any) => {
-        router.push(`/@${user.name}/${data.data.id}`);
+        // router.push(`/@${user.name}/${data.data.id}`,);
+        router.push(
+          {
+            pathname: '/[user]/[posturl]',
+            query: {
+              id: data.data.id,
+            },
+          },
+          `/@${user.name}/${data.data.title}`,
+        );
       },
       onError: (error: any, variables: any, context: any) => {
         alert(error.response.data);

@@ -10,13 +10,20 @@ interface MainContentProps {
 }
 
 const MainContent = ({ data }: MainContentProps) => {
-  console.log('main:', data);
   return (
     <>
       {data?.map((item) => (
         <S.Content key={item.id}>
           <S.ContentTop>
-            <Link href="/[user]/[posturl]" as={`/@${item.user?.name}/${item.id}`}>
+            <Link
+              href={{
+                pathname: '/[user]/[posturl]',
+                query: {
+                  id: item.id,
+                },
+              }}
+              as={`/@${item.user?.name}/${item.title}`}
+            >
               <a>
                 <div className="content_img">
                   <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : defaultTitleImage()} alt="test" />
@@ -25,7 +32,15 @@ const MainContent = ({ data }: MainContentProps) => {
             </Link>
           </S.ContentTop>
           <S.ContentMiddle>
-            <Link href="/[user]/[posturl]" as={`/@${item.user?.name}/${item.id}`}>
+            <Link
+              href={{
+                pathname: '/[user]/[posturl]',
+                query: {
+                  id: item.id,
+                },
+              }}
+              as={`/@${item.user?.name}/${item.title}`}
+            >
               <a>
                 <h4 className="title">{item.title}</h4>
                 <p className="write">{reg.removeTag(item.content)}</p>

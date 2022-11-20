@@ -1,10 +1,11 @@
 import type { AppProps } from 'next/app';
-import GlobalStyle from '../styles/global-styles';
-import AppLayout from '../components/AppLayout';
-import { ThemeProvider } from 'styled-components';
-import { theme } from '../styles/theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
+import { CookiesProvider } from 'react-cookie';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from '../styles/global-styles';
+import AppLayout from '../components/AppLayout';
+import { theme } from '../styles/theme';
 
 const queryClient = new QueryClient();
 
@@ -13,10 +14,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          <GlobalStyle />
-          <AppLayout>
-            <Component {...pageProps} />
-          </AppLayout>
+          <CookiesProvider>
+            <GlobalStyle />
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
+          </CookiesProvider>
         </RecoilRoot>
       </QueryClientProvider>
     </ThemeProvider>

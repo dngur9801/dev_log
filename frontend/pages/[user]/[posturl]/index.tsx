@@ -18,33 +18,35 @@ const DetailPost = () => {
     ssr: false,
   });
   const [isLike, setIsLike] = useState(false);
+  const [storageId, setStorageId] = useState(null);
   const [me] = useRecoilState(userInfo);
 
   const queryClient = useQueryClient();
-
   const likeBox = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { user, posturl } = router.query;
+  const { user, id } = router.query;
   const {
     data: postData,
     error,
     status,
-  } = useQuery<ResponseDetailPostTypes, AxiosError>('postDetail', () => postAPI.detail(posturl), {
+  } = useQuery<ResponseDetailPostTypes, AxiosError>(['postDetail', storageId], () => postAPI.detail(storageId), {
     refetchOnWindowFocus: false,
-    enabled: !!posturl,
+    enabled: !!storageId,
   });
   const { mutate: removePost } = useMutation((data: string | string[]) => postAPI.delete(data));
   const { mutate: addLike } = useMutation((data: string | string[]) => postAPI.addLike(data));
   const { mutate: removeLike } = useMutation((data: string | string[]) => postAPI.removeLike(data));
 
   if (status === 'error') {
-    alert((error as any).message);
+    alert(error.response.data);
   }
+  console.log('id : ', id);
+  console.log(router);
 
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      removePost(posturl, {
+      removePost(storageId, {
         onSuccess: (data: any, variables: any, context: any) => {
           alert('삭제가 완료되었습니다.');
           router.replace('/');
@@ -59,7 +61,7 @@ const DetailPost = () => {
   // like 버튼 클릭 시
   const onClickSetLike = () => {
     if (!isLike) {
-      addLike(posturl, {
+      addLike(storageId, {
         onSuccess: (data: any, variables: any, context: any) => {
           setIsLike(!isLike);
           queryClient.invalidateQueries('postDetail');
@@ -69,7 +71,7 @@ const DetailPost = () => {
         },
       });
     } else {
-      removeLike(posturl, {
+      removeLike(storageId, {
         onSuccess: (data: any, variables: any, context: any) => {
           setIsLike(!isLike);
           queryClient.invalidateQueries('postDetail');
@@ -109,7 +111,14 @@ const DetailPost = () => {
     }
   }, [postData]);
 
-  console.log('postData : ', postData);
+  // 게시물 id값 쿠키에 저장
+  useEffect(() => {
+    if (id) {
+      localStorage.setItem('id', id as string);
+    }
+    setStorageId(localStorage.getItem('id'));
+  }, [id]);
+
   return (
     <>
       <Styled.Header image={postData?.data?.image?.src}>
@@ -126,7 +135,7 @@ const DetailPost = () => {
       <Styled.ContentWrap>
         {me?.id === postData?.data.user.id && (
           <Styled.ContentBtn>
-            <button type="button" onClick={() => router.push(`/${user}/${posturl}/edit`)}>
+            <button type="button" onClick={() => router.push(`/${user}/${storageId}/edit`)}>
               포스트 수정
             </button>
             <button type="button" onClick={onClickDelete}>
