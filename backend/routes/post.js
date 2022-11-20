@@ -74,7 +74,7 @@ router.get('/:postId', async (req, res, next) => {
         },
         {
           model: User,
-          attributes: ['name'],
+          attributes: ['id', 'name'],
         },
         {
           model: User,

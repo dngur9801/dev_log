@@ -4,7 +4,6 @@ module.exports = (sequelize, Sequelize) => {
     {
       email: {
         type: Sequelize.STRING(30),
-        // unique: true,
       },
       password: {
         type: Sequelize.STRING(100),
@@ -14,6 +13,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       name: {
         type: Sequelize.STRING(30),
+        unique: true,
       },
       introduce: {
         type: Sequelize.STRING(50),
@@ -23,12 +23,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       profileImage: {
         type: Sequelize.STRING(200),
-      },
-      blogName: {
-        type: Sequelize.STRING(30),
-      },
-      blogName: {
-        type: Sequelize.STRING(30),
       },
     },
     {

@@ -1,3 +1,16 @@
+export interface UserInfoTypes {
+  id: null;
+  email: string;
+  name: string;
+  profileImage: string;
+  nickName: string;
+  introduce: string;
+}
+
+export interface ResponseUserInfoTypes {
+  data: UserInfoTypes;
+}
+
 export interface SignUpTypes {
   email: string;
   password: string;
@@ -47,16 +60,29 @@ export interface PostTypes {
   };
   title: string;
   user: {
+    id: number;
     name: string;
+    nickName: string;
     profileImage: string;
+    introduce: string;
   };
   viewCnt: string;
 }
 
-export interface ResponsePostTypes {
+export interface ResponsePostsTypes {
   data: PostTypes[];
 }
+
+export interface ResponseDetailPostTypes {
+  data: PostTypes;
+}
+
 export interface UserRegistTypes {
   nickName: string;
   inputId: string;
+}
+
+export interface CommentEditTypes {
+  commentId: string;
+  content: string;
 }

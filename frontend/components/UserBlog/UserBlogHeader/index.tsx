@@ -2,14 +2,20 @@ import React from 'react';
 import { defaultProfileImage } from '../../../config';
 import * as S from './UserBlogHeader.style';
 
-const UserBlogHeader = () => {
+interface UserBlogHeaderPropTypes {
+  nickName: string;
+  profileImage: string;
+  introduce: string;
+}
+
+const UserBlogHeader = ({ nickName, profileImage, introduce }: UserBlogHeaderPropTypes) => {
   return (
     <S.Container>
       <div className="profile">
-        <img src={defaultProfileImage()} alt="" />
+        <img src={profileImage ? profileImage : defaultProfileImage()} alt="" />
         <div className="profile_text">
-          <p>aaa</p>
-          <span>bbb</span>
+          <p>{nickName}</p>
+          <span>{introduce}</span>
         </div>
       </div>
     </S.Container>

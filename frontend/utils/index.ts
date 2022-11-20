@@ -1,3 +1,5 @@
+import { UserInfoTypes } from '../interfaces';
+
 export const reg = {
   removeTag(string: string) {
     const regExp = /<[^>]*>?/g;
@@ -9,3 +11,12 @@ export const reg = {
     return regExp.test(string);
   },
 };
+
+export const initUserInfoData = (): UserInfoTypes => ({
+  id: null,
+  email: '',
+  name: '',
+  profileImage: '',
+  nickName: '',
+  introduce: '',
+});

@@ -24,12 +24,15 @@ const UserBlog: NextPage = () => {
   if (status === 'error') {
     alert(error.response.data);
   }
-  console.log(userName);
 
   return (
     <>
       <Seo>Devlog</Seo>
-      <UserBlogHeader />
+      <UserBlogHeader
+        nickName={data?.data[0].user.nickName}
+        profileImage={data?.data[0].user.profileImage}
+        introduce={data?.data[0].user.introduce}
+      />
       <Styled.Wrap>
         <div className="taps">
           <span>글</span>
@@ -56,8 +59,9 @@ const Styled = {
         display: inline-block;
         width: 120px;
         padding: 10px 0;
-        border-bottom: 2px solid ${({ theme }) => theme.colors.blue1};
-        color: ${({ theme }) => theme.colors.blue1};
+        border-bottom: 2px solid ${({ theme }) => theme.colors.basic2};
+        color: ${({ theme }) => theme.colors.basic2};
+        font-weight: ${({ theme }) => theme.fontWeights.xl};
       }
     }
   `,

@@ -84,6 +84,7 @@ export const ContentBottom = styled.div`
 
     span {
       color: ${({ theme }) => theme.colors.gray2};
+      font-weight: ${({ theme }) => theme.fontWeights.xl};
     }
   }
   .like {
@@ -91,7 +92,8 @@ export const ContentBottom = styled.div`
     align-items: center;
 
     svg {
-      margin-right: ${({ theme }) => theme.calcRem(10)};
+      margin-right: ${({ theme }) => theme.calcRem(5)};
+      margin-bottom: 3px;
     }
   }
 `;

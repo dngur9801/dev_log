@@ -14,7 +14,14 @@ router.get('/', async (req, res, next) => {
     if (req.user) {
       const userInfo = await User.findOne({
         where: { id: req.user.id },
-        attributes: ['id', 'email', 'name', 'profileImage', 'blogName'],
+        attributes: [
+          'id',
+          'email',
+          'name',
+          'profileImage',
+          'nickName',
+          'introduce',
+        ],
       });
 
       res.status(200).json(userInfo);
@@ -133,6 +140,7 @@ router.get('/posts', async (req, res, next) => {
     });
     console.log('user : ', user.id);
     const posts = await Post.findAll({
+      order: [['createdAt', 'DESC']],
       where: { userId: user.id },
       include: [
         {
@@ -141,7 +149,7 @@ router.get('/posts', async (req, res, next) => {
         },
         {
           model: User,
-          attributes: ['profileImage', 'name'],
+          attributes: ['profileImage', 'nickName', 'introduce'],
         },
         {
           model: Comment,

@@ -2,14 +2,17 @@ import { FaSearch, FaSun, FaListUl } from 'react-icons/fa';
 import Image from 'next/image';
 import * as S from './AppLayout.style';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import LoginModal from './LoginModal';
 import { useRecoilState } from 'recoil';
 import { userInfo } from '../../store/atom';
 import { userAPI } from '../../api';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { defaultProfileImage } from '../../config';
+import { initUserInfoData } from '../../utils';
+import { AxiosError } from 'axios';
+import { ResponseUserInfoTypes, UserInfoTypes } from '../../interfaces';
 type Props = {
   children: JSX.Element;
 };
@@ -20,7 +23,9 @@ const AppLayout = ({ children }: Props) => {
   const [user, setUser] = useRecoilState(userInfo);
 
   const { mutate }: any = useMutation(() => userAPI.logout());
-
+  const { data, error, status } = useQuery<ResponseUserInfoTypes, AxiosError<ReactNode>>('userInfo', userAPI.info, {
+    refetchOnWindowFocus: false,
+  });
   const router = useRouter();
 
   // 로그아웃
@@ -28,22 +33,23 @@ const AppLayout = ({ children }: Props) => {
     mutate('', {
       onSuccess: () => {
         router.replace('/');
-        setUser({ id: '', email: '', name: '', profileImage: '', blogName: '' });
+        setUser(initUserInfoData());
       },
       onError: (error: any, variables: any, context: any) => {
         router.replace('/');
-        setUser({ id: '', email: '', name: '', profileImage: '', blogName: '' });
+        setUser(initUserInfoData());
       },
     });
   };
 
+  if (status === 'error') {
+    return <span>{error.response.data}</span>;
+  }
+
+  // 유저 정보 요청
   useEffect(() => {
-    // 유저 정보 요청
-    (async () => {
-      const { data } = await userAPI.info();
-      setUser(data);
-    })();
-  }, []);
+    setUser(data?.data);
+  }, [data]);
   console.log('AppLayout:', user);
 
   return (

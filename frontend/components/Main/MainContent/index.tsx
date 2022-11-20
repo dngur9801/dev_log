@@ -38,7 +38,7 @@ const MainContent = ({ data }: MainContentProps) => {
           <S.ContentBottom>
             <Link href="/[user]" as={`/@${item.user?.name}`}>
               <a className="profile">
-                <img src={item.user.profileImage ? item.user.profileImage : defaultProfileImage()} alt="test" />
+                <img src={item.user.profileImage ? item.user.profileImage : defaultProfileImage()} alt="profileImage" />
                 <span>{item.user?.name}</span>
               </a>
             </Link>

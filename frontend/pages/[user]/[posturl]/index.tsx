@@ -11,11 +11,7 @@ import { postAPI } from '../../../api';
 import { apiAddress, defaultTitleImage } from '../../../config';
 import CommentBox from '../../../components/DetailPost/CommentBox';
 import { userInfo } from '../../../store/atom';
-import { PostTypes } from '../../../interfaces';
-
-interface DataTypes {
-  data: PostTypes;
-}
+import { ResponseDetailPostTypes } from '../../../interfaces';
 
 const DetailPost = () => {
   const Viewer = dynamic(() => import('../../../components/common/ViewerBox'), {
@@ -33,13 +29,13 @@ const DetailPost = () => {
     data: postData,
     error,
     status,
-  } = useQuery<DataTypes, AxiosError>('postDetail', () => postAPI.detail(posturl), {
+  } = useQuery<ResponseDetailPostTypes, AxiosError>('postDetail', () => postAPI.detail(posturl), {
     refetchOnWindowFocus: false,
     enabled: !!posturl,
   });
-  const { mutate: removePost }: any = useMutation((data) => postAPI.delete(data));
-  const { mutate: addLike }: any = useMutation((data) => postAPI.addLike(data));
-  const { mutate: removeLike }: any = useMutation((data) => postAPI.removeLike(data));
+  const { mutate: removePost } = useMutation((data: string | string[]) => postAPI.delete(data));
+  const { mutate: addLike } = useMutation((data: string | string[]) => postAPI.addLike(data));
+  const { mutate: removeLike } = useMutation((data: string | string[]) => postAPI.removeLike(data));
 
   if (status === 'error') {
     alert((error as any).message);
@@ -103,6 +99,7 @@ const DetailPost = () => {
     };
   }, []);
 
+  // 좋아요 체크 여부
   useEffect(() => {
     const findLiker = postData?.data?.Likers?.some((item) => item.Like.userId === me?.id);
     if (!findLiker) {
@@ -111,6 +108,8 @@ const DetailPost = () => {
       setIsLike(true);
     }
   }, [postData]);
+
+  console.log('postData : ', postData);
   return (
     <>
       <Styled.Header image={postData?.data?.image?.src}>
@@ -125,14 +124,16 @@ const DetailPost = () => {
         </Styled.Title>
       </Styled.Header>
       <Styled.ContentWrap>
-        <Styled.ContentBtn>
-          <button type="button" onClick={() => router.push(`/${user}/${posturl}/edit`)}>
-            포스트 수정
-          </button>
-          <button type="button" onClick={onClickDelete}>
-            포스트 삭제
-          </button>
-        </Styled.ContentBtn>
+        {me?.id === postData?.data.user.id && (
+          <Styled.ContentBtn>
+            <button type="button" onClick={() => router.push(`/${user}/${posturl}/edit`)}>
+              포스트 수정
+            </button>
+            <button type="button" onClick={onClickDelete}>
+              포스트 삭제
+            </button>
+          </Styled.ContentBtn>
+        )}
         <Styled.Content>
           <Viewer content={postData?.data?.content} />
           <Styled.LikeBox ref={likeBox}>

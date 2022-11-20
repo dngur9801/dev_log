@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import styled from 'styled-components';
 import React, { useState } from 'react';
 import { FaPlusSquare } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
@@ -6,8 +7,7 @@ import { useMutation } from 'react-query';
 import { userInfo } from '../../store/atom';
 import { defaultProfileImage } from '../../config';
 import { commentAPI } from '../../api';
-import styled from 'styled-components';
-import { CommentTypes } from '../../interfaces';
+import { CommentEditTypes, CommentTypes } from '../../interfaces';
 
 interface CommentPropTypes {
   item: CommentTypes;
@@ -20,8 +20,9 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDat
   const [editComment, setEditComment] = useState('');
   const [user] = useRecoilState(userInfo);
 
-  const { mutate: edit }: any = useMutation((data: string) => commentAPI.edit(data));
-  const { mutate: remove }: any = useMutation((data: string) => commentAPI.delete(data));
+  const { mutate: edit } = useMutation((data: CommentEditTypes) => commentAPI.edit(data));
+  const { mutate: remove } = useMutation((data: string) => commentAPI.delete(data));
+
   // 댓글 수정 클릭 시
   const onClickModify = (id: string, prevContent: string) => {
     const data = {

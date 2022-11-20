@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
+
   .my_content {
     margin-top: 50px;
 
