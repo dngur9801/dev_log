@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
   );
 
   Image.associate = db => {
-    db.Image.belongsTo(db.Post);
+    db.Image.belongsTo(db.Post, { onDelete: 'CASCADE' });
   };
 
   return Image;

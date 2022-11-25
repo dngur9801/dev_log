@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import { apiAddress, defaultProfileImage, defaultTitleImage } from '../../../config';
+import { apiAddress, defaultTitleImage } from '../../../config';
 import { PostTypes } from '../../../interfaces';
 import { reg } from '../../../utils';
+import ProfileImage from '../../common/ProfileImage';
 import * as S from './MainContent.style';
 
 interface MainContentProps {
@@ -10,6 +11,7 @@ interface MainContentProps {
 }
 
 const MainContent = ({ data }: MainContentProps) => {
+  console.log('main : ', data);
   return (
     <>
       {data?.map((item) => (
@@ -53,7 +55,7 @@ const MainContent = ({ data }: MainContentProps) => {
           <S.ContentBottom>
             <Link href="/[user]" as={`/@${item.user?.name}`}>
               <a className="profile">
-                <img src={item.user.profileImage ? item.user.profileImage : defaultProfileImage()} alt="profileImage" />
+                <ProfileImage width={24} height={24} />
                 <span>{item.user?.name}</span>
               </a>
             </Link>

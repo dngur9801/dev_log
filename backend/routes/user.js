@@ -1,12 +1,25 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const multer = require('multer');
 
 const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const utils = require('../utils');
 
 const router = express.Router();
+
+// multer 셋팅
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // 콜백 함수로 업로드 파일의 저장 위치를 설정한다.
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`); // 콜백 함수로 파일이 저장될 때 이름을 설정한다.
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // 유저 정보
 router.get('/', async (req, res, next) => {
@@ -18,6 +31,7 @@ router.get('/', async (req, res, next) => {
           'id',
           'email',
           'name',
+          'blogName',
           'profileImage',
           'nickName',
           'introduce',
@@ -172,4 +186,81 @@ router.get('/posts', async (req, res, next) => {
   }
 });
 
+// 유저 정보 수정
+router.put('/edit/profile', isLoggedIn, async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const { nickName, introduce } = req.body;
+    await User.update(
+      {
+        nickName,
+        introduce,
+      },
+      {
+        where: { id: req.user.id },
+      }
+    );
+    res.status(200).send('프로필 변경 완료');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 유저 블로그 제목 수정
+router.put('/edit/subject', isLoggedIn, async (req, res, next) => {
+  try {
+    const { blogName } = req.body;
+    await User.update(
+      {
+        blogName,
+      },
+      {
+        where: { id: req.user.id },
+      }
+    );
+    res.status(200).send('프로필 변경 완료');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 프로필 이미지 수정
+router.put(
+  '/image',
+  isLoggedIn,
+  upload.single('file'),
+  async (req, res, next) => {
+    try {
+      console.log('req.file : ', req.file);
+      const { blogName } = req.body;
+      await User.update(
+        {
+          profileImage: req.file.path,
+        },
+        {
+          where: { id: req.user.id },
+        }
+      );
+      res.status(200).json(req.file.path);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+);
+
+// 회원 탈퇴
+router.post('/out', isLoggedIn, async (req, res, next) => {
+  try {
+    await User.destroy({
+      where: { id: req.user.id },
+    });
+    res.status(200).send('회원 탈퇴 완료');
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 module.exports = router;

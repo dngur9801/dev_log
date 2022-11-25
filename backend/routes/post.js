@@ -106,7 +106,7 @@ router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
     if (title === '') {
       return res.status(401).json('제목을 입력하세요.');
     }
-    const post = await Post.update(
+    await Post.update(
       {
         title,
         content,
@@ -114,14 +114,18 @@ router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
       { where: { id } }
     );
     if (req.file) {
-      const image = await Image.update(
+      await Image.update(
         {
           src: req.file.path,
         },
         { where: { postId: id } }
       );
     }
-    res.status(201).json(null);
+    const post = await Post.findOne({
+      where: { id },
+    });
+
+    res.status(201).json(post);
   } catch (error) {
     console.error(error);
     next(error);

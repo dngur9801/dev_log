@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(30),
         unique: true,
       },
+      blogName: {
+        type: Sequelize.STRING(30),
+      },
       introduce: {
         type: Sequelize.STRING(50),
       },
@@ -32,9 +35,13 @@ module.exports = (sequelize, Sequelize) => {
   );
 
   User.associate = db => {
-    db.User.hasMany(db.Post);
-    db.User.hasMany(db.Comment);
-    db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
+    db.User.hasMany(db.Post, { onDelete: 'CASCADE' });
+    db.User.hasMany(db.Comment, { onDelete: 'CASCADE' });
+    db.User.belongsToMany(db.Post, {
+      through: 'Like',
+      as: 'Liked',
+      onDelete: 'CASCADE',
+    });
   };
 
   return User;

@@ -8,6 +8,7 @@ import { userInfo } from '../../store/atom';
 import { defaultProfileImage } from '../../config';
 import { commentAPI } from '../../api';
 import { CommentEditTypes, CommentTypes } from '../../interfaces';
+import ProfileImage from '../common/ProfileImage';
 
 interface CommentPropTypes {
   item: CommentTypes;
@@ -24,14 +25,19 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDat
   const { mutate: remove } = useMutation((data: string) => commentAPI.delete(data));
 
   // 댓글 수정 클릭 시
-  const onClickModify = (id: string, prevContent: string) => {
+  const onClickModify = (id: string) => {
+    if (editComment === '') {
+      setSelectedCommentIndex(null);
+      return;
+    }
     const data = {
       commentId: id,
-      content: editComment || prevContent,
+      content: editComment,
     };
     edit(data, {
       onSuccess: (data: any) => {
         setSelectedCommentIndex(null);
+        setEditComment('');
         item.content = editComment;
       },
       onError: (error: any, variables: any, context: any) => {
@@ -60,7 +66,7 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDat
         <div className="profile">
           <Link href={`/@${item?.user?.name}`}>
             <a>
-              <img src={item?.user?.profileImage ? item?.user?.profileImage : defaultProfileImage()} />
+              <ProfileImage width={50} height={50} />
             </a>
           </Link>
           <div className="comment_info">
@@ -88,7 +94,7 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDat
             <button type="button" onClick={() => setSelectedCommentIndex(null)}>
               취소
             </button>
-            <button type="button" onClick={() => onClickModify(item.id, item.content)}>
+            <button type="button" onClick={() => onClickModify(item.id)}>
               수정 완료
             </button>
           </div>

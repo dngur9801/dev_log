@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
   );
 
   Comment.associate = db => {
-    db.Comment.belongsTo(db.User);
+    db.Comment.belongsTo(db.User, { onDelete: 'CASCADE' });
     db.Comment.belongsTo(db.Post);
   };
 

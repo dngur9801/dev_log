@@ -17,7 +17,7 @@ const EditorBox = dynamic(() => import('../components/common/EditorBox'), {
 interface WriteTypes {
   modifyTitle?: string;
   modifyContent?: string;
-  id?: string;
+  id?: string | number;
 }
 
 const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
@@ -47,7 +47,6 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
     const formData = commonFormData();
     regist(formData, {
       onSuccess: (data: any, variables: any, context: any) => {
-        // router.push(`/@${user.name}/${data.data.id}`,);
         router.push(
           {
             pathname: '/[user]/[posturl]',
@@ -68,10 +67,19 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   const onSubmitModify = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = commonFormData();
-    formData.append('id', id);
+    formData.append('id', id as string);
     edit(formData, {
       onSuccess: (data: any, variables: any, context: any) => {
-        router.push(`/@${user.name}/${id}`);
+        console.log(data);
+        router.push(
+          {
+            pathname: '/[user]/[posturl]',
+            query: {
+              id: data.data.id,
+            },
+          },
+          `/@${user.name}/${data.data.title}`,
+        );
       },
       onError: (error: any, variables: any, context: any) => {
         alert(error.response.data);

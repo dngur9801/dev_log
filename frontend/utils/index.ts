@@ -16,6 +16,7 @@ export const initUserInfoData = (): UserInfoTypes => ({
   id: null,
   email: '',
   name: '',
+  blogName: '',
   profileImage: '',
   nickName: '',
   introduce: '',

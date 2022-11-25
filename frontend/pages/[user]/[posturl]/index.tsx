@@ -37,11 +37,10 @@ const DetailPost = () => {
   const { mutate: addLike } = useMutation((data: string | string[]) => postAPI.addLike(data));
   const { mutate: removeLike } = useMutation((data: string | string[]) => postAPI.removeLike(data));
 
+  console.log(postData);
   if (status === 'error') {
     alert(error.response.data);
   }
-  console.log('id : ', id);
-  console.log(router);
 
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
@@ -88,7 +87,7 @@ const DetailPost = () => {
     if (window.scrollY > 1300) {
       likeBox.current.style.top = String(`${window.scrollY - 1260 + 'px'}`);
     } else {
-      likeBox.current.style.top = '40px';
+      if (likeBox.current) likeBox.current.style.top = '40px';
     }
   };
   useEffect(() => {
@@ -156,7 +155,7 @@ const DetailPost = () => {
             </div>
           </Styled.LikeBox>
         </Styled.Content>
-        <CommentBox comments={postData?.data?.comments} />
+        <CommentBox comments={postData?.data?.comments} storageId={storageId} />
       </Styled.ContentWrap>
     </>
   );

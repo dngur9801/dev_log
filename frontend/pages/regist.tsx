@@ -22,13 +22,12 @@ const Register = () => {
   const router = useRouter();
 
   const { auth, id } = router.query;
-  console.log(auth, id);
-  const { mutate: regist }: any = useMutation((data: UserRegistTypes) => userAPI.regist(data));
+  const { mutate: regist } = useMutation((data: UserRegistTypes) => userAPI.regist(data));
 
   // 완료버튼 클릭 시
   const onClickRegist = () => {
     const data = {
-      userId: id,
+      userId: id as string,
       nickName,
       name,
       introduce,

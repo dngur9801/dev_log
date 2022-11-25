@@ -1,7 +1,7 @@
 import { FaHeart } from 'react-icons/fa';
 import * as S from './UserBlogContent.style';
 import { PostTypes } from '../../../interfaces';
-import { defaultTitleImage } from '../../../config';
+import { apiAddress, defaultTitleImage } from '../../../config';
 import { reg } from '../../../utils';
 import Link from 'next/link';
 
@@ -15,7 +15,7 @@ const UserBlogContent = ({ item }: UserBlogContentPropTypes) => {
       <div className="my_content">
         <Link href={`/@${item.user?.name}/${item.id}`}>
           <a>
-            <img src={item.image?.src ? item.image?.src : defaultTitleImage()} />
+            <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : defaultTitleImage()} alt="" />
           </a>
         </Link>
         <Link href={`/@${item.user?.name}/${item.id}`}>

@@ -8,9 +8,10 @@ import * as Styled from './CommentBox.style';
 import Comment from './Comment';
 interface CommentBoxPropTypes {
   comments: CommentTypes[];
+  storageId: number;
 }
 
-const CommentBox = ({ comments }: CommentBoxPropTypes) => {
+const CommentBox = ({ comments, storageId }: CommentBoxPropTypes) => {
   const [comment, setComment] = useState('');
   const [commentDatas, setCommentDatas] = useState([]);
   const [selectedCommentIndex, setSelectedCommentIndex] = useState<number>();
@@ -35,7 +36,7 @@ const CommentBox = ({ comments }: CommentBoxPropTypes) => {
   // 댓글 작성 클릭 시
   const onClickRegistComment = () => {
     const data = {
-      postId: posturl,
+      postId: storageId,
       content: comment,
     };
     create(data, {

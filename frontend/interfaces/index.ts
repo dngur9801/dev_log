@@ -2,6 +2,7 @@ export interface UserInfoTypes {
   id: null;
   email: string;
   name: string;
+  blogName: string;
   profileImage: string;
   nickName: string;
   introduce: string;
@@ -78,11 +79,18 @@ export interface ResponseDetailPostTypes {
 }
 
 export interface UserRegistTypes {
+  userId: string;
+  name: string;
+  introduce: string;
   nickName: string;
-  inputId: string;
 }
 
 export interface CommentEditTypes {
   commentId: string;
   content: string;
+}
+
+export interface ChangeProfileFormTypes {
+  nickName?: string;
+  introduce?: string;
 }

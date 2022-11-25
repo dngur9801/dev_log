@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultProfileImage } from '../../../config';
+import ProfileImage from '../../common/ProfileImage';
 import * as S from './UserBlogHeader.style';
 
 interface UserBlogHeaderPropTypes {
@@ -8,11 +8,11 @@ interface UserBlogHeaderPropTypes {
   introduce: string;
 }
 
-const UserBlogHeader = ({ nickName, profileImage, introduce }: UserBlogHeaderPropTypes) => {
+const UserBlogHeader = ({ nickName, introduce }: UserBlogHeaderPropTypes) => {
   return (
     <S.Container>
       <div className="profile">
-        <img src={profileImage ? profileImage : defaultProfileImage()} alt="" />
+        <ProfileImage width={130} height={130} />
         <div className="profile_text">
           <p>{nickName}</p>
           <span>{introduce}</span>

@@ -75,14 +75,13 @@ export const ContentBottom = styled.div`
   .profile {
     display: flex;
     align-items: center;
+
     img {
-      width: 24px;
-      height: 24px;
       border-radius: 100%;
-      margin-right: ${({ theme }) => theme.calcRem(7)};
     }
 
     span {
+      padding-left: ${({ theme }) => theme.calcRem(7)};
       color: ${({ theme }) => theme.colors.gray2};
       font-weight: ${({ theme }) => theme.fontWeights.xl};
     }

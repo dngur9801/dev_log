@@ -15,17 +15,38 @@ export const Container = styled.div`
       border-right: 2px solid #eee;
       padding-right: 40px;
       img {
-        width: 100%;
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
         border-radius: 100%;
         margin-bottom: 20px;
       }
 
+      label,
       button {
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
         width: 100%;
         color: white;
-        background-color: ${({ theme }) => theme.backgroundColors.blue2};
+        background-color: ${({ theme }) => theme.backgroundColors.basic1};
+        font-size: ${({ theme }) => theme.fontSizes.small};
         padding: 5px 0;
         border-radius: 5px;
+        margin-bottom: 5px;
+      }
+
+      label {
+        margin-top: 15px;
+      }
+
+      button.remove {
+        background: transparent;
+        color: ${({ theme }) => theme.colors.basic1};
+      }
+
+      .file {
+        display: none;
       }
     }
 
@@ -45,7 +66,7 @@ export const Container = styled.div`
         width: 60px;
         padding: 5px 0;
         border-radius: 5px;
-        background-color: ${({ theme }) => theme.backgroundColors.blue1};
+        background-color: ${({ theme }) => theme.backgroundColors.basic2};
         color: white;
       }
 
@@ -103,7 +124,7 @@ export const InfoButton = styled.button`
           ${theme.backgroundColors.red1}
         `
       : css`
-          ${theme.backgroundColors.blue1}
+          ${theme.backgroundColors.basic2}
         `};
   color: white;
 `;

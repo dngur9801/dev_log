@@ -10,6 +10,7 @@ import {
   ResponseUserInfoTypes,
   ResponseDetailPostTypes,
   CommentEditTypes,
+  ChangeProfileFormTypes,
 } from '../interfaces';
 
 const request = axios.create({
@@ -24,6 +25,10 @@ export const userAPI = {
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
   logout: () => request.post('/user/logout'),
   regist: (data: UserRegistTypes) => request.post('/user/regist', data),
+  outMember: () => request.post('/user/out'),
+  editProfile: (data: ChangeProfileFormTypes) => request.put('/user/edit/profile', data),
+  editSubject: (data: { blogName: string }) => request.put('/user/edit/subject', data),
+  uploadImage: (data: FormData) => request.put('/user/image', data),
 };
 
 export const postAPI = {

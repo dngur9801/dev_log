@@ -17,7 +17,7 @@ router.get(
   (req, res) => {
     if (!req._user.name) {
       res.redirect(
-        `http://localhost:3000/register?auth=google&id=${req._user.id}`
+        `http://localhost:3000/regist?auth=google&id=${req._user.id}`
       );
     } else {
       res.redirect('http://localhost:3000');
@@ -40,7 +40,7 @@ router.get(
   (req, res) => {
     if (!req._user.name) {
       res.redirect(
-        `http://localhost:3000/register?auth=github&id=${req._user.id}`
+        `http://localhost:3000/regist?auth=github&id=${req._user.id}`
       );
     } else {
       res.redirect('http://localhost:3000');

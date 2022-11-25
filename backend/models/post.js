@@ -19,10 +19,14 @@ module.exports = (sequelize, Sequelize) => {
   );
 
   Post.associate = db => {
-    db.Post.belongsTo(db.User);
+    db.Post.belongsTo(db.User, { onDelete: 'CASCADE' });
     db.Post.hasMany(db.Comment);
-    db.Post.hasOne(db.Image);
-    db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
+    db.Post.hasOne(db.Image, { onDelete: 'CASCADE' });
+    db.Post.belongsToMany(
+      db.User,
+      { through: 'Like', as: 'Likers' },
+      { onDelete: 'CASCADE' }
+    );
   };
 
   return Post;

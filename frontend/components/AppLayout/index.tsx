@@ -9,10 +9,11 @@ import { userInfo } from '../../store/atom';
 import { userAPI } from '../../api';
 import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { defaultProfileImage } from '../../config';
+import { apiAddress, defaultProfileImage } from '../../config';
 import { initUserInfoData } from '../../utils';
 import { AxiosError } from 'axios';
-import { ResponseUserInfoTypes, UserInfoTypes } from '../../interfaces';
+import { ResponseUserInfoTypes } from '../../interfaces';
+import ProfileImage from '../common/ProfileImage';
 type Props = {
   children: JSX.Element;
 };
@@ -46,6 +47,18 @@ const AppLayout = ({ children }: Props) => {
     return <span>{error.response.data}</span>;
   }
 
+  const profileImage = () => {
+    if (user?.profileImage) {
+      if (user?.profileImage.indexOf('http') === 0) {
+        return user?.profileImage;
+      } else {
+        return `${apiAddress()}/${user?.profileImage}`;
+      }
+    } else {
+      return defaultProfileImage();
+    }
+  };
+
   // 유저 정보 요청
   useEffect(() => {
     setUser(data?.data);
@@ -64,7 +77,7 @@ const AppLayout = ({ children }: Props) => {
           <S.MyTitle>
             {user?.email && (
               <Link href="/[user]" as={`/@${user.name}`}>
-                <a>{user?.name}.log</a>
+                <a>{user?.blogName || user?.name}.log</a>
               </Link>
             )}
           </S.MyTitle>
@@ -79,12 +92,7 @@ const AppLayout = ({ children }: Props) => {
                   </Link>
                 </S.WriteBtn>
                 <S.MyPageWrap onClick={() => setToggle(!toggle)}>
-                  <Image
-                    src={user?.profileImage ? user?.profileImage : defaultProfileImage()}
-                    alt="profile_img"
-                    width={50}
-                    height={50}
-                  />
+                  <ProfileImage width={50} height={50} />
                   <FaListUl size="24px" />
                   {toggle && (
                     <div className="my_list">
