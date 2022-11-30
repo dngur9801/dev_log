@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { RegistOrEditTypes } from '../interfaces';
 import { useRecoilState } from 'recoil'; // 훅 import
 import { userInfo } from '../store/atom';
+import RegistModal from '../components/Write/RegistModal';
 
 const EditorBox = dynamic(() => import('../components/common/EditorBox'), {
   ssr: false,
@@ -21,9 +22,11 @@ interface WriteTypes {
 }
 
 const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
+  const [isModal, setIsModal] = useState(false);
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');
   const [title, setTitle] = useState('');
+  const [isPrivate, setIsPrivate] = useState<'0' | '1'>('0');
   const [user] = useRecoilState(userInfo);
 
   const editorRef = useRef<Editor>(null);
@@ -42,8 +45,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   };
 
   // 글 발행하기 클릭 시
-  const onSubmitRegist = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitRegist = () => {
     const formData = commonFormData();
     regist(formData, {
       onSuccess: (data: any, variables: any, context: any) => {
@@ -56,6 +58,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
           },
           `/@${user.name}/${data.data.title}`,
         );
+        console.log(data);
       },
       onError: (error: any, variables: any, context: any) => {
         alert(error.response.data);
@@ -64,8 +67,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   };
 
   // 글 수정하기 클릭 시
-  const onSubmitModify = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmitModify = () => {
     const formData = commonFormData();
     formData.append('id', id as string);
     edit(formData, {
@@ -94,6 +96,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
     formData.append('file', file);
     formData.append('title', title);
     formData.append('content', content);
+    formData.append('private', isPrivate);
     return formData;
   };
 
@@ -102,7 +105,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   }, [modifyTitle]);
   return (
     <Styled.Wrap>
-      <form encType="multipart/form-data" onSubmit={id ? onSubmitModify : onSubmitRegist}>
+      <form encType="multipart/form-data">
         <Styled.Subject>
           <input
             type="text"
@@ -124,8 +127,18 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
         </Styled.Subject>
         <EditorBox editorRef={editorRef} value={modifyContent} />
         <Styled.ButtonWrap>
-          <button type="submit">글 {modifyTitle ? '수정' : '발행'}하기</button>
+          <button type="button" onClick={() => setIsModal(true)}>
+            글 {modifyTitle ? '수정' : '발행'}하기
+          </button>
         </Styled.ButtonWrap>
+        {isModal && (
+          <RegistModal
+            onSubmit={id ? onSubmitModify : onSubmitRegist}
+            setIsModal={setIsModal}
+            isPrivate={isPrivate}
+            setIsPrivate={setIsPrivate}
+          />
+        )}
       </form>
     </Styled.Wrap>
   );

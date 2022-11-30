@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({
+      where: { private: 0 },
       order: [['createdAt', 'DESC']],
       include: [
         {

@@ -8,6 +8,9 @@ module.exports = (sequelize, Sequelize) => {
       content: {
         type: Sequelize.TEXT,
       },
+      private: {
+        type: Sequelize.STRING(1),
+      },
       viewCnt: {
         type: Sequelize.INTEGER,
       },

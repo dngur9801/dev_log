@@ -24,13 +24,14 @@ router.post(
   upload.single('file'),
   async (req, res, next) => {
     try {
-      const { title, content } = req.body;
+      const { title, content, private } = req.body;
       if (title === '') {
         return res.status(401).send('제목을 입력하세요.');
       }
       const post = await Post.create({
         title,
         content,
+        private,
         userId: req.user.id,
         writer: req.user.email.split('@')[0],
         viewCnt: 0,
@@ -102,7 +103,7 @@ router.get('/:postId', async (req, res, next) => {
 // 게시글 수정
 router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
   try {
-    const { title, content, id } = req.body;
+    const { title, content, id, private } = req.body;
     if (title === '') {
       return res.status(401).json('제목을 입력하세요.');
     }
@@ -110,6 +111,7 @@ router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
       {
         title,
         content,
+        private,
       },
       { where: { id } }
     );

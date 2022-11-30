@@ -29,9 +29,9 @@ const UserBlog: NextPage = () => {
     <>
       <Seo>Devlog</Seo>
       <UserBlogHeader
-        nickName={data?.data[0].user.nickName}
-        profileImage={data?.data[0].user.profileImage}
-        introduce={data?.data[0].user.introduce}
+        nickName={data?.data[0]?.user.nickName}
+        profileImage={data?.data[0]?.user.profileImage}
+        introduce={data?.data[0]?.user.introduce}
       />
       <Styled.Wrap>
         <div className="taps">
