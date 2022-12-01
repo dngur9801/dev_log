@@ -3,7 +3,7 @@ import { FaHeart } from 'react-icons/fa';
 import { apiAddress, defaultTitleImage } from '../../../config';
 import { PostTypes } from '../../../interfaces';
 import { reg } from '../../../utils';
-import ProfileImage from '../../common/ProfileImage';
+import ProfileImage from '../../Common/ProfileImage';
 import * as Styled from './MainContent.style';
 
 interface MainContentProps {

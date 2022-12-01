@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { userAPI } from '../../../api';
-import Loading from '../../common/Loading';
+import Loading from '../../Common/Loading';
 import { SignUpTypes } from '../../../interfaces';
 
 interface SignUpModalProps {

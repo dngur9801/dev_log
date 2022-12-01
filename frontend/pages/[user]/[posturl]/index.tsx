@@ -1,26 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { AxiosError } from 'axios';
 import { postAPI } from '../../../api';
 import { apiAddress, defaultTitleImage } from '../../../config';
 import CommentBox from '../../../components/DetailPost/CommentBox';
-import { userInfo } from '../../../store/atom';
+import { darkMode, userInfo } from '../../../store/atom';
 import { ResponseDetailPostTypes } from '../../../interfaces';
 import { DETAIL_POST } from '../../../constant/queryKey';
 
 const DetailPost = () => {
-  const Viewer = dynamic(() => import('../../../components/common/ViewerBox'), {
+  const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
     ssr: false,
   });
   const [isLike, setIsLike] = useState(false);
   const [storageId, setStorageId] = useState(null);
   const [me] = useRecoilState(userInfo);
+  const darkmode = useRecoilValue(darkMode);
 
   const queryClient = useQueryClient();
   const likeBox = useRef<HTMLDivElement>(null);
@@ -30,18 +31,19 @@ const DetailPost = () => {
     data: postData,
     error,
     status,
-  } = useQuery<ResponseDetailPostTypes, AxiosError>([DETAIL_POST, storageId], () => postAPI.detail(storageId), {
-    refetchOnWindowFocus: false,
-    enabled: !!storageId,
-  });
+  } = useQuery<ResponseDetailPostTypes, AxiosError<ReactNode>>(
+    [DETAIL_POST, storageId],
+    () => postAPI.detail(storageId),
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!storageId,
+    },
+  );
   const { mutate: removePost } = useMutation((data: string | string[]) => postAPI.delete(data));
   const { mutate: addLike } = useMutation((data: string | string[]) => postAPI.addLike(data));
   const { mutate: removeLike } = useMutation((data: string | string[]) => postAPI.removeLike(data));
 
   console.log(postData);
-  if (status === 'error') {
-    alert(error.response.data);
-  }
 
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
@@ -119,6 +121,10 @@ const DetailPost = () => {
     setStorageId(localStorage.getItem('id'));
   }, [id]);
 
+  if (status === 'error') {
+    return <span>{error.response.data}</span>;
+  }
+
   return (
     <>
       <Styled.Header image={postData?.data?.image?.src}>
@@ -144,7 +150,7 @@ const DetailPost = () => {
           </Styled.ContentBtn>
         )}
         <Styled.Content>
-          <Viewer content={postData?.data?.content} />
+          <Viewer content={postData?.data?.content} darkmode={darkmode} />
           <Styled.LikeBox ref={likeBox}>
             <div className="inner">
               {isLike ? (
@@ -225,7 +231,8 @@ const Styled = {
     left: -7rem;
     top: 40px;
     border-radius: 20px;
-    background-color: #eee;
+    border: 1px solid ${({ theme }) => theme.colors.gray3};
+    background-color: ${({ theme }) => theme.backgroundColors.white1};
     padding: 10px;
 
     .inner {

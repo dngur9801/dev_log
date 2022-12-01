@@ -1,20 +1,19 @@
-import { FaSearch, FaSun, FaListUl } from 'react-icons/fa';
-import Image from 'next/image';
-import * as S from './AppLayout.style';
+import { FaSearch, FaSun, FaMoon, FaListUl } from 'react-icons/fa';
 import Link from 'next/link';
 import { ReactNode, useEffect, useState } from 'react';
-import LoginModal from './LoginModal';
 import { useRecoilState } from 'recoil';
-import { userInfo } from '../../store/atom';
-import { userAPI } from '../../api';
 import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { apiAddress, defaultProfileImage } from '../../config';
-import { initUserInfoData } from '../../utils';
 import { AxiosError } from 'axios';
+import LoginModal from './LoginModal';
+import * as Styled from './AppLayout.style';
+import { darkMode, userInfo } from '../../store/atom';
+import { userAPI } from '../../api';
+import { initUserInfoData } from '../../utils';
 import { ResponseUserInfoTypes } from '../../interfaces';
-import ProfileImage from '../common/ProfileImage';
+import ProfileImage from '../Common/ProfileImage';
 import { USER_INFO } from '../../constant/queryKey';
+
 type Props = {
   children: JSX.Element;
 };
@@ -23,6 +22,7 @@ const AppLayout = ({ children }: Props) => {
   const [toggle, setToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
+  const [darkmode, setDarkmode] = useRecoilState(darkMode);
 
   const { mutate }: any = useMutation(() => userAPI.logout());
   const { data, error, status } = useQuery<ResponseUserInfoTypes, AxiosError<ReactNode>>(USER_INFO, userAPI.info, {
@@ -44,20 +44,12 @@ const AppLayout = ({ children }: Props) => {
     });
   };
 
-  if (status === 'error') {
-    return <span>{error.response.data}</span>;
-  }
-
-  const profileImage = () => {
-    if (user?.profileImage) {
-      if (user?.profileImage.indexOf('http') === 0) {
-        return user?.profileImage;
-      } else {
-        return `${apiAddress()}/${user?.profileImage}`;
-      }
-    } else {
-      return defaultProfileImage();
-    }
+  // darkMode or lightMode toggle
+  const onClickSetMode = () => {
+    localStorage.getItem('theme') === 'dark'
+      ? localStorage.setItem('theme', 'light')
+      : localStorage.setItem('theme', 'dark');
+    setDarkmode(!darkmode);
   };
 
   // 유저 정보 요청
@@ -66,33 +58,41 @@ const AppLayout = ({ children }: Props) => {
   }, [data]);
   console.log('AppLayout:', user);
 
+  if (status === 'error') {
+    return <span>{error.response.data}</span>;
+  }
+
   return (
     <>
-      <S.HeaderWrap>
-        <S.Header>
+      <Styled.HeaderWrap>
+        <Styled.Header>
           <div className="blog_name">
             <Link href="/">
               <a>Devlog</a>
             </Link>
           </div>
-          <S.MyTitle>
+          <Styled.MyTitle>
             {user?.email && (
               <Link href="/[user]" as={`/@${user.name}`}>
                 <a>{user?.blogName || user?.name}.log</a>
               </Link>
             )}
-          </S.MyTitle>
-          <S.HeaderRight>
-            <FaSun size="24px" cursor="pointer" />
-            <FaSearch size="24px" cursor="pointer" />
+          </Styled.MyTitle>
+          <Styled.HeaderRight>
+            {darkmode ? (
+              <FaSun size="24px" onClick={onClickSetMode} />
+            ) : (
+              <FaMoon size="24px" onClick={onClickSetMode} />
+            )}
+            <FaSearch size="24px" />
             {user?.email ? (
               <>
-                <S.WriteBtn>
+                <Styled.WriteBtn>
                   <Link href="/write">
                     <a>새 글 작성</a>
                   </Link>
-                </S.WriteBtn>
-                <S.MyPageWrap onClick={() => setToggle(!toggle)}>
+                </Styled.WriteBtn>
+                <Styled.MyPageWrap onClick={() => setToggle(!toggle)}>
                   <ProfileImage width={50} height={50} />
                   <FaListUl size="24px" />
                   {toggle && (
@@ -117,7 +117,7 @@ const AppLayout = ({ children }: Props) => {
                       </div>
                     </div>
                   )}
-                </S.MyPageWrap>
+                </Styled.MyPageWrap>
               </>
             ) : (
               <>
@@ -127,9 +127,9 @@ const AppLayout = ({ children }: Props) => {
                 {loginModal && <LoginModal setLoginModal={setLoginModal} />}
               </>
             )}
-          </S.HeaderRight>
-        </S.Header>
-      </S.HeaderWrap>
+          </Styled.HeaderRight>
+        </Styled.Header>
+      </Styled.HeaderWrap>
       {children}
     </>
   );

@@ -1,25 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-import { FaImage } from 'react-icons/fa';
+import { FaImage, FaArrowCircleLeft } from 'react-icons/fa';
 import { useMutation } from 'react-query';
 import { postAPI } from '../api';
 import { Editor } from '@toast-ui/react-editor';
 import { useRouter } from 'next/router';
 import { RegistOrEditTypes } from '../interfaces';
-import { useRecoilState } from 'recoil'; // 훅 import
-import { userInfo } from '../store/atom';
+import { useRecoilState, useRecoilValue } from 'recoil'; // 훅 import
+import { darkMode, userInfo } from '../store/atom';
 import RegistModal from '../components/Write/RegistModal';
-
-const EditorBox = dynamic(() => import('../components/common/EditorBox'), {
-  ssr: false,
-});
 
 interface WriteTypes {
   modifyTitle?: string;
   modifyContent?: string;
   id?: string | number;
 }
+const EditorBox = dynamic(() => import('../components/Common/EditorBox'), {
+  ssr: false,
+});
 
 const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   const [isModal, setIsModal] = useState(false);
@@ -28,6 +27,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   const [title, setTitle] = useState('');
   const [isPrivate, setIsPrivate] = useState<'0' | '1'>('0');
   const [user] = useRecoilState(userInfo);
+  const darkmode = useRecoilValue(darkMode);
 
   const editorRef = useRef<Editor>(null);
   const router = useRouter();
@@ -44,7 +44,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
     setFileName(e.target.files[0].name);
   };
 
-  // 글 발행하기 클릭 시
+  // 발행하기 클릭 시
   const onSubmitRegist = () => {
     const formData = commonFormData();
     regist(formData, {
@@ -125,8 +125,12 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
             <input type="file" accept="image/*" id="file" name="file" onChange={(e) => onUploadImage(e)} />
           </div>
         </Styled.Subject>
-        <EditorBox editorRef={editorRef} value={modifyContent} />
+        <EditorBox editorRef={editorRef} value={modifyContent} darkmode={darkmode} />
         <Styled.ButtonWrap>
+          <button type="button" onClick={() => router.back()}>
+            <FaArrowCircleLeft />
+            나가기
+          </button>
           <button type="button" onClick={() => setIsModal(true)}>
             글 {modifyTitle ? '수정' : '발행'}하기
           </button>
@@ -196,10 +200,28 @@ const Styled = {
     }
   `,
   ButtonWrap: styled.div`
-    margin: 30px 0;
-    text-align: right;
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background-color: ${({ theme }) => theme.backgroundColors.white1};
 
-    button {
+    button:nth-of-type(1) {
+      background: transparent;
+      margin-left: 30px;
+      font-size: ${({ theme }) => theme.fontSizes.xl};
+      color: ${({ theme }) => theme.colors.black1};
+
+      svg {
+        vertical-align: -3px;
+        margin-right: 8px;
+      }
+    }
+
+    button:nth-of-type(2) {
       padding: 10px 15px;
       margin-right: 30px;
       border-radius: 10px;

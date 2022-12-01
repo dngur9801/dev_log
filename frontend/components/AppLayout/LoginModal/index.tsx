@@ -4,7 +4,7 @@ import { FaRegWindowClose } from 'react-icons/fa';
 import SignUpModal from '../SignUpModal';
 import { useMutation } from 'react-query';
 import { userAPI } from '../../../api';
-import Loading from '../../common/Loading';
+import Loading from '../../Common/Loading';
 import Link from 'next/link';
 import { LocalLoginTypes } from '../../../interfaces';
 import { apiAddress } from '../../../config';

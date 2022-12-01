@@ -17,7 +17,7 @@ export const Wrap = styled.div`
 `;
 
 export const Ahref = styled.a<{ pathName: string }>`
-  color: #868e96;
+  color: ${({ theme }) => theme.colors.gray2};
   padding: 0 3rem 0.5rem;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.xl};
@@ -25,9 +25,9 @@ export const Ahref = styled.a<{ pathName: string }>`
   ${(props) =>
     props.pathName === props.href &&
     css`
-      color: black;
+      color: ${({ theme }) => theme.colors.black1};
       font-weight: 700;
-      border-bottom: 2px solid black;
+      border-bottom: 2px solid ${({ theme }) => theme.colors.black1};
     `}
 
   @media ${({ theme }) => theme.device.tablet} {

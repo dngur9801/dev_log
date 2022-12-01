@@ -23,17 +23,33 @@ const fontWeights = {
   xl: 700,
 };
 
-const colors = {
+const lightColors = {
+  default: '#121212',
   basic1: '#4b53e5',
   basic2: '#7279ff',
   black1: '#353535',
   gray1: '#495057',
   gray2: '#959595',
-  gray3: '#eeeeee',
+  gray3: '#e0e0e0',
   blue1: '#49c7f6',
 };
 
-const backgroundColors = {
+const darkColors = {
+  default: '#f9f9f9',
+  basic1: '#4b53e5',
+  basic2: '#c0c3ff',
+  black1: '#efebeb',
+  gray1: '#bbbfc3',
+  gray2: '#acacac',
+  gray3: '#727272',
+  blue1: '#49c7f6',
+};
+
+const lightBackgroundColors = {
+  body: '#f6f6f6',
+  default: '#ffffff',
+  white1: '#f2f2f2',
+  white2: '#f2f2f2',
   basic1: '#4b53e5',
   basic2: '#7279ff',
   black1: '#353535',
@@ -45,7 +61,21 @@ const backgroundColors = {
   yellow1: '#f9e000',
 };
 
-// 보라색 계열로
+const darkBackgroundColors = {
+  body: '#121212',
+  default: '#141414',
+  white1: '#3e3e3e',
+  white2: '#191919',
+  basic1: '#4b53e5',
+  basic2: '#7279ff',
+  black1: '#efebeb',
+  gray1: '#b2b2b2',
+  blue1: '#a1e3fc',
+  blue2: '#58d1ff',
+  red1: '#ff4e4e',
+  purple1: '#7e2db2',
+  yellow1: '#f9e000',
+};
 
 const deviceWrapSizes = {
   tablet: '768px',
@@ -76,17 +106,27 @@ export type FontWeightsTypes = typeof fontWeights;
 export type DeviceSizesTypes = typeof deviceSizes;
 export type DeviceTypes = typeof device;
 export type DeviceWrapSizesTypes = typeof deviceWrapSizes;
-export type ColorsTypes = typeof colors;
-export type BackgroundColorsTypes = typeof backgroundColors;
+export type ColorsTypes = typeof lightColors;
+export type BackgroundColorsTypes = typeof lightBackgroundColors;
 export type CalcRemTypes = typeof calcRem;
 
-export const theme: DefaultTheme = {
+const theme: DefaultTheme = {
   fontSizes,
   fontWeights,
   deviceSizes,
   device,
   deviceWrapSizes,
-  colors,
-  backgroundColors,
   calcRem,
+};
+
+export const lightTheme: DefaultTheme = {
+  ...theme,
+  colors: lightColors,
+  backgroundColors: lightBackgroundColors,
+};
+
+export const darkTheme: DefaultTheme = {
+  ...theme,
+  colors: darkColors,
+  backgroundColors: darkBackgroundColors,
 };

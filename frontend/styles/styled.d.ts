@@ -17,8 +17,8 @@ declare module 'styled-components' {
     deviceSizes: DeviceSizesTypes;
     device: DeviceTypes;
     deviceWrapSizes: DeviceWrapSizesTypes;
-    colors: ColorsTypes;
     calcRem: CalcRemTypes;
-    backgroundColors: BackgroundColorsTypes;
+    colors?: ColorsTypes;
+    backgroundColors?: BackgroundColorsTypes;
   }
 }

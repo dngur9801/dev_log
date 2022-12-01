@@ -5,10 +5,9 @@ import { FaPlusSquare } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
 import { userInfo } from '../../store/atom';
-import { defaultProfileImage } from '../../config';
 import { commentAPI } from '../../api';
 import { CommentEditTypes, CommentTypes } from '../../interfaces';
-import ProfileImage from '../common/ProfileImage';
+import ProfileImage from '../Common/ProfileImage';
 
 interface CommentPropTypes {
   item: CommentTypes;

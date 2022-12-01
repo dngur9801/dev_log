@@ -1,28 +1,18 @@
+/* eslint-disable react/no-children-prop */
 import type { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
-import { CookiesProvider } from 'react-cookie';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from '../styles/global-styles';
-import AppLayout from '../components/AppLayout';
-import { theme } from '../styles/theme';
+import CustomThemeProvider from '../styles/CustomThemeProvider';
 
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <CookiesProvider>
-            <GlobalStyle />
-            <AppLayout>
-              <Component {...pageProps} />
-            </AppLayout>
-          </CookiesProvider>
-        </RecoilRoot>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <CustomThemeProvider children={<Component {...pageProps} />} />
+      </RecoilRoot>
+    </QueryClientProvider>
   );
 }
 

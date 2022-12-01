@@ -13,7 +13,7 @@ export const Wrap = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     width: 500px;
-    background: white;
+    background-color: ${({ theme }) => theme.backgroundColors.white1};
 
     p {
       background-color: ${({ theme }) => theme.backgroundColors.basic1};

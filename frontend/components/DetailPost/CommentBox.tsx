@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 import { commentAPI } from '../../api';
@@ -16,8 +15,6 @@ const CommentBox = ({ comments, storageId }: CommentBoxPropTypes) => {
   const [commentDatas, setCommentDatas] = useState([]);
   const [selectedCommentIndex, setSelectedCommentIndex] = useState<number>();
 
-  const router = useRouter();
-  const { posturl } = router.query;
   const textRef = useRef<HTMLTextAreaElement>(null);
   const { mutate: create }: any = useMutation((data: registCommentTypes) => commentAPI.regist(data));
 

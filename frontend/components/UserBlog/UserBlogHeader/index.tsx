@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileImage from '../../common/ProfileImage';
+import ProfileImage from '../../Common/ProfileImage';
 import * as S from './UserBlogHeader.style';
 
 interface UserBlogHeaderPropTypes {

@@ -6,7 +6,7 @@ import { userAPI } from '../../api';
 import { apiAddress } from '../../config';
 import { ChangeProfileFormTypes } from '../../interfaces';
 import { userInfo } from '../../store/atom';
-import ProfileImage from '../common/ProfileImage';
+import ProfileImage from '../Common/ProfileImage';
 import * as S from './Setting.style';
 
 const Setting = () => {

@@ -12,7 +12,7 @@ export const Container = styled.div`
 
     .modify_img {
       width: 190px;
-      border-right: 2px solid #eee;
+      border-right: 2px solid ${({ theme }) => theme.colors.gray3};
       padding-right: 40px;
       img {
         width: 120px;
@@ -82,7 +82,7 @@ export const Container = styled.div`
 
     .modify_subinfo {
       margin-bottom: 40px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.gray3};
       padding-bottom: 20px;
 
       .info {

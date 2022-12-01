@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { NextPage } from 'next';
+import { ReactNode } from 'react';
 import { useQuery } from 'react-query';
 import { postAPI } from '../api';
 import MainContent from '../components/Main/MainContent';
@@ -9,10 +10,12 @@ import { LATEST_LISTS } from '../constant/queryKey';
 import { ResponsePostsTypes } from '../interfaces';
 
 const Latest: NextPage = () => {
-  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError>(LATEST_LISTS, postAPI.latest);
+  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError<ReactNode>>(LATEST_LISTS, postAPI.latest);
+
   if (status === 'error') {
-    alert(error.response.data);
+    return <span>{error.response.data}</span>;
   }
+
   return (
     <>
       <Seo>Devlog</Seo>

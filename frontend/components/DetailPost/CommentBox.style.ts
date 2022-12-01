@@ -11,6 +11,7 @@ export const Wrap = styled.div`
 
     .count {
       color: ${({ theme }) => theme.colors.basic1};
+      padding-right: 3px;
     }
   }
 
@@ -18,12 +19,17 @@ export const Wrap = styled.div`
     width: 100%;
     padding: 20px;
     height: 100px;
-    border: 1px solid #eee;
+    border: 1px solid ${({ theme }) => theme.colors.gray3};
+    background-color: ${({ theme }) => theme.backgroundColors.white1};
     resize: none;
     overflow: hidden;
     line-height: 1.5;
+    caret-color: ${({ theme }) => theme.colors.black1};
     &:focus {
       outline: none;
+    }
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.black1};
     }
   }
 

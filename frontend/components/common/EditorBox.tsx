@@ -12,24 +12,26 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 interface EditorBoxTypes {
   editorRef: MutableRefObject<Editor>;
   value?: string;
+  darkmode: boolean;
 }
 
-const EditorBox = ({ editorRef, value }: EditorBoxTypes) => {
+const EditorBox = ({ editorRef, value, darkmode }: EditorBoxTypes) => {
   useEffect(() => {
-    editorRef.current?.getInstance().setHTML(value);
-  }, []);
+    editorRef.current.getInstance().setHTML(value);
+  }, [darkmode]);
   return (
     <>
-      <Editor
-        ref={editorRef}
-        initialValue=" "
-        initialEditType="markdown"
-        height="60vh"
-        previewStyle="vertical"
-        useCommandShortcut={true}
-        // theme="dark"
-        plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
-      />
+      <div className={`${darkmode ? 'toastui-editor-dark' : ''} toastui-editor-defaultUI`}>
+        <Editor
+          ref={editorRef}
+          initialValue={' '}
+          initialEditType="markdown"
+          height="100vh"
+          previewStyle="vertical"
+          useCommandShortcut={true}
+          plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
+        />
+      </div>
     </>
   );
 };

@@ -54,6 +54,7 @@ export const ContentTop = styled.div`
 `;
 export const ContentMiddle = styled.div`
   padding: 15px;
+  background-color: ${({ theme }) => theme.backgroundColors.white1};
 
   .title {
     word-break: break-word;
@@ -86,13 +87,14 @@ export const ContentMiddle = styled.div`
   }
 `;
 export const ContentBottom = styled.div`
-  border-top: 1px solid #eee;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray3};
   display: flex;
   height: 40px;
   justify-content: space-between;
   align-items: center;
   padding: 0 15px;
   font-size: ${({ theme }) => theme.fontSizes.small};
+  background-color: ${({ theme }) => theme.backgroundColors.white1};
 
   .profile {
     display: flex;

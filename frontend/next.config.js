@@ -5,6 +5,9 @@ const nextConfig = {
   images: {
     domains: ['avatars.githubusercontent.com', 'localhost', 'lh3.googleusercontent.com', 'localhost'],
   },
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 module.exports = nextConfig;

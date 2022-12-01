@@ -9,11 +9,12 @@ import { ResponsePostsTypes } from '../../interfaces';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { USER_POSTS } from '../../constant/queryKey';
+import { ReactNode } from 'react';
 
 const UserBlog: NextPage = () => {
   const route = useRouter();
   const userName = (route.query.user as string)?.replace('@', '');
-  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError>(
+  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError<ReactNode>>(
     [USER_POSTS, userName],
     () => userAPI.posts(userName),
     {
@@ -23,7 +24,7 @@ const UserBlog: NextPage = () => {
   );
   console.log(data);
   if (status === 'error') {
-    alert(error.response.data);
+    return <span>{error.response.data}</span>;
   }
 
   return (
