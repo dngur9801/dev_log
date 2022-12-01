@@ -1,14 +1,21 @@
 const express = require('express');
-const { User, Post, Image, Comment } = require('../models');
+const { User, Post, Image, Comment, sequelize } = require('../models');
 const utils = require('../utils');
 const router = express.Router();
 
 // 전체 게시글
 router.get('/', async (req, res, next) => {
   try {
+    const { sort } = req.query;
+    let order = [];
+    if (sort === 'popular') {
+      order = [['likeCount', 'DESC']];
+    } else {
+      order = [['createdAt', 'DESC']];
+    }
     const posts = await Post.findAll({
       where: { private: 0 },
-      order: [['createdAt', 'DESC']],
+      order,
       include: [
         {
           model: Image,
@@ -16,7 +23,7 @@ router.get('/', async (req, res, next) => {
         },
         {
           model: User,
-          attributes: ['profileImage', 'name'],
+          attributes: ['profileImage', 'name', 'createdAt'],
         },
         {
           model: Comment,

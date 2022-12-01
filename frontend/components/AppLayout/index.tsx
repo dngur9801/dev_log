@@ -14,6 +14,7 @@ import { initUserInfoData } from '../../utils';
 import { AxiosError } from 'axios';
 import { ResponseUserInfoTypes } from '../../interfaces';
 import ProfileImage from '../common/ProfileImage';
+import { USER_INFO } from '../../constant/queryKey';
 type Props = {
   children: JSX.Element;
 };
@@ -24,7 +25,7 @@ const AppLayout = ({ children }: Props) => {
   const [user, setUser] = useRecoilState(userInfo);
 
   const { mutate }: any = useMutation(() => userAPI.logout());
-  const { data, error, status } = useQuery<ResponseUserInfoTypes, AxiosError<ReactNode>>('userInfo', userAPI.info, {
+  const { data, error, status } = useQuery<ResponseUserInfoTypes, AxiosError<ReactNode>>(USER_INFO, userAPI.info, {
     refetchOnWindowFocus: false,
   });
   const router = useRouter();

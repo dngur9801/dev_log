@@ -12,6 +12,7 @@ import { apiAddress, defaultTitleImage } from '../../../config';
 import CommentBox from '../../../components/DetailPost/CommentBox';
 import { userInfo } from '../../../store/atom';
 import { ResponseDetailPostTypes } from '../../../interfaces';
+import { DETAIL_POST } from '../../../constant/queryKey';
 
 const DetailPost = () => {
   const Viewer = dynamic(() => import('../../../components/common/ViewerBox'), {
@@ -29,7 +30,7 @@ const DetailPost = () => {
     data: postData,
     error,
     status,
-  } = useQuery<ResponseDetailPostTypes, AxiosError>(['postDetail', storageId], () => postAPI.detail(storageId), {
+  } = useQuery<ResponseDetailPostTypes, AxiosError>([DETAIL_POST, storageId], () => postAPI.detail(storageId), {
     refetchOnWindowFocus: false,
     enabled: !!storageId,
   });

@@ -52,6 +52,7 @@ export interface PostTypes {
       userId: number;
     };
   }[];
+  likeCount: number;
   id: number;
   comments: CommentTypes[];
   content: string;

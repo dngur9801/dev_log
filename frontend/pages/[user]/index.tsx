@@ -8,12 +8,13 @@ import { AxiosError } from 'axios';
 import { ResponsePostsTypes } from '../../interfaces';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { USER_POSTS } from '../../constant/queryKey';
 
 const UserBlog: NextPage = () => {
   const route = useRouter();
   const userName = (route.query.user as string)?.replace('@', '');
   const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError>(
-    ['userPosts', userName],
+    [USER_POSTS, userName],
     () => userAPI.posts(userName),
     {
       enabled: !!userName,

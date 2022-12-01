@@ -33,7 +33,8 @@ export const userAPI = {
 
 export const postAPI = {
   detail: (data: string | string[]): Promise<ResponseDetailPostTypes> => request.get(`/post/${data}`),
-  posts: (): Promise<ResponsePostsTypes> => request.get('/posts'),
+  popular: (): Promise<ResponsePostsTypes> => request.get('/posts?sort=popular'),
+  latest: (): Promise<ResponsePostsTypes> => request.get('/posts?sort=latest'),
   regist: (data: RegistOrEditTypes) => request.post('/post/regist', data),
   addLike: (data: string | string[]) => request.post(`/post/${data}/like`),
   edit: (data: RegistOrEditTypes) => request.put('/post', data),

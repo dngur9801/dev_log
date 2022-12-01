@@ -161,6 +161,11 @@ router.post('/:postId/like', isLoggedIn, async (req, res, next) => {
       return res.status(403).send('게시글이 존재하지 않습니다.');
     }
     await post.addLikers(req.user.id);
+    await Post.increment(
+      { like_count: +1 },
+      { where: { id: req.params.postId } }
+    );
+
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
     console.error(error);
@@ -177,6 +182,10 @@ router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
       return res.status(403).send('게시글이 존재하지 않습니다.');
     }
     await post.removeLikers(req.user.id);
+    await Post.increment(
+      { like_count: -1 },
+      { where: { id: req.params.postId } }
+    );
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
     console.error(error);

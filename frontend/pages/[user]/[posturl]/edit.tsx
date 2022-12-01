@@ -2,12 +2,13 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { postAPI } from '../../../api';
+import { DETAIL_POST } from '../../../constant/queryKey';
 import Write from '../../write';
 
 const Edit = () => {
   const router = useRouter();
   const { posturl } = router.query;
-  const { data, error, status } = useQuery('postDetail', () => postAPI.detail(posturl), {
+  const { data, error, status } = useQuery([DETAIL_POST, posturl], () => postAPI.detail(posturl), {
     refetchOnWindowFocus: false,
     enabled: !!posturl,
   });

@@ -13,6 +13,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       viewCnt: {
         type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      likeCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
     },
     {

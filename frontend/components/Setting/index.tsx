@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
 import { userAPI } from '../../api';
-import { apiAddress, defaultProfileImage } from '../../config';
+import { apiAddress } from '../../config';
 import { ChangeProfileFormTypes } from '../../interfaces';
 import { userInfo } from '../../store/atom';
 import ProfileImage from '../common/ProfileImage';
 import * as S from './Setting.style';
 
 const Setting = () => {
-  const [file, setFile] = useState(null);
   const [profileSrc, setProfileSrc] = useState(null);
   const [isModifyProfile, setIsModifyProfile] = useState(false);
   const [isModifySubject, setIsModifySubject] = useState(false);
