@@ -31,19 +31,15 @@ const DetailPost = () => {
     data: postData,
     error,
     status,
-  } = useQuery<ResponseDetailPostTypes, AxiosError<ReactNode>>(
-    [DETAIL_POST, storageId],
-    () => postAPI.detail(storageId),
-    {
-      refetchOnWindowFocus: false,
-      enabled: !!storageId,
-    },
-  );
+  } = useQuery<ResponseDetailPostTypes, AxiosError<ReactNode>>([DETAIL_POST, isLike], () => postAPI.detail(storageId), {
+    refetchOnWindowFocus: false,
+    enabled: !!storageId,
+  });
   const { mutate: removePost } = useMutation((data: string | string[]) => postAPI.delete(data));
   const { mutate: addLike } = useMutation((data: string | string[]) => postAPI.addLike(data));
   const { mutate: removeLike } = useMutation((data: string | string[]) => postAPI.removeLike(data));
 
-  console.log(postData);
+  console.log('Detail : ', postData);
 
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
@@ -135,7 +131,6 @@ const DetailPost = () => {
           <span>
             {postData?.data?.user?.name} | {postData?.data?.createdAt?.split('T')[0]}
           </span>
-          <span>조회 수 : {postData?.data?.viewCnt}</span>
         </Styled.Title>
       </Styled.Header>
       <Styled.ContentWrap>
@@ -158,7 +153,7 @@ const DetailPost = () => {
               ) : (
                 <FaRegHeart size={'36px'} onClick={onClickSetLike} />
               )}
-              <div>{postData?.data?.Likers?.length}</div>
+              <div>{postData?.data?.likeCount}</div>
             </div>
           </Styled.LikeBox>
         </Styled.Content>

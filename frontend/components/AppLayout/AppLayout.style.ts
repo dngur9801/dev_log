@@ -1,11 +1,26 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const HeaderWrap = styled.div`
+export const Wrap = styled.div`
+  height: 80px;
+`;
+
+export const HeaderBox = styled.div<{ hide: boolean }>`
   width: 100%;
   height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: 0.4s ease;
   font-size: ${({ theme }) => theme.fontSizes.xl};
   background-color: ${({ theme }) => theme.backgroundColors.white2};
   box-shadow: 0px 6px 11px -6px #000000;
+
+  ${({ hide }) =>
+    hide &&
+    css`
+      transform: translateY(-80px);
+    `}
 
   @media ${({ theme }) => theme.device.laptop} {
     font-size: ${({ theme }) => theme.fontSizes.lg};

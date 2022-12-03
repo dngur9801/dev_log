@@ -53,7 +53,7 @@ const MainContent = ({ data }: MainContentProps) => {
                 </a>
               </Link>
               <div className="sub_info">
-                {item.createdAt} | {item.comments.length}개의 댓글 | 조회수 : {item.viewCnt}
+                {item.createdAt} | {item.comments.length}개의 댓글
               </div>
             </Styled.ContentMiddle>
             <Styled.ContentBottom>
@@ -65,7 +65,7 @@ const MainContent = ({ data }: MainContentProps) => {
               </Link>
               <span className="like">
                 <FaHeart color="red" />
-                <span>{item.Likers.length}</span>
+                <span>{item?.likeCount}</span>
               </span>
             </Styled.ContentBottom>
           </Styled.Content>

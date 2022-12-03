@@ -20,7 +20,9 @@ const GlobalStyle = createGlobalStyle`
     padding:0;
     font-family: ‘Noto Sans’, sans-serif;
     color: ${({ theme }) => theme.colors.black1};
-    background-color:${({ theme }) => theme.backgroundColors.body}
+    background-color:${({ theme }) => theme.backgroundColors.body};
+    transition:0.2s all;
+    
   }
 
   a {
