@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkMode } from '../store/atom';
 import GlobalStyle from './global-styles';
 import { darkTheme, lightTheme } from './theme';
-import AppLayout from '../components/AppLayout';
+import Header from '../components/Header';
 
 interface Props {
   children: JSX.Element;
@@ -22,7 +22,8 @@ const CustomThemeProvider = ({ children }: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <AppLayout>{children}</AppLayout>
+      <Header></Header>
+      {children}
     </ThemeProvider>
   );
 };

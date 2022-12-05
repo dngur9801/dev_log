@@ -1,12 +1,12 @@
 import { FaSearch, FaSun, FaMoon, FaListUl } from 'react-icons/fa';
 import Link from 'next/link';
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 import LoginModal from './LoginModal';
-import * as Styled from './AppLayout.style';
+import * as Styled from './Header.style';
 import { darkMode, userInfo } from '../../store/atom';
 import { userAPI } from '../../api';
 import { initUserInfoData } from '../../utils';
@@ -15,11 +15,7 @@ import ProfileImage from '../Common/ProfileImage';
 import { USER_INFO } from '../../constant/queryKey';
 import useScroll from '../../hooks/useScroll';
 
-type Props = {
-  children: JSX.Element;
-};
-
-const AppLayout = ({ children }: Props) => {
+const Header = () => {
   const [toggle, setToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
@@ -58,7 +54,7 @@ const AppLayout = ({ children }: Props) => {
   useEffect(() => {
     setUser(data?.data);
   }, [data]);
-  // console.log('AppLayout:', user);
+  console.log('Header:', user);
 
   // 스크롤시 헤더 감지
   useEffect(() => {
@@ -139,8 +135,7 @@ const AppLayout = ({ children }: Props) => {
           </Styled.Header>
         </Styled.HeaderBox>
       </Styled.Wrap>
-      {children}
     </>
   );
 };
-export default AppLayout;
+export default Header;

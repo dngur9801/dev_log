@@ -18,7 +18,7 @@ interface EditorBoxTypes {
 const EditorBox = ({ editorRef, value, darkmode }: EditorBoxTypes) => {
   useEffect(() => {
     editorRef.current.getInstance().setHTML(value);
-  }, [darkmode]);
+  }, []);
   return (
     <>
       <div className={`${darkmode ? 'toastui-editor-dark' : ''} toastui-editor-defaultUI`}>
