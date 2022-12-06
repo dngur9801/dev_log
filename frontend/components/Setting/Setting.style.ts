@@ -5,6 +5,10 @@ export const Container = styled.div`
   margin: 0 auto;
   margin-top: 50px;
 
+  @media ${({ theme }) => theme.device.tablet} {
+    width: calc(100% - 2rem);
+  }
+
   .modify_profile {
     display: flex;
     align-items: center;
@@ -93,7 +97,7 @@ export const Container = styled.div`
         h3 {
           font-size: ${({ theme }) => theme.fontSizes.xl};
           font-weight: ${({ theme }) => theme.fontWeights.xl};
-          flex: 1 1 0%;
+          flex: 1 1 20%;
         }
 
         p,

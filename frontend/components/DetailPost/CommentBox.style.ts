@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrap = styled.div`
-  margin-top: 300px;
+  margin-top: 200px;
 
   h4 {
     font-weight: ${({ theme }) => theme.fontWeights.xl};
@@ -43,7 +43,11 @@ export const Wrap = styled.div`
       background-color: ${({ theme }) => theme.backgroundColors.basic1};
       color: white;
       padding: 8px 20px;
-      font-size: ${({ theme }) => theme.fontSizes.lg};
+      font-size: ${({ theme }) => theme.fontSizes.small};
+
+      @media ${({ theme }) => theme.device.tablet} {
+        padding: 5px 10px;
+      }
     }
   }
 `;

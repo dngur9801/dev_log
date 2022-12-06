@@ -20,11 +20,12 @@ const DetailPost = () => {
   });
   const [isLike, setIsLike] = useState(false);
   const [storageId, setStorageId] = useState(null);
+  const [resize, setResize] = useState(null);
   const [me] = useRecoilState(userInfo);
   const darkmode = useRecoilValue(darkMode);
 
   const queryClient = useQueryClient();
-  const likeBox = useRef<HTMLDivElement>(null);
+  const likeRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { user, id } = router.query;
   const {
@@ -83,10 +84,14 @@ const DetailPost = () => {
 
   // 사이드바 스크롤시 위치고정
   const handleScroll = () => {
+    if (!likeRef.current) {
+      return;
+    }
     if (window.scrollY > 1300) {
-      likeBox.current.style.top = String(`${window.scrollY - 1260 + 'px'}`);
+      console.log(9999);
+      likeRef.current.style.top = String(`${window.scrollY - 1260 + 'px'}`);
     } else {
-      if (likeBox.current) likeBox.current.style.top = '40px';
+      if (likeRef.current) likeRef.current.style.top = '40px';
     }
   };
   useEffect(() => {
@@ -96,6 +101,18 @@ const DetailPost = () => {
     return () => {
       clearInterval(timer);
       window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleResize = () => {
+    setResize(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    setResize(window.innerWidth);
+    return () => {
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -146,14 +163,10 @@ const DetailPost = () => {
         )}
         <Styled.Content>
           <Viewer content={postData?.data?.content} darkmode={darkmode} />
-          <Styled.LikeBox ref={likeBox}>
+          <Styled.LikeBox ref={resize > 1024 ? likeRef : null} onClick={onClickSetLike}>
             <div className="inner">
-              {isLike ? (
-                <FaHeart size={'36px'} onClick={onClickSetLike} color={'red'} />
-              ) : (
-                <FaRegHeart size={'36px'} onClick={onClickSetLike} />
-              )}
-              <div>{postData?.data?.likeCount}</div>
+              {isLike ? <FaHeart size={'36px'} color={'red'} /> : <FaRegHeart size={'36px'} />}
+              <div>{!likeRef.current ? '좋아요' : postData?.data?.likeCount}</div>
             </div>
           </Styled.LikeBox>
         </Styled.Content>
@@ -186,6 +199,7 @@ const Styled = {
       top: 80px;
     }
   `,
+
   Title: styled.div`
     position: absolute;
     top: 500px;
@@ -201,11 +215,22 @@ const Styled = {
       font-size: ${({ theme }) => theme.fontSizes.lg};
       margin-bottom: 1.5rem;
     }
+
+    @media ${({ theme }) => theme.device.tablet} {
+      left: 50%;
+      transform: translateX(-50%);
+    }
   `,
+
   ContentWrap: styled.div`
     max-width: ${({ theme }) => theme.deviceWrapSizes.tablet};
     margin: 0 auto;
+
+    @media ${({ theme }) => theme.device.tablet} {
+      width: calc(100% - 2rem);
+    }
   `,
+
   ContentBtn: styled.div`
     margin-bottom: 40px;
     text-align: right;
@@ -217,10 +242,17 @@ const Styled = {
       color: white;
       border-radius: 5px;
     }
+    @media ${({ theme }) => theme.device.tablet} {
+      button {
+        padding: 5px 10px;
+      }
+    }
   `,
+
   Content: styled.div`
     position: relative;
   `,
+
   LikeBox: styled.div`
     position: absolute;
     left: -7rem;
@@ -229,16 +261,40 @@ const Styled = {
     border: 1px solid ${({ theme }) => theme.colors.gray3};
     background-color: ${({ theme }) => theme.backgroundColors.white1};
     padding: 10px;
+    cursor: pointer;
 
     .inner {
-      svg {
-        cursor: pointer;
-      }
       div {
         margin-top: 10px;
         text-align: center;
         font-size: ${({ theme }) => theme.fontSizes.xl};
         font-weight: ${({ theme }) => theme.fontWeights.xl};
+      }
+    }
+
+    @media ${({ theme }) => theme.device.tabletL} {
+      display: inline-block;
+      position: relative;
+      top: 0 !important;
+      left: 0;
+      margin-top: 50px;
+      background-color: ${({ theme }) => theme.backgroundColors.basic2};
+      border-radius: 0;
+
+      .inner {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: black;
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+
+        div {
+          margin: 0;
+        }
       }
     }
   `,

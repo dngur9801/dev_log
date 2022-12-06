@@ -27,7 +27,7 @@ const EditorBox = ({ editorRef, value, darkmode }: EditorBoxTypes) => {
           initialValue={' '}
           initialEditType="markdown"
           height="100vh"
-          previewStyle="vertical"
+          previewStyle={window.innerWidth > 1000 ? 'vertical' : 'tab'}
           useCommandShortcut={true}
           plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
         />

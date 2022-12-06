@@ -124,7 +124,8 @@ const Styled = {
       gap: 30px;
 
       button:nth-child(1) {
-        background-color: white;
+        background-color: transparent;
+        color: ${({ theme }) => theme.colors.basic2};
         padding: 8px 10px;
       }
 

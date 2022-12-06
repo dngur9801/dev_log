@@ -6,11 +6,10 @@ import { FaLock } from 'react-icons/fa';
 interface RegistModalPropTypes {
   onSubmit: () => void;
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  isPrivate: '0' | '1';
   setIsPrivate: React.Dispatch<React.SetStateAction<'0' | '1'>>;
 }
 
-const RegistModal = ({ onSubmit, setIsModal, isPrivate, setIsPrivate }: RegistModalPropTypes) => {
+const RegistModal = ({ onSubmit, setIsModal, setIsPrivate }: RegistModalPropTypes) => {
   return (
     <Styled.Wrap>
       <div className="inner">

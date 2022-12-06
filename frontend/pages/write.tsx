@@ -139,7 +139,6 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
           <RegistModal
             onSubmit={id ? onSubmitModify : onSubmitRegist}
             setIsModal={setIsModal}
-            isPrivate={isPrivate}
             setIsPrivate={setIsPrivate}
           />
         )}
