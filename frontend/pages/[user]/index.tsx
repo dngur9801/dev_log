@@ -53,6 +53,10 @@ const Styled = {
     margin: 0 auto;
     margin-top: 60px;
 
+    @media ${({ theme }) => theme.device.tablet} {
+      width: calc(100% - 2rem);
+    }
+
     .taps {
       text-align: center;
       font-size: ${({ theme }) => theme.fontSizes.xl};

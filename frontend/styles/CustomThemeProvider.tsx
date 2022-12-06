@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { useCookies } from 'react-cookie';
 import { ThemeProvider } from 'styled-components';
 import { darkMode } from '../store/atom';
 import GlobalStyle from './global-styles';
 import { darkTheme, lightTheme } from './theme';
 import Header from '../components/Header';
-
 interface Props {
   children: JSX.Element;
+  cookie: any;
 }
-const CustomThemeProvider = ({ children }: Props) => {
+const CustomThemeProvider = ({ children, cookie }: Props) => {
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
-  const theme = darkmode ? darkTheme : lightTheme;
-
+  const [theme, setTheme] = useState(cookie.theme === 'dark' ? darkTheme : lightTheme);
+  const [cookies] = useCookies(['theme']);
   useEffect(() => {
-    if (localStorage.getItem('theme') === 'dark') {
+    if (cookies.theme === 'dark') {
+      setTheme(darkTheme);
       setDarkmode(true);
+    } else if (cookies.theme === 'light') {
+      setTheme(lightTheme);
+      setDarkmode(false);
     }
-  }, []);
+  }, [cookies]);
 
   return (
     <ThemeProvider theme={theme}>

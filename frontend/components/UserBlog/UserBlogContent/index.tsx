@@ -14,7 +14,7 @@ const UserBlogContent = ({ item }: UserBlogContentPropTypes) => {
     <S.Content>
       <div className="my_content">
         <Link href={`/@${item.user?.name}/${item.id}`}>
-          <a>
+          <a className="image_box">
             <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : defaultTitleImage()} alt="" />
           </a>
         </Link>

@@ -7,6 +7,10 @@ export const Container = styled.div`
   padding-bottom: 40px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray3};
 
+  @media ${({ theme }) => theme.device.laptop} {
+    width: calc(100% - 2rem);
+  }
+
   .profile {
     display: flex;
     align-items: center;

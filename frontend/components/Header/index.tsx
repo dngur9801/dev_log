@@ -14,14 +14,15 @@ import { ResponseUserInfoTypes } from '../../interfaces';
 import ProfileImage from '../Common/ProfileImage';
 import { USER_INFO } from '../../constant/queryKey';
 import useScroll from '../../hooks/useScroll';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
-  const [toggle, setToggle] = useState(false);
+  const [menuToggle, setMenuToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
   const { hide, pageY, throttleScroll } = useScroll(50);
-
+  const [cookies, setCookie] = useCookies(['theme']);
   const { mutate }: any = useMutation(() => userAPI.logout());
   const { data, error, status } = useQuery<ResponseUserInfoTypes, AxiosError<ReactNode>>(USER_INFO, userAPI.info, {
     refetchOnWindowFocus: false,
@@ -44,9 +45,7 @@ const Header = () => {
 
   // darkMode or lightMode toggle
   const onClickSetMode = () => {
-    localStorage.getItem('theme') === 'dark'
-      ? localStorage.setItem('theme', 'light')
-      : localStorage.setItem('theme', 'dark');
+    cookies.theme === 'dark' ? setCookie('theme', 'light') : setCookie('theme', 'dark');
     setDarkmode(!darkmode);
   };
 
@@ -84,9 +83,9 @@ const Header = () => {
             </Styled.MyTitle>
             <Styled.HeaderRight>
               {darkmode ? (
-                <FaSun size="24px" onClick={onClickSetMode} />
-              ) : (
                 <FaMoon size="24px" onClick={onClickSetMode} />
+              ) : (
+                <FaSun size="24px" onClick={onClickSetMode} />
               )}
               <FaSearch size="24px" />
               {user?.email ? (
@@ -96,10 +95,10 @@ const Header = () => {
                       <a>새 글 작성</a>
                     </Link>
                   </Styled.WriteBtn>
-                  <Styled.MyPageWrap onClick={() => setToggle(!toggle)}>
+                  <Styled.MyPageWrap onClick={() => setMenuToggle(!menuToggle)}>
                     <ProfileImage width={50} height={50} />
                     <FaListUl size="24px" />
-                    {toggle && (
+                    {menuToggle && (
                       <div className="my_list">
                         <div>
                           <Link href="/[user]" as={`/@${user.name}`}>

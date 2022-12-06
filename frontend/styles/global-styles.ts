@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
+    background-color:${({ theme }) => theme.backgroundColors.body};
     @media ${({ theme }) => theme.device.tabletL} {
       font-size:14px;
     }
@@ -18,9 +19,8 @@ const GlobalStyle = createGlobalStyle`
   body{
     margin:0;
     padding:0;
-    font-family: ‘Noto Sans’, sans-serif;
+    font-family: 'Noto Sans KR';
     color: ${({ theme }) => theme.colors.black1};
-    background-color:${({ theme }) => theme.backgroundColors.body};
     transition:0.2s all;
     
   }
