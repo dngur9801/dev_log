@@ -2,32 +2,39 @@ import { FaSearch, FaSun, FaMoon, FaListUl } from 'react-icons/fa';
 import Link from 'next/link';
 import { ReactNode, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 import LoginModal from './LoginModal';
-import * as Styled from './Header.style';
+import * as Styled from './LayoutHeader.style';
 import { darkMode, userInfo } from '../../store/atom';
 import { userAPI } from '../../api';
 import { initUserInfoData } from '../../utils';
-import { ResponseUserInfoTypes } from '../../interfaces';
+import { UserInfoTypes } from '../../interfaces';
 import ProfileImage from '../Common/ProfileImage';
 import { USER_INFO } from '../../constant/queryKey';
 import useScroll from '../../hooks/useScroll';
 import { useCookies } from 'react-cookie';
 
-const Header = () => {
+const LayoutHeader = () => {
   const [menuToggle, setMenuToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
   const { hide, pageY, throttleScroll } = useScroll(50);
   const [cookies, setCookie] = useCookies(['theme']);
+
   const { mutate }: any = useMutation(() => userAPI.logout());
-  const { data, error, status } = useQuery<ResponseUserInfoTypes, AxiosError<ReactNode>>(USER_INFO, userAPI.info, {
+  const {
+    data: userData,
+    error,
+    status,
+  } = useQuery<UserInfoTypes, AxiosError<ReactNode>>(USER_INFO, userAPI.info, {
     refetchOnWindowFocus: false,
+    // enabled: false,
   });
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // 로그아웃
   const onClickLogout = () => {
@@ -38,6 +45,7 @@ const Header = () => {
       },
       onError: (error: any, variables: any, context: any) => {
         router.replace('/');
+        queryClient.removeQueries(USER_INFO);
         setUser(initUserInfoData());
       },
     });
@@ -51,9 +59,10 @@ const Header = () => {
 
   // 유저 정보 요청
   useEffect(() => {
-    setUser(data?.data);
-  }, [data]);
-  console.log('Header:', user);
+    setUser(userData);
+    userData || queryClient.removeQueries(USER_INFO);
+  }, []);
+  console.log('userData:', userData);
 
   // 스크롤시 헤더 감지
   useEffect(() => {
@@ -75,9 +84,9 @@ const Header = () => {
               </Link>
             </div>
             <Styled.MyTitle>
-              {user?.email && (
-                <Link href="/[user]" as={`/@${user.name}`}>
-                  <a>{user?.blogName || user?.name}.log</a>
+              {userData?.email && (
+                <Link href="/[user]" as={`/@${userData?.name}`}>
+                  <a>{userData?.blogName || userData?.name}.log</a>
                 </Link>
               )}
             </Styled.MyTitle>
@@ -88,7 +97,7 @@ const Header = () => {
                 <FaSun size="24px" onClick={onClickSetMode} />
               )}
               <FaSearch size="24px" />
-              {user?.email ? (
+              {userData?.email ? (
                 <>
                   <Styled.WriteBtn>
                     <Link href="/write">
@@ -96,12 +105,12 @@ const Header = () => {
                     </Link>
                   </Styled.WriteBtn>
                   <Styled.MyPageWrap onClick={() => setMenuToggle(!menuToggle)}>
-                    <ProfileImage width={50} height={50} />
+                    <ProfileImage width={50} height={50} src={userData?.profileImage} />
                     <FaListUl size="24px" />
                     {menuToggle && (
                       <div className="my_list">
                         <div>
-                          <Link href="/[user]" as={`/@${user.name}`}>
+                          <Link href="/[user]" as={`/@${userData?.name}`}>
                             <a>마이페이지</a>
                           </Link>
                         </div>
@@ -123,12 +132,12 @@ const Header = () => {
                   </Styled.MyPageWrap>
                 </>
               ) : (
-                <>
+                <Styled.HeaderRight>
                   <button className="login" onClick={() => setLoginModal(true)}>
                     로그인
                   </button>
                   {loginModal && <LoginModal setLoginModal={setLoginModal} />}
-                </>
+                </Styled.HeaderRight>
               )}
             </Styled.HeaderRight>
           </Styled.Header>
@@ -137,4 +146,4 @@ const Header = () => {
     </>
   );
 };
-export default Header;
+export default LayoutHeader;

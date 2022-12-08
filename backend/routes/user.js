@@ -52,6 +52,7 @@ router.get('/', async (req, res, next) => {
 router.post('/logout', isLoggedIn, (req, res) => {
   req.session.destroy(function (err) {
     if (err) throw err;
+    res.clearCookie('connect.sid');
     res.send('ok');
   });
 });

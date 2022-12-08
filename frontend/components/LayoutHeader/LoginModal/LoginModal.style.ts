@@ -18,6 +18,7 @@ export const Wrap = styled.div`
     background-color: white;
     padding: 20px;
     box-shadow: 0 0 10px;
+    background-color: ${({ theme }) => theme.backgroundColors.default};
 
     .close {
       text-align: right;
@@ -65,7 +66,7 @@ export const Content = styled.div`
         background-color: ${({ theme }) => theme.backgroundColors.basic1};
       }
       &.black {
-        background-color: ${({ theme }) => theme.backgroundColors.black1};
+        background-color: ${({ theme }) => theme.backgroundColors.basic2};
       }
     }
     .line_wrap {
@@ -74,7 +75,7 @@ export const Content = styled.div`
 
       .line {
         display: block;
-        background: #ddd;
+        background: ${({ theme }) => theme.backgroundColors.basic2};
         height: 1px;
         width: 100%;
         transform: translateY(10px);
@@ -84,7 +85,7 @@ export const Content = styled.div`
         position: relative;
         color: ${({ theme }) => theme.colors.gray2};
         padding: 0 8px;
-        background: #fff;
+        background: ${({ theme }) => theme.backgroundColors.default};
       }
     }
 
@@ -108,10 +109,6 @@ export const Content = styled.div`
           text-decoration: underline;
         }
       }
-    }
-
-    .signup_btn {
-      background-color: ${({ theme }) => theme.backgroundColors.black1} !important;
     }
   }
 `;

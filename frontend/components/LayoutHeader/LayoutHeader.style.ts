@@ -93,7 +93,7 @@ export const HeaderRight = styled.div`
   .login {
     padding: 8px 20px;
     font-size: ${({ theme }) => theme.fontSizes.base};
-    background-color: ${({ theme }) => theme.colors.black1};
+    background-color: ${({ theme }) => theme.colors.basic1};
     color: white;
     border-radius: 10px;
   }

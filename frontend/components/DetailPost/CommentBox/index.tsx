@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
-import { commentAPI } from '../../api';
-import { CommentTypes, registCommentTypes } from '../../interfaces';
+import { commentAPI } from '../../../api';
+import { CommentTypes, registCommentTypes } from '../../../interfaces';
+import Comment from './Comment';
 import * as Styled from './CommentBox.style';
 
-import Comment from './Comment';
 interface CommentBoxPropTypes {
   comments: CommentTypes[];
   storageId: number;

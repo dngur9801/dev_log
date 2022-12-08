@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { FaPlusSquare } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 import { useMutation } from 'react-query';
-import { userInfo } from '../../store/atom';
-import { commentAPI } from '../../api';
-import { CommentEditTypes, CommentTypes } from '../../interfaces';
-import ProfileImage from '../Common/ProfileImage';
+import { userInfo } from '../../../../store/atom';
+import { commentAPI } from '../../../../api';
+import { CommentEditTypes, CommentTypes } from '../../../../interfaces';
+import ProfileImage from '../../../Common/ProfileImage';
 
 interface CommentPropTypes {
   item: CommentTypes;

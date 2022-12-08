@@ -7,10 +7,10 @@ import {
   registCommentTypes,
   UserRegistTypes,
   ResponsePostsTypes,
-  ResponseUserInfoTypes,
   ResponseDetailPostTypes,
   CommentEditTypes,
   ChangeProfileFormTypes,
+  UserInfoTypes,
 } from '../interfaces';
 
 const request = axios.create({
@@ -19,7 +19,10 @@ const request = axios.create({
 });
 
 export const userAPI = {
-  info: (): Promise<ResponseUserInfoTypes> => request.get('/user'),
+  info: (): Promise<UserInfoTypes> => {
+    console.log('axios.defaults.headers.Cookie : ', axios.defaults.headers);
+    return request.get('/user').then((res) => res.data);
+  },
   posts: (data: string): Promise<ResponsePostsTypes> => request.get(`/user/posts?name=${data}`),
   signUp: (data: SignUpTypes) => request.post('/user/signup', data),
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),

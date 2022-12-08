@@ -10,7 +10,9 @@ import { LATEST_LISTS } from '../constant/queryKey';
 import { ResponsePostsTypes } from '../interfaces';
 
 const Latest: NextPage = () => {
-  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError<ReactNode>>(LATEST_LISTS, postAPI.latest);
+  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError<ReactNode>>(LATEST_LISTS, postAPI.latest, {
+    refetchOnWindowFocus: false,
+  });
 
   if (status === 'error') {
     return <span>{error.response.data}</span>;
