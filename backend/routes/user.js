@@ -23,6 +23,7 @@ const upload = multer({ storage: storage });
 
 // 유저 정보
 router.get('/', async (req, res, next) => {
+  console.log('req.user : ', req.user);
   try {
     if (req.user) {
       const userInfo = await User.findOne({

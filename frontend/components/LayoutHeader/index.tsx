@@ -16,7 +16,11 @@ import { USER_INFO } from '../../constant/queryKey';
 import useScroll from '../../hooks/useScroll';
 import { useCookies } from 'react-cookie';
 
-const LayoutHeader = () => {
+interface Props {
+  ssrUserData: UserInfoTypes;
+}
+
+const LayoutHeader = ({ ssrUserData }: Props) => {
   const [menuToggle, setMenuToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
@@ -30,8 +34,8 @@ const LayoutHeader = () => {
     error,
     status,
   } = useQuery<UserInfoTypes, AxiosError<ReactNode>>(USER_INFO, userAPI.info, {
+    initialData: ssrUserData,
     refetchOnWindowFocus: false,
-    // enabled: false,
   });
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -42,11 +46,12 @@ const LayoutHeader = () => {
       onSuccess: () => {
         router.replace('/');
         setUser(initUserInfoData());
+        queryClient.removeQueries(USER_INFO);
       },
       onError: (error: any, variables: any, context: any) => {
         router.replace('/');
-        queryClient.removeQueries(USER_INFO);
         setUser(initUserInfoData());
+        queryClient.removeQueries(USER_INFO);
       },
     });
   };

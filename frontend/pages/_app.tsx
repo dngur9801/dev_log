@@ -4,20 +4,24 @@ import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
 import CustomThemeProvider from '../styles/CustomThemeProvider';
 import { CookiesProvider } from 'react-cookie';
-import { userAPI } from '../api';
 import axios from 'axios';
 import React from 'react';
+import { apiAddress } from '../config';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
-  console.log('pageProps : ', pageProps);
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <RecoilRoot>
             <CookiesProvider>
-              <CustomThemeProvider children={<Component {...pageProps} />} cookie={pageProps.cookie} />
+              <CustomThemeProvider
+                children={<Component {...pageProps} />}
+                themeCookie={pageProps.themeCookie}
+                ssrUserData={pageProps.userData}
+              />
             </CookiesProvider>
           </RecoilRoot>
         </Hydrate>
@@ -28,23 +32,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 MyApp.getInitialProps = async ({ ctx, Component }: any) => {
   let pageProps: any = {};
+  const connectCookie = ctx.req ? ctx.req.headers.cookie : '';
+  const themeCookie = ctx.req ? ctx.req.cookies : '';
+
+  axios.defaults.headers.Cookie = '';
+  if (ctx.req && connectCookie) {
+    axios.defaults.headers.Cookie = connectCookie;
+  }
+  const userData = await axios.get(`${apiAddress()}/user`).then((res) => res.data);
+
   if (Component.getInitialProps) {
     pageProps = await Component.getInitialProps(ctx);
   }
-  const cookie = ctx.req ? ctx.req.cookies : '';
-  console.log('initialProps Start');
-  // const cookie = ctx.req ? ctx.req.headers.cookie : '';
-  // console.log('cookie : ', cookie);
 
-  // axios.defaults.headers.common['Cookies'] = '';
-  // if (ctx.req && cookie) {
-  //   axios.defaults.headers.common['Cookies'] = cookie;
-  // }
-
-  // const user = await userAPI.info();
-  // console.log('user : ', user);
-
-  pageProps.cookie = cookie;
+  pageProps.themeCookie = themeCookie;
+  pageProps.userData = userData;
   return { pageProps };
 };
 export default MyApp;

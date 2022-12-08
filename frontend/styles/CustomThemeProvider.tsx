@@ -5,15 +5,17 @@ import { ThemeProvider } from 'styled-components';
 import { darkMode } from '../store/atom';
 import GlobalStyle from './global-styles';
 import { darkTheme, lightTheme } from './theme';
-import Header from '../components/LayoutHeader';
+import { UserInfoTypes } from '../interfaces';
+import LayoutHeader from '../components/LayoutHeader';
 
 interface Props {
   children: JSX.Element;
-  cookie: any;
+  themeCookie: any;
+  ssrUserData: UserInfoTypes;
 }
-const CustomThemeProvider = ({ children, cookie }: Props) => {
+const CustomThemeProvider = ({ children, themeCookie, ssrUserData }: Props) => {
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
-  const [theme, setTheme] = useState(cookie?.theme === 'dark' ? darkTheme : lightTheme);
+  const [theme, setTheme] = useState(themeCookie?.theme === 'dark' ? darkTheme : lightTheme);
   const [cookies] = useCookies(['theme']);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ const CustomThemeProvider = ({ children, cookie }: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <LayoutHeader ssrUserData={ssrUserData} />
       {children}
     </ThemeProvider>
   );
