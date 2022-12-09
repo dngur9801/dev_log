@@ -6,7 +6,6 @@ import {
   RegistOrEditTypes,
   registCommentTypes,
   UserRegistTypes,
-  ResponsePostsTypes,
   CommentEditTypes,
   ChangeProfileFormTypes,
   UserInfoTypes,
@@ -20,7 +19,7 @@ const request = axios.create({
 
 export const userAPI = {
   info: (): Promise<UserInfoTypes> => request.get('/user').then((res) => res.data),
-  posts: (data: string): Promise<ResponsePostsTypes> => request.get(`/user/posts?name=${data}`),
+  posts: (data: string): Promise<PostTypes[]> => request.get(`/user/posts?name=${data}`).then((res) => res.data),
   signUp: (data: SignUpTypes) => request.post('/user/signup', data),
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
   logout: () => request.post('/user/logout'),
@@ -36,10 +35,10 @@ export const postAPI = {
   popular: (): Promise<PostTypes[]> => request.get('/posts?sort=popular').then((res) => res.data),
   latest: (): Promise<PostTypes[]> => request.get('/posts?sort=latest').then((res) => res.data),
   regist: (data: RegistOrEditTypes) => request.post('/post/regist', data),
-  addLike: (data: string | string[]) => request.post(`/post/${data}/like`),
+  addLike: (data: number) => request.post(`/post/${data}/like`),
   edit: (data: RegistOrEditTypes) => request.put('/post', data),
-  delete: (data: string | string[]) => request.delete(`/post/${data}`),
-  removeLike: (data: string | string[]) => request.delete(`/post/${data}/like`),
+  delete: (data: number) => request.delete(`/post/${data}`),
+  removeLike: (data: number) => request.delete(`/post/${data}/like`),
 };
 
 export const commentAPI = {

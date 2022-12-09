@@ -11,41 +11,41 @@ import { DETAIL_POST } from '../../../constant/queryKey';
 import Header from '../../../components/DetailPost/Header';
 import Content from '../../../components/DetailPost/Content';
 import { GetServerSidePropsContext } from 'next';
+import { useCookies } from 'react-cookie';
 
 const DetailPost = () => {
   const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
     ssr: false,
   });
+  const [cookies, setCookies, deleteCookies] = useCookies(['postId']);
+
   const router = useRouter();
   const { id } = router.query;
-  const [storageId, setStorageId] = useState(null);
   const {
     data: postData,
     error,
     status,
     refetch,
-  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI.detail(storageId), {
+  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI.detail(id), {
     refetchOnWindowFocus: false,
-    enabled: !!storageId,
+    enabled: !!id,
   });
   const [isLike, setIsLike] = useState(postData.isLike === 1 ? true : false);
   const likeRef = useRef<HTMLDivElement>(null);
 
-  const { mutate: removePost } = useMutation((data: string | string[]) => postAPI.delete(data));
-  const { mutate: addLike } = useMutation((data: string | string[]) => postAPI.addLike(data));
-  const { mutate: removeLike } = useMutation((data: string | string[]) => postAPI.removeLike(data));
-
-  console.log('Detail : ', postData);
+  const { mutate: removePost } = useMutation((data: number) => postAPI.delete(data));
+  const { mutate: addLike } = useMutation((data: number) => postAPI.addLike(data));
+  const { mutate: removeLike } = useMutation((data: number) => postAPI.removeLike(data));
 
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      removePost(storageId, {
-        onSuccess: (data: any, variables: any, context: any) => {
+      removePost(postData.id, {
+        onSuccess: () => {
           alert('삭제가 완료되었습니다.');
           router.replace('/');
         },
-        onError: (error: any, variables: any, context: any) => {
+        onError: (error: any) => {
           alert(error.response.data);
         },
       });
@@ -55,7 +55,7 @@ const DetailPost = () => {
   // like 버튼 클릭 시
   const onClickSetLike = () => {
     if (!isLike) {
-      addLike(storageId, {
+      addLike(postData.id, {
         onSuccess: () => {
           setIsLike(!isLike);
           refetch();
@@ -65,7 +65,7 @@ const DetailPost = () => {
         },
       });
     } else {
-      removeLike(storageId, {
+      removeLike(postData.id, {
         onSuccess: () => {
           setIsLike(!isLike);
           refetch();
@@ -83,7 +83,6 @@ const DetailPost = () => {
       return;
     }
     if (window.scrollY > 1300) {
-      console.log(9999);
       likeRef.current.style.top = String(`${window.scrollY - 1260 + 'px'}`);
     } else {
       if (likeRef.current) likeRef.current.style.top = '40px';
@@ -99,14 +98,11 @@ const DetailPost = () => {
     };
   }, []);
 
-  // 게시물 id값 쿠키에 저장
   useEffect(() => {
-    if (id) {
-      localStorage.setItem('id', id as string);
-    }
-    setStorageId(localStorage.getItem('id'));
-  }, [id]);
+    setCookies('postId', id || postData.id);
 
+    return () => deleteCookies('postId');
+  }, []);
   if (status === 'error') {
     return <span>{error.response.data}</span>;
   }
@@ -117,22 +113,31 @@ const DetailPost = () => {
       <Styled.ContentWrap>
         <Content
           data={postData}
-          storageId={storageId}
+          postId={postData.id}
           onClickDelete={onClickDelete}
           Viewer={Viewer}
           onClickSetLike={onClickSetLike}
           isLike={isLike}
         />
-        <CommentBox comments={postData?.comments} storageId={storageId} refetch={refetch} />
+        <CommentBox comments={postData?.comments} postId={postData.id} refetch={refetch} />
       </Styled.ContentWrap>
     </>
   );
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const { id } = context.query;
+  const id = context.query?.id;
+  const cookie = context.req.cookies;
+
+  const postId = id || cookie.postId;
+
+  if (!id && !postId) {
+    return {
+      notFound: true,
+    };
+  }
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(DETAIL_POST, () => postAPI.detail(id));
+  await queryClient.prefetchQuery(DETAIL_POST, () => postAPI.detail(postId));
 
   return {
     props: {

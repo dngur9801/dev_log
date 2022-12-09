@@ -46,10 +46,10 @@ const Setting: NextPage = () => {
       introduce: changeForm?.introduce ?? user.introduce,
     }));
     editProfile(changeForm, {
-      onSuccess: (data: any, variables: any, context: any) => {
+      onSuccess: () => {
         setIsModifyProfile(false);
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });
@@ -65,13 +65,13 @@ const Setting: NextPage = () => {
     const formData = new FormData();
     formData.append('file', e.target.files[0]);
     upload(formData, {
-      onSuccess: (data: any, variables: any, context: any) => {
+      onSuccess: (data: any) => {
         setUser((prev) => ({
           ...prev,
           profileImage: `${apiAddress()}/${data.data}`,
         }));
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });
@@ -86,10 +86,10 @@ const Setting: NextPage = () => {
     editSubject(
       { blogName: subject },
       {
-        onSuccess: (data: any, variables: any, context: any) => {
+        onSuccess: () => {
           setIsModifySubject(false);
         },
-        onError: (error: any, variables: any, context: any) => {
+        onError: (error: any) => {
           alert(error.response.data);
         },
       },
@@ -100,11 +100,11 @@ const Setting: NextPage = () => {
   const onClickOutMember = () => {
     if (window.confirm('탈퇴 시 모든 데이터가 초기화되며 복구할 수 없습니다.\n탈퇴하시겠습니까?'))
       outMember(null, {
-        onSuccess: (data: any, variables: any, context: any) => {
+        onSuccess: () => {
           route.push('/');
           queryClient.invalidateQueries(USER_INFO);
         },
-        onError: (error: any, variables: any, context: any) => {
+        onError: (error: any) => {
           alert(error.response.data);
         },
       });

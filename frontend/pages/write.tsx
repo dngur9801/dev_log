@@ -48,7 +48,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   const onSubmitRegist = () => {
     const formData = commonFormData();
     regist(formData, {
-      onSuccess: (data: any, variables: any, context: any) => {
+      onSuccess: (data: any) => {
         router.push(
           {
             pathname: '/[user]/[posturl]',
@@ -58,9 +58,8 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
           },
           `/@${user.name}/${data.data.title}`,
         );
-        console.log(data);
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });
@@ -71,8 +70,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
     const formData = commonFormData();
     formData.append('id', id as string);
     edit(formData, {
-      onSuccess: (data: any, variables: any, context: any) => {
-        console.log(data);
+      onSuccess: (data: any) => {
         router.push(
           {
             pathname: '/[user]/[posturl]',
@@ -83,7 +81,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
           `/@${user.name}/${data.data.title}`,
         );
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });

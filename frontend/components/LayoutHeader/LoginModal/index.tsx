@@ -32,7 +32,7 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
       onSuccess: () => {
         window.location.reload();
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });

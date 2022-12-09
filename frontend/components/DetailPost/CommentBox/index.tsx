@@ -8,13 +8,13 @@ import * as Styled from './CommentBox.style';
 
 interface CommentBoxPropTypes {
   comments: CommentTypes[];
-  storageId: number;
+  postId: number;
   refetch: <TPageData>(
     options?: RefetchOptions & RefetchQueryFilters<TPageData>,
   ) => Promise<QueryObserverResult<PostTypes, AxiosError<React.ReactNode>>>;
 }
 
-const CommentBox = ({ comments, storageId, refetch }: CommentBoxPropTypes) => {
+const CommentBox = ({ comments, postId, refetch }: CommentBoxPropTypes) => {
   const [comment, setComment] = useState('');
   const [selectedCommentIndex, setSelectedCommentIndex] = useState<number>();
 
@@ -36,7 +36,7 @@ const CommentBox = ({ comments, storageId, refetch }: CommentBoxPropTypes) => {
   // 댓글 작성 클릭 시
   const onClickRegistComment = () => {
     const data = {
-      postId: storageId,
+      postId: postId,
       content: comment,
     };
     create(data, {

@@ -24,7 +24,7 @@ const MainContent = ({ data }: MainContentProps) => {
                     id: item.id,
                   },
                 }}
-                as={`/@${item.user?.name}/${item.title}?id=${item.id}`}
+                as={`/@${item.user?.name}/${item.title}`}
               >
                 <a>
                   <div className="content_img">

@@ -35,6 +35,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
     data: userData,
     error,
     status,
+    refetch,
   } = useQuery<UserInfoTypes, AxiosError<ReactNode>>(USER_INFO, userAPI.info, {
     initialData: ssrUserData,
     refetchOnWindowFocus: false,
@@ -48,12 +49,12 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
       onSuccess: () => {
         router.replace('/');
         setUser(initUserInfoData());
-        queryClient.removeQueries(USER_INFO);
+        refetch();
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: () => {
         router.replace('/');
         setUser(initUserInfoData());
-        queryClient.removeQueries(USER_INFO);
+        refetch();
       },
     });
   };

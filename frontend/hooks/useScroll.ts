@@ -19,7 +19,6 @@ const useScroll = (waitTime: number) => {
     const headerHeight = 80;
     const { pageYOffset } = window;
     const deltaY = pageYOffset - pageY;
-    console.log('pageYOffset:', pageYOffset, 'pageY:', pageY, 'deltaY:', deltaY);
     const hide = pageYOffset >= headerHeight && deltaY >= 0;
     setHide(hide);
     setPageY(pageYOffset);

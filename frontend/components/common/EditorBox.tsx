@@ -20,19 +20,17 @@ const EditorBox = ({ editorRef, value, darkmode }: EditorBoxTypes) => {
     editorRef.current.getInstance().setHTML(value);
   }, []);
   return (
-    <>
-      <div className={`${darkmode ? 'toastui-editor-dark' : ''} toastui-editor-defaultUI`}>
-        <Editor
-          ref={editorRef}
-          initialValue={' '}
-          initialEditType="markdown"
-          height="100vh"
-          previewStyle={window.innerWidth > 1000 ? 'vertical' : 'tab'}
-          useCommandShortcut={true}
-          plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
-        />
-      </div>
-    </>
+    <div className={`${darkmode ? 'toastui-editor-dark' : ''} toastui-editor-defaultUI`}>
+      <Editor
+        ref={editorRef}
+        initialValue={' '}
+        initialEditType="markdown"
+        height="100vh"
+        previewStyle={window.innerWidth > 1000 ? 'vertical' : 'tab'}
+        useCommandShortcut={true}
+        plugins={[colorSyntax, [codeSyntaxHighlight, { highlighter: Prism }]]}
+      />
+    </div>
   );
 };
 

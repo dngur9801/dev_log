@@ -40,14 +40,14 @@ const Register = () => {
       alert('아이디는 영문자로 시작하는 영문자 또는 숫자 6~20자를 입력하세요');
     } else {
       regist(data, {
-        onSuccess: (data: any, variables: any, context: any) => {
+        onSuccess: () => {
           if (auth === 'github') {
             window.location.href = `${apiAddress()}/auth/github`;
           } else if (auth === 'google') {
             window.location.href = `${apiAddress()}/auth/google`;
           }
         },
-        onError: (error: any, variables: any, context: any) => {
+        onError: (error: any) => {
           alert(error.response.data);
         },
       });

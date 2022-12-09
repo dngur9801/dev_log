@@ -12,13 +12,10 @@ interface ViewrBoxTypes {
   darkmode: boolean;
 }
 const ViewerBox = ({ content, darkmode }: ViewrBoxTypes) => {
-  console.log('ViewerBox_darkmode : ', darkmode);
   return (
-    <Viewer
-      initialValue={content}
-      plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-      theme={darkmode ? 'dark' : 'light'}
-    />
+    <div className={darkmode ? 'toastui-editor-dark' : ''}>
+      <Viewer initialValue={content} plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]} />
+    </div>
   );
 };
 

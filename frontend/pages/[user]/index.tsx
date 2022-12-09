@@ -5,7 +5,7 @@ import Seo from '../../components/Seo';
 import { userAPI } from '../../api';
 import { useQuery } from 'react-query';
 import { AxiosError } from 'axios';
-import { ResponsePostsTypes } from '../../interfaces';
+import { PostTypes } from '../../interfaces';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { USER_POSTS } from '../../constant/queryKey';
@@ -14,7 +14,7 @@ import { ReactNode } from 'react';
 const UserBlog: NextPage = () => {
   const route = useRouter();
   const userName = (route.query.user as string)?.replace('@', '');
-  const { data, error, status } = useQuery<ResponsePostsTypes, AxiosError<ReactNode>>(
+  const { data, error, status } = useQuery<PostTypes[], AxiosError<ReactNode>>(
     [USER_POSTS, userName],
     () => userAPI.posts(userName),
     {
@@ -22,7 +22,6 @@ const UserBlog: NextPage = () => {
       refetchOnWindowFocus: false,
     },
   );
-  console.log(data);
   if (status === 'error') {
     return <span>{error.response.data}</span>;
   }
@@ -31,15 +30,15 @@ const UserBlog: NextPage = () => {
     <>
       <Seo>Devlog</Seo>
       <UserBlogHeader
-        nickName={data?.data[0]?.user.nickName}
-        profileImage={data?.data[0]?.user.profileImage}
-        introduce={data?.data[0]?.user.introduce}
+        nickName={data?.[0]?.user.nickName}
+        profileImage={data?.[0]?.user.profileImage}
+        introduce={data?.[0]?.user.introduce}
       />
       <Styled.Wrap>
         <div className="taps">
           <span>글</span>
         </div>
-        {data?.data.map((item) => (
+        {data?.map((item) => (
           <UserBlogContent key={item.id} item={item} />
         ))}
       </Styled.Wrap>

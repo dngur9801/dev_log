@@ -26,11 +26,11 @@ const SignUpModal = ({ setIsSignUp }: SignUpModalProps) => {
   const onClickSignUp = () => {
     const data = formData;
     mutate(data, {
-      onSuccess: (data: any, variables: any, context: any) => {
+      onSuccess: () => {
         alert('회원가입이 완료되었습니다.');
         setIsSignUp(false);
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });

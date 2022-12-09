@@ -8,14 +8,14 @@ import Like from './Like';
 
 interface Props {
   data: PostTypes;
-  storageId: number;
+  postId: number;
   onClickDelete: () => void;
   onClickSetLike: () => void;
   Viewer: React.ComponentType<any>;
   isLike: boolean;
 }
 
-const Content = ({ data, storageId, onClickDelete, onClickSetLike, Viewer, isLike }: Props) => {
+const Content = ({ data, postId, onClickDelete, onClickSetLike, Viewer, isLike }: Props) => {
   const me = useRecoilValue(userInfo);
   const darkmode = useRecoilValue(darkMode);
 
@@ -26,7 +26,7 @@ const Content = ({ data, storageId, onClickDelete, onClickSetLike, Viewer, isLik
     <>
       {me?.id === data?.user.id && (
         <Styled.ContentBtn>
-          <button type="button" onClick={() => router.push(`/${user}/${storageId}/edit`)}>
+          <button type="button" onClick={() => router.push(`/${user}/${postId}/edit`)}>
             포스트 수정
           </button>
           <button type="button" onClick={onClickDelete}>
