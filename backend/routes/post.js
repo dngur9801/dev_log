@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { User, Post, Image, Comment } = require('../models');
+const { User, Post, Image, Comment, sequelize } = require('../models');
 const utils = require('../utils');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
@@ -53,7 +53,7 @@ router.post(
 // 게시글 상세페이지
 router.get('/:postId', async (req, res, next) => {
   try {
-    console.log(req.params.postId);
+    const userId = req.user?.id;
     const post = await Post.findOne({
       where: { id: req.params.postId },
       include: [
@@ -93,6 +93,11 @@ router.get('/:postId', async (req, res, next) => {
     post.dataValues.comments.forEach((item, idx) => {
       item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
     });
+    const isLike = post.dataValues.Likers.find(item => item.id === userId)
+      ? 1
+      : 0;
+    console.log('isLike : ', isLike);
+    post.dataValues.isLike = isLike;
     return res.status(200).json(post);
   } catch (error) {
     console.error(error);

@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { GetServerSidePropsContext, NextPage } from 'next';
+import { NextPage } from 'next';
 import { ReactNode } from 'react';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { postAPI } from '../api';
@@ -27,7 +27,8 @@ const Latest: NextPage = () => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
+  console.log('getServerSideProps start');
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(LATEST_LISTS, postAPI.popular);
 

@@ -31,7 +31,7 @@ const CustomThemeProvider = ({ children, themeCookie, ssrUserData }: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <LayoutHeader ssrUserData={ssrUserData} />
+      <LayoutHeader ssrUserData={ssrUserData} themeCookie={themeCookie?.theme} />
       {children}
     </ThemeProvider>
   );

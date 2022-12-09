@@ -1,9 +1,10 @@
 /* eslint-disable react/no-children-prop */
 import type { AppProps } from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
-import CustomThemeProvider from '../styles/CustomThemeProvider';
 import { CookiesProvider } from 'react-cookie';
+import CustomThemeProvider from '../styles/CustomThemeProvider';
 import axios from 'axios';
 import React from 'react';
 import { apiAddress } from '../config';
@@ -25,6 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </CookiesProvider>
           </RecoilRoot>
         </Hydrate>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </>
   );
@@ -45,8 +47,7 @@ MyApp.getInitialProps = async ({ ctx, Component }: any) => {
     pageProps = await Component.getInitialProps(ctx);
   }
 
-  pageProps.themeCookie = themeCookie;
-  pageProps.userData = userData;
+  pageProps = { ...pageProps, themeCookie, userData };
   return { pageProps };
 };
 export default MyApp;

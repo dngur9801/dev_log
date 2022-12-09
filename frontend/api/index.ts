@@ -7,7 +7,6 @@ import {
   registCommentTypes,
   UserRegistTypes,
   ResponsePostsTypes,
-  ResponseDetailPostTypes,
   CommentEditTypes,
   ChangeProfileFormTypes,
   UserInfoTypes,
@@ -33,7 +32,7 @@ export const userAPI = {
 };
 
 export const postAPI = {
-  detail: (data: string | string[]): Promise<ResponseDetailPostTypes> => request.get(`/post/${data}`),
+  detail: (data: string | string[]): Promise<PostTypes> => request.get(`/post/${data}`).then((res) => res.data),
   popular: (): Promise<PostTypes[]> => request.get('/posts?sort=popular').then((res) => res.data),
   latest: (): Promise<PostTypes[]> => request.get('/posts?sort=latest').then((res) => res.data),
   regist: (data: RegistOrEditTypes) => request.post('/post/regist', data),

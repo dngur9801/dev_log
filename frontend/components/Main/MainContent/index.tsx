@@ -11,7 +11,6 @@ interface MainContentProps {
 }
 
 const MainContent = ({ data }: MainContentProps) => {
-  console.log('main : ', data);
   return (
     <Styled.Container>
       <Styled.Wrap>
@@ -25,7 +24,7 @@ const MainContent = ({ data }: MainContentProps) => {
                     id: item.id,
                   },
                 }}
-                as={`/@${item.user?.name}/${item.title}`}
+                as={`/@${item.user?.name}/${item.title}?id=${item.id}`}
               >
                 <a>
                   <div className="content_img">

@@ -1,39 +1,36 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import dynamic from 'next/dynamic';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { dehydrate, QueryClient, useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
 import { AxiosError } from 'axios';
 import { postAPI } from '../../../api';
 import CommentBox from '../../../components/DetailPost/CommentBox';
-import { userInfo } from '../../../store/atom';
-import { ResponseDetailPostTypes } from '../../../interfaces';
+import { PostTypes } from '../../../interfaces';
 import { DETAIL_POST } from '../../../constant/queryKey';
 import Header from '../../../components/DetailPost/Header';
 import Content from '../../../components/DetailPost/Content';
+import { GetServerSidePropsContext } from 'next';
 
 const DetailPost = () => {
   const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
     ssr: false,
   });
-  const [isLike, setIsLike] = useState(false);
-  const [storageId, setStorageId] = useState(null);
-  const [me] = useRecoilState(userInfo);
-
-  const queryClient = useQueryClient();
-  const likeRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { id } = router.query;
-
+  const [storageId, setStorageId] = useState(null);
   const {
     data: postData,
     error,
     status,
-  } = useQuery<ResponseDetailPostTypes, AxiosError<ReactNode>>([DETAIL_POST], () => postAPI.detail(storageId), {
+    refetch,
+  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI.detail(storageId), {
     refetchOnWindowFocus: false,
     enabled: !!storageId,
   });
+  const [isLike, setIsLike] = useState(postData.isLike === 1 ? true : false);
+  const likeRef = useRef<HTMLDivElement>(null);
+
   const { mutate: removePost } = useMutation((data: string | string[]) => postAPI.delete(data));
   const { mutate: addLike } = useMutation((data: string | string[]) => postAPI.addLike(data));
   const { mutate: removeLike } = useMutation((data: string | string[]) => postAPI.removeLike(data));
@@ -59,21 +56,21 @@ const DetailPost = () => {
   const onClickSetLike = () => {
     if (!isLike) {
       addLike(storageId, {
-        onSuccess: (data: any, variables: any, context: any) => {
+        onSuccess: () => {
           setIsLike(!isLike);
-          queryClient.invalidateQueries(DETAIL_POST);
+          refetch();
         },
-        onError: (error: any, variables: any, context: any) => {
+        onError: (error: any) => {
           alert(error.response.data);
         },
       });
     } else {
       removeLike(storageId, {
-        onSuccess: (data: any, variables: any, context: any) => {
+        onSuccess: () => {
           setIsLike(!isLike);
-          queryClient.invalidateQueries(DETAIL_POST);
+          refetch();
         },
-        onError: (error: any, variables: any, context: any) => {
+        onError: (error: any) => {
           alert(error.response.data);
         },
       });
@@ -102,16 +99,6 @@ const DetailPost = () => {
     };
   }, []);
 
-  // 좋아요 체크 여부
-  useEffect(() => {
-    const findLiker = postData?.data?.Likers?.some((item) => item.Like.userId === me?.id);
-    if (!findLiker) {
-      setIsLike(false);
-    } else {
-      setIsLike(true);
-    }
-  }, [postData]);
-
   // 게시물 id값 쿠키에 저장
   useEffect(() => {
     if (id) {
@@ -126,22 +113,33 @@ const DetailPost = () => {
 
   return (
     <>
-      <Header data={postData?.data} />
+      <Header data={postData} />
       <Styled.ContentWrap>
         <Content
-          data={postData?.data}
+          data={postData}
           storageId={storageId}
           onClickDelete={onClickDelete}
           Viewer={Viewer}
           onClickSetLike={onClickSetLike}
           isLike={isLike}
         />
-        <CommentBox comments={postData?.data?.comments} storageId={storageId} />
+        <CommentBox comments={postData?.comments} storageId={storageId} refetch={refetch} />
       </Styled.ContentWrap>
     </>
   );
 };
 
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const { id } = context.query;
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(DETAIL_POST, () => postAPI.detail(id));
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 export default DetailPost;
 
 const Styled = {

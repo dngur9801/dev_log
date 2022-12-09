@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import { FaPlusSquare } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
-import { useMutation } from 'react-query';
+import { AxiosError } from 'axios';
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation } from 'react-query';
 import { userInfo } from '../../../../store/atom';
 import { commentAPI } from '../../../../api';
-import { CommentEditTypes, CommentTypes } from '../../../../interfaces';
+import { CommentEditTypes, CommentTypes, PostTypes } from '../../../../interfaces';
 import ProfileImage from '../../../Common/ProfileImage';
 
 interface CommentPropTypes {
@@ -14,9 +15,11 @@ interface CommentPropTypes {
   idx: number;
   isSelected: boolean;
   setSelectedCommentIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setCommentDatas: React.Dispatch<React.SetStateAction<any[]>>;
+  refetch: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>,
+  ) => Promise<QueryObserverResult<PostTypes, AxiosError<React.ReactNode>>>;
 }
-const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDatas }: CommentPropTypes) => {
+const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, refetch }: CommentPropTypes) => {
   const [editComment, setEditComment] = useState('');
   const [user] = useRecoilState(userInfo);
 
@@ -34,12 +37,12 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDat
       content: editComment,
     };
     edit(data, {
-      onSuccess: (data: any) => {
+      onSuccess: () => {
+        refetch();
         setSelectedCommentIndex(null);
         setEditComment('');
-        item.content = editComment;
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });
@@ -51,16 +54,17 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setCommentDat
       alert('삭제되었습니다.');
     }
     remove(id, {
-      onSuccess: (data: any) => {
-        setCommentDatas((prev) => [...prev.filter((item) => item.id !== id)]);
+      onSuccess: () => {
+        refetch();
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });
   };
+
   return (
-    <div className="comment" key={item.id}>
+    <div className="comment">
       <div className="profile_info">
         <div className="profile">
           <Link href={`/@${item?.user?.name}`}>

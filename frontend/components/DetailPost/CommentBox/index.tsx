@@ -1,18 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useMutation } from 'react-query';
+import { AxiosError } from 'axios';
+import React, { useRef, useState } from 'react';
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation } from 'react-query';
 import { commentAPI } from '../../../api';
-import { CommentTypes, registCommentTypes } from '../../../interfaces';
+import { CommentTypes, PostTypes, registCommentTypes } from '../../../interfaces';
 import Comment from './Comment';
 import * as Styled from './CommentBox.style';
 
 interface CommentBoxPropTypes {
   comments: CommentTypes[];
   storageId: number;
+  refetch: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>,
+  ) => Promise<QueryObserverResult<PostTypes, AxiosError<React.ReactNode>>>;
 }
 
-const CommentBox = ({ comments, storageId }: CommentBoxPropTypes) => {
+const CommentBox = ({ comments, storageId, refetch }: CommentBoxPropTypes) => {
   const [comment, setComment] = useState('');
-  const [commentDatas, setCommentDatas] = useState([]);
   const [selectedCommentIndex, setSelectedCommentIndex] = useState<number>();
 
   const textRef = useRef<HTMLTextAreaElement>(null);
@@ -37,25 +40,20 @@ const CommentBox = ({ comments, storageId }: CommentBoxPropTypes) => {
       content: comment,
     };
     create(data, {
-      onSuccess: (data: any) => {
+      onSuccess: () => {
         alert('댓글이 작성되었습니다.');
-        setCommentDatas((prev) => [...prev, data?.data]);
-        textRef.current.value = '';
+        refetch();
       },
-      onError: (error: any, variables: any, context: any) => {
+      onError: (error: any) => {
         alert(error.response.data);
       },
     });
   };
 
-  useEffect(() => {
-    setCommentDatas(comments);
-  }, [comments]);
-
   return (
     <Styled.Wrap>
       <h4>
-        <span className="count">{commentDatas?.length}</span>개의 댓글
+        <span className="count">{comments?.length}</span>개의 댓글
       </h4>
       <textarea ref={textRef} placeholder="댓글을 작성하세요" maxLength={400} onInput={onInputComment}></textarea>
       <div className="button_wrap">
@@ -64,19 +62,19 @@ const CommentBox = ({ comments, storageId }: CommentBoxPropTypes) => {
         </button>
       </div>
       <Styled.Comments>
-        {commentDatas?.length === 0 ? (
+        {comments?.length === 0 ? (
           <div className="none_comment">
             <span>작성된 댓글이 없습니다.</span>
           </div>
         ) : (
-          commentDatas?.map((item, idx) => (
+          comments?.map((item, idx) => (
             <Comment
               key={item.id}
               item={item}
               idx={idx}
               isSelected={selectedCommentIndex === idx ? true : false}
               setSelectedCommentIndex={setSelectedCommentIndex}
-              setCommentDatas={setCommentDatas}
+              refetch={refetch}
             />
           ))
         )}

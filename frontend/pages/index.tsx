@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios';
 import { ReactNode } from 'react';
-import type { GetServerSidePropsContext } from 'next';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import MainContentHeader from '../components/Main/MainContentHeader';
 import Seo from '../components/Seo';
@@ -25,7 +24,7 @@ const Home = () => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(POPULAR_LISTS, postAPI.popular);
 

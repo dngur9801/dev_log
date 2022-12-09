@@ -4,13 +4,13 @@ import React, { ReactNode } from 'react';
 import { useQuery } from 'react-query';
 import { postAPI } from '../../../api';
 import { DETAIL_POST } from '../../../constant/queryKey';
-import { ResponseDetailPostTypes } from '../../../interfaces';
+import { PostTypes } from '../../../interfaces';
 import Write from '../../write';
 
 const Edit = () => {
   const router = useRouter();
   const { posturl } = router.query;
-  const { data, error, status } = useQuery<ResponseDetailPostTypes, AxiosError<ReactNode>>(
+  const { data, error, status } = useQuery<PostTypes, AxiosError<ReactNode>>(
     [DETAIL_POST, posturl],
     () => postAPI.detail(posturl),
     {
@@ -23,7 +23,7 @@ const Edit = () => {
     return <span>{error.response.data}</span>;
   }
 
-  return <Write modifyTitle={data?.data?.title} modifyContent={data?.data?.content} id={data?.data?.id} />;
+  return <Write modifyTitle={data?.title} modifyContent={data?.content} id={data?.id} />;
 };
 
 export default Edit;

@@ -18,12 +18,14 @@ import { useCookies } from 'react-cookie';
 
 interface Props {
   ssrUserData: UserInfoTypes;
+  themeCookie: 'dark' | 'light' | undefined;
 }
 
-const LayoutHeader = ({ ssrUserData }: Props) => {
+const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
   const [menuToggle, setMenuToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
+  const [toggleDarkMode, setToggleDarkMode] = useState(themeCookie === 'dark' ? true : false);
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
   const { hide, pageY, throttleScroll } = useScroll(50);
   const [cookies, setCookie] = useCookies(['theme']);
@@ -59,6 +61,7 @@ const LayoutHeader = ({ ssrUserData }: Props) => {
   // darkMode or lightMode toggle
   const onClickSetMode = () => {
     cookies.theme === 'dark' ? setCookie('theme', 'light') : setCookie('theme', 'dark');
+    setToggleDarkMode(!toggleDarkMode);
     setDarkmode(!darkmode);
   };
 
@@ -96,7 +99,7 @@ const LayoutHeader = ({ ssrUserData }: Props) => {
               )}
             </Styled.MyTitle>
             <Styled.HeaderRight>
-              {darkmode ? (
+              {toggleDarkMode ? (
                 <FaMoon size="24px" onClick={onClickSetMode} />
               ) : (
                 <FaSun size="24px" onClick={onClickSetMode} />

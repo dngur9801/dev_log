@@ -54,6 +54,7 @@ export interface PostTypes {
   }[];
   likeCount: number;
   id: number;
+  isLike: 0 | 1;
   comments: CommentTypes[];
   content: string;
   createdAt: string;
