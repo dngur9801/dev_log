@@ -174,33 +174,9 @@ router.get('/posts', async (req, res, next) => {
         },
       ],
     });
-    console.log('user : ', user.id);
-    // const posts = await Post.findAll({
-    //   order: [['createdAt', 'DESC']],
-    //   where: { userId: user.id },
-    //   include: [
-    //     {
-    //       model: Image,
-    //       attributes: ['src'],
-    //     },
-    //     {
-    //       model: User,
-    //       attributes: ['profileImage', 'nickName', 'introduce', 'name'],
-    //     },
-    //     {
-    //       model: Comment,
-    //       attributes: ['content'],
-    //     },
-    //     {
-    //       model: User,
-    //       as: 'Likers',
-    //       attributes: ['id'],
-    //     },
-    //   ],
-    // });
-    // posts.forEach((item, idx) => {
-    //   item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
-    // });
+    user.dataValues.posts.forEach((item, idx) => {
+      item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
+    });
     res.status(200).json(user);
   } catch (error) {
     console.error(error);

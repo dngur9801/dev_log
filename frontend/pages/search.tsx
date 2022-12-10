@@ -9,7 +9,7 @@ import { postAPI } from '../api';
 import { debounce } from '../utils';
 import { SEARCH_POST } from '../constant/queryKey';
 const Search = () => {
-  const [keyword, setKeyword] = useState(null);
+  const [keyword, setKeyword] = useState('');
   const {
     data: searchData,
     error,
@@ -19,8 +19,11 @@ const Search = () => {
     enabled: !!keyword,
     select: (data) => data.slice(0, 10),
   });
+
+  const printValue = debounce((value: React.SetStateAction<string>) => setKeyword(value), 500);
+
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debounce(() => setKeyword(e.target.value), 500)();
+    printValue(e.target.value);
   };
 
   if (status === 'error') {

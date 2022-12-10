@@ -27,7 +27,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
   const [user, setUser] = useRecoilState(userInfo);
   const [toggleDarkMode, setToggleDarkMode] = useState(themeCookie === 'dark' ? true : false);
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
-  const { hide, pageY, throttleScroll } = useScroll(50);
+  const { hide, pageY, throttleScroll } = useScroll(100);
   const [cookies, setCookie] = useCookies(['theme']);
 
   const { mutate }: any = useMutation(() => userAPI.logout());

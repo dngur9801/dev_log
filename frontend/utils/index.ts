@@ -22,13 +22,21 @@ export const initUserInfoData = (): UserInfoTypes => ({
   introduce: '',
 });
 
-export const debounce = (callback: any, duration: number) => {
-  let timer: NodeJS.Timeout;
-  console.log('debounce');
+export const throttle = (callback: () => void, waitTime: number) => {
+  let timerId: NodeJS.Timeout = null;
   return () => {
-    console.log('callback : ', callback);
-    console.log('debounce33');
+    if (timerId) return;
+    timerId = setTimeout(() => {
+      callback.call(this);
+      timerId = null;
+    }, waitTime);
+  };
+};
+
+export const debounce = (callback: React.Dispatch<React.SetStateAction<string>>, duration: number) => {
+  let timer: any;
+  return (value: string) => {
     clearTimeout(timer);
-    timer = setTimeout(() => callback(), duration);
+    timer = setTimeout(() => callback(value), duration);
   };
 };

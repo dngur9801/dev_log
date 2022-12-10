@@ -241,6 +241,7 @@ router.get('/search', async (req, res, next) => {
     posts.forEach((item, idx) => {
       item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
     });
+    console.log('request');
     res.json(posts);
   } catch (error) {
     console.error(error);

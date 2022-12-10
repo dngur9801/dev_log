@@ -106,7 +106,7 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, refetch }: Co
         <div className="content">{item.content}</div>
       )}
 
-      <button type="button" className="reply">
+      <button type="button" className="reply" onClick={() => alert('서비스 준비중 입니다.')}>
         <FaPlusSquare />
         <span>답글 달기</span>
       </button>

@@ -1,15 +1,5 @@
 import { useState } from 'react';
-
-const throttle = (callback: () => void, waitTime: number) => {
-  let timerId: NodeJS.Timeout = null;
-  return () => {
-    if (timerId) return;
-    timerId = setTimeout(() => {
-      callback.call(this);
-      timerId = null;
-    }, waitTime);
-  };
-};
+import { throttle } from '../utils';
 
 const useScroll = (waitTime: number) => {
   const [hide, setHide] = useState(false);
