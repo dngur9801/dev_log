@@ -10,6 +10,7 @@ import {
   ChangeProfileFormTypes,
   UserInfoTypes,
   PostTypes,
+  UserBlogTypes,
 } from '../interfaces';
 
 const request = axios.create({
@@ -19,7 +20,7 @@ const request = axios.create({
 
 export const userAPI = {
   info: (): Promise<UserInfoTypes> => request.get('/user').then((res) => res.data),
-  posts: (data: string): Promise<PostTypes[]> => request.get(`/user/posts?name=${data}`).then((res) => res.data),
+  posts: (data: string): Promise<UserBlogTypes> => request.get(`/user/posts?name=${data}`).then((res) => res.data),
   signUp: (data: SignUpTypes) => request.post('/user/signup', data),
   localLogin: (data: LocalLoginTypes) => request.post('/user/login', data),
   logout: () => request.post('/user/logout'),

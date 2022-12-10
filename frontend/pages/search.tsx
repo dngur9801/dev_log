@@ -7,13 +7,14 @@ import { PostTypes } from '../interfaces';
 import { AxiosError } from 'axios';
 import { postAPI } from '../api';
 import { debounce } from '../utils';
+import { SEARCH_POST } from '../constant/queryKey';
 const Search = () => {
   const [keyword, setKeyword] = useState(null);
   const {
     data: searchData,
     error,
     status,
-  } = useQuery<PostTypes[], AxiosError<ReactNode>>(['SEARCH_POST', keyword], () => postAPI.search(keyword), {
+  } = useQuery<PostTypes[], AxiosError<ReactNode>>([SEARCH_POST, keyword], () => postAPI.search(keyword), {
     refetchOnWindowFocus: false,
     enabled: !!keyword,
     select: (data) => data.slice(0, 10),

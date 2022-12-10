@@ -13,12 +13,28 @@ const UserBlogContent = ({ item }: UserBlogContentPropTypes) => {
   return (
     <Styled.Content>
       <div className="my_content">
-        <Link href={`/@${item.user?.name}/${item.id}`}>
+        <Link
+          href={{
+            pathname: '/[user]/[posturl]',
+            query: {
+              id: item.id,
+            },
+          }}
+          as={`/@${item.user?.name}/${item.title}`}
+        >
           <a className="image_box">
             <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : defaultTitleImage()} alt="" />
           </a>
         </Link>
-        <Link href={`/@${item.user?.name}/${item.id}`}>
+        <Link
+          href={{
+            pathname: '/[user]/[posturl]',
+            query: {
+              id: item.id,
+            },
+          }}
+          as={`/@${item.user?.name}/${item.title}`}
+        >
           <a>
             <p className="subject">{item.title}</p>
           </a>
@@ -90,9 +106,9 @@ const Styled = {
         align-items: center;
 
         svg {
-          margin-bottom: 4px;
+          margin-bottom: -1px;
           color: red;
-          vertical-align: 1px;
+          vertical-align: 5px;
         }
       }
     }

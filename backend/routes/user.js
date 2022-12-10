@@ -152,35 +152,56 @@ router.get('/posts', async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: { name: req.query.name },
-    });
-    console.log('user : ', user.id);
-    const posts = await Post.findAll({
-      order: [['createdAt', 'DESC']],
-      where: { userId: user.id },
       include: [
         {
-          model: Image,
-          attributes: ['src'],
-        },
-        {
-          model: User,
-          attributes: ['profileImage', 'nickName', 'introduce'],
-        },
-        {
-          model: Comment,
-          attributes: ['content'],
-        },
-        {
-          model: User,
-          as: 'Likers',
-          attributes: ['id'],
+          model: Post,
+          order: [['createdAt', 'DESC']],
+          include: [
+            {
+              model: Image,
+              attributes: ['src'],
+            },
+            {
+              model: Comment,
+              attributes: ['content'],
+            },
+            {
+              model: User,
+              as: 'Likers',
+              attributes: ['id'],
+            },
+          ],
         },
       ],
     });
-    posts.forEach((item, idx) => {
-      item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
-    });
-    res.status(200).json(posts);
+    console.log('user : ', user.id);
+    // const posts = await Post.findAll({
+    //   order: [['createdAt', 'DESC']],
+    //   where: { userId: user.id },
+    //   include: [
+    //     {
+    //       model: Image,
+    //       attributes: ['src'],
+    //     },
+    //     {
+    //       model: User,
+    //       attributes: ['profileImage', 'nickName', 'introduce', 'name'],
+    //     },
+    //     {
+    //       model: Comment,
+    //       attributes: ['content'],
+    //     },
+    //     {
+    //       model: User,
+    //       as: 'Likers',
+    //       attributes: ['id'],
+    //     },
+    //   ],
+    // });
+    // posts.forEach((item, idx) => {
+    //   item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
+    // });
+    res.status(200).json(user);
   } catch (error) {
     console.error(error);
     next(error);

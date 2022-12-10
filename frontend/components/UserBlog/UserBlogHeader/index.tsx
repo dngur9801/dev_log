@@ -8,11 +8,11 @@ interface UserBlogHeaderPropTypes {
   introduce: string;
 }
 
-const UserBlogHeader = ({ nickName, introduce }: UserBlogHeaderPropTypes) => {
+const UserBlogHeader = ({ nickName, profileImage, introduce }: UserBlogHeaderPropTypes) => {
   return (
     <S.Container>
       <div className="profile">
-        <ProfileImage width={130} height={130} />
+        <ProfileImage width={130} height={130} src={profileImage} />
         <div className="profile_text">
           <p>{nickName}</p>
           <span>{introduce}</span>

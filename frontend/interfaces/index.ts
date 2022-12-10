@@ -8,10 +8,6 @@ export interface UserInfoTypes {
   introduce: string;
 }
 
-export interface ResponseUserInfoTypes {
-  data: UserInfoTypes;
-}
-
 export interface SignUpTypes {
   email: string;
   password: string;
@@ -39,10 +35,7 @@ export interface CommentTypes {
   id: string;
   content: string;
   createdAt: string;
-  user: {
-    name: string;
-    profileImage: string;
-  };
+  user: UserInfoTypes;
 }
 
 export interface PostTypes {
@@ -62,22 +55,12 @@ export interface PostTypes {
     src: string;
   };
   title: string;
-  user: {
-    id: number;
-    name: string;
-    nickName: string;
-    profileImage: string;
-    introduce: string;
-  };
+  user: UserInfoTypes;
   viewCnt: string;
 }
 
-export interface ResponsePostsTypes {
-  data: PostTypes[];
-}
-
-export interface ResponseDetailPostTypes {
-  data: PostTypes;
+export interface UserBlogTypes extends UserInfoTypes {
+  posts: PostTypes[];
 }
 
 export interface UserRegistTypes {
