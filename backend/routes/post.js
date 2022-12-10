@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const { Op } = require('sequelize');
 const { User, Post, Image, Comment, sequelize } = require('../models');
 const utils = require('../utils');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
@@ -51,7 +52,7 @@ router.post(
 );
 
 // 게시글 상세페이지
-router.get('/:postId', async (req, res, next) => {
+router.get('/detail/:postId', async (req, res, next) => {
   try {
     const userId = req.user?.id;
     const post = await Post.findOne({
@@ -180,7 +181,6 @@ router.post('/:postId/like', isLoggedIn, async (req, res, next) => {
 
 // 좋아요 취소
 router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
-  // DELETE /post/1/like
   try {
     const post = await Post.findOne({ where: { id: req.params.postId } });
     if (!post) {
@@ -192,6 +192,56 @@ router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
       { where: { id: req.params.postId } }
     );
     res.json({ PostId: post.id, UserId: req.user.id });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 게시글 검색
+router.get('/search', async (req, res, next) => {
+  try {
+    const { searchWord } = req.query;
+    Op;
+    const posts = await Post.findAll({
+      where: {
+        title: {
+          [Op.like]: '%' + searchWord + '%',
+        },
+      },
+      order: [['likeCount', 'DESC']],
+      include: [
+        {
+          model: Image,
+          attributes: ['src'],
+        },
+        {
+          model: Comment,
+          attributes: {
+            exclude: ['updatedAt', 'postId', 'userId'],
+          },
+          include: [
+            {
+              model: User,
+              attributes: ['name', 'profileImage'],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ['id', 'name'],
+        },
+        {
+          model: User,
+          as: 'Likers',
+          attributes: ['id'],
+        },
+      ],
+    });
+    posts.forEach((item, idx) => {
+      item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
+    });
+    res.json(posts);
   } catch (error) {
     console.error(error);
     next(error);

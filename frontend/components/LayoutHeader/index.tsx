@@ -105,7 +105,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
               ) : (
                 <FaSun size="24px" onClick={onClickSetMode} />
               )}
-              <FaSearch size="24px" />
+              <FaSearch size="24px" onClick={() => router.push('/search')} />
               {userData?.email ? (
                 <>
                   <Styled.WriteBtn>

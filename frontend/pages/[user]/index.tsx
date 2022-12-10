@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import UserBlogHeader from '../../components/UserBlog/UserBlogHeader';
-import UserBlogContent from '../../components/UserBlog/UserBlogContent';
+import UserBlogContent from '../../components/Common/UserBlogContent';
 import Seo from '../../components/Seo';
 import { userAPI } from '../../api';
 import { useQuery } from 'react-query';

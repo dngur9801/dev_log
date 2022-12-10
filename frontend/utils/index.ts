@@ -21,3 +21,14 @@ export const initUserInfoData = (): UserInfoTypes => ({
   nickName: '',
   introduce: '',
 });
+
+export const debounce = (callback: any, duration: number) => {
+  let timer: NodeJS.Timeout;
+  console.log('debounce');
+  return () => {
+    console.log('callback : ', callback);
+    console.log('debounce33');
+    clearTimeout(timer);
+    timer = setTimeout(() => callback(), duration);
+  };
+};
