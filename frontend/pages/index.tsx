@@ -7,6 +7,7 @@ import { postAPI } from '../api';
 import MainContent from '../components/Main/MainContent';
 import { POPULAR_LISTS } from '../constant/queryKey';
 import { PostTypes } from '../interfaces';
+import Alert from '../components/Common/CustomAlert';
 
 const Home = () => {
   const { data, error, status } = useQuery<PostTypes[], AxiosError<ReactNode>>(POPULAR_LISTS, postAPI.popular, {

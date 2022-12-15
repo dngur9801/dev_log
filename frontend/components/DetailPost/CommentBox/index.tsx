@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation } from 'react-query';
 import { commentAPI } from '../../../api';
 import { CommentTypes, PostTypes, registCommentTypes } from '../../../interfaces';
+import CustomAlert from '../../Common/CustomAlert';
 import Comment from './Comment';
 import * as Styled from './CommentBox.style';
 
@@ -15,6 +16,8 @@ interface CommentBoxPropTypes {
 }
 
 const CommentBox = ({ comments, postId, refetch }: CommentBoxPropTypes) => {
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [comment, setComment] = useState('');
   const [selectedCommentIndex, setSelectedCommentIndex] = useState<number>();
 
@@ -41,11 +44,13 @@ const CommentBox = ({ comments, postId, refetch }: CommentBoxPropTypes) => {
     };
     create(data, {
       onSuccess: () => {
-        alert('댓글이 작성되었습니다.');
+        setIsAlert(true);
+        setAlertText('😁 댓글이 작성되었습니다.');
         refetch();
       },
       onError: (error: any) => {
-        alert(error.response.data);
+        setIsAlert(true);
+        setAlertText(`😂 ${error.response.data}`);
       },
     });
   };
@@ -74,11 +79,14 @@ const CommentBox = ({ comments, postId, refetch }: CommentBoxPropTypes) => {
               idx={idx}
               isSelected={selectedCommentIndex === idx ? true : false}
               setSelectedCommentIndex={setSelectedCommentIndex}
+              setIsAlert={setIsAlert}
+              setAlertText={setAlertText}
               refetch={refetch}
             />
           ))
         )}
       </Styled.Comments>
+      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </Styled.Wrap>
   );
 };

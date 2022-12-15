@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { userAPI } from '../api';
+import CustomAlert from '../components/Common/CustomAlert';
 import Seo from '../components/Seo';
 import EditProfile from '../components/Setting/EditProfile';
 import EditSubject from '../components/Setting/EditSubject';
@@ -15,6 +16,8 @@ import { ChangeProfileFormTypes } from '../interfaces';
 import { userInfo } from '../store/atom';
 
 const Setting: NextPage = () => {
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [changeForm, setChangeForm] = useState<ChangeProfileFormTypes>(null);
   const [isModifyProfile, setIsModifyProfile] = useState(false);
   const [isModifySubject, setIsModifySubject] = useState(false);
@@ -50,7 +53,8 @@ const Setting: NextPage = () => {
         setIsModifyProfile(false);
       },
       onError: (error: any) => {
-        alert(error.response.data);
+        setIsAlert(true);
+        setAlertText(`😂 ${error.response.data}`);
       },
     });
   };
@@ -72,7 +76,8 @@ const Setting: NextPage = () => {
         }));
       },
       onError: (error: any) => {
-        alert(error.response.data);
+        setIsAlert(true);
+        setAlertText(`😂 ${error.response.data}`);
       },
     });
   };
@@ -90,7 +95,8 @@ const Setting: NextPage = () => {
           setIsModifySubject(false);
         },
         onError: (error: any) => {
-          alert(error.response.data);
+          setIsAlert(true);
+          setAlertText(`😂 ${error.response.data}`);
         },
       },
     );
@@ -105,7 +111,8 @@ const Setting: NextPage = () => {
           queryClient.invalidateQueries(USER_INFO);
         },
         onError: (error: any) => {
-          alert(error.response.data);
+          setIsAlert(true);
+          setAlertText(`😂 ${error.response.data}`);
         },
       });
   };
@@ -132,6 +139,7 @@ const Setting: NextPage = () => {
           <OutMember onClickOutMember={onClickOutMember} />
         </Styled.SubInfoWrap>
       </Styled.Container>
+      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </>
   );
 };

@@ -12,11 +12,15 @@ import Header from '../../../components/DetailPost/Header';
 import Content from '../../../components/DetailPost/Content';
 import { GetServerSidePropsContext } from 'next';
 import { useCookies } from 'react-cookie';
+import CustomAlert from '../../../components/Common/CustomAlert';
 
 const DetailPost = () => {
   const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
     ssr: false,
   });
+
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [cookies, setCookies, deleteCookies] = useCookies(['postId']);
 
   const router = useRouter();
@@ -26,9 +30,9 @@ const DetailPost = () => {
     error,
     status,
     refetch,
-  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI.detail(id), {
+  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI.detail(cookies.postId), {
     refetchOnWindowFocus: false,
-    enabled: !!id,
+    enabled: !!cookies.postId,
   });
   const [isLike, setIsLike] = useState(postData.isLike === 1 ? true : false);
   const likeRef = useRef<HTMLDivElement>(null);
@@ -42,11 +46,13 @@ const DetailPost = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       removePost(postData.id, {
         onSuccess: () => {
-          alert('삭제가 완료되었습니다.');
+          setIsAlert(true);
+          setAlertText('😁 삭제가 완료되었습니다.');
           router.replace('/');
         },
         onError: (error: any) => {
-          alert(error.response.data);
+          setIsAlert(true);
+          setAlertText(`😂 ${error.response.data}`);
         },
       });
     }
@@ -61,7 +67,8 @@ const DetailPost = () => {
           refetch();
         },
         onError: (error: any) => {
-          alert(error.response.data);
+          setIsAlert(true);
+          setAlertText(`😂 ${error.response.data}`);
         },
       });
     } else {
@@ -71,7 +78,8 @@ const DetailPost = () => {
           refetch();
         },
         onError: (error: any) => {
-          alert(error.response.data);
+          setIsAlert(true);
+          setAlertText(`😂 ${error.response.data}`);
         },
       });
     }
@@ -121,6 +129,7 @@ const DetailPost = () => {
         />
         <CommentBox comments={postData?.comments} postId={postData.id} refetch={refetch} />
       </Styled.ContentWrap>
+      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </>
   );
 };

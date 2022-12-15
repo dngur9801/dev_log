@@ -10,16 +10,18 @@ import { commentAPI } from '../../../../api';
 import { CommentEditTypes, CommentTypes, PostTypes } from '../../../../interfaces';
 import ProfileImage from '../../../Common/ProfileImage';
 
-interface CommentPropTypes {
+interface Props {
   item: CommentTypes;
   idx: number;
   isSelected: boolean;
   setSelectedCommentIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setIsAlert: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlertText: React.Dispatch<React.SetStateAction<string>>;
   refetch: <TPageData>(
     options?: RefetchOptions & RefetchQueryFilters<TPageData>,
   ) => Promise<QueryObserverResult<PostTypes, AxiosError<React.ReactNode>>>;
 }
-const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, refetch }: CommentPropTypes) => {
+const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setIsAlert, setAlertText, refetch }: Props) => {
   const [editComment, setEditComment] = useState('');
   const [user] = useRecoilState(userInfo);
 
@@ -43,7 +45,8 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, refetch }: Co
         setEditComment('');
       },
       onError: (error: any) => {
-        alert(error.response.data);
+        setIsAlert(true);
+        setAlertText(`😂 ${error.response.data}`);
       },
     });
   };
@@ -51,16 +54,18 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, refetch }: Co
   // 댓글 삭제 클릭 시
   const onClickDelete = (id: string) => {
     if (confirm('댓글을 삭제하시겠습니까?')) {
-      alert('삭제되었습니다.');
+      remove(id, {
+        onSuccess: () => {
+          setIsAlert(true);
+          setAlertText('😁 삭제되었습니다.');
+          refetch();
+        },
+        onError: (error: any) => {
+          setIsAlert(true);
+          setAlertText(`😂 ${error.response.data}`);
+        },
+      });
     }
-    remove(id, {
-      onSuccess: () => {
-        refetch();
-      },
-      onError: (error: any) => {
-        alert(error.response.data);
-      },
-    });
   };
 
   return (
@@ -106,7 +111,14 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, refetch }: Co
         <div className="content">{item.content}</div>
       )}
 
-      <button type="button" className="reply" onClick={() => alert('서비스 준비중 입니다.')}>
+      <button
+        type="button"
+        className="reply"
+        onClick={() => {
+          setIsAlert(true);
+          setAlertText('😅 서비스 준비중 입니다.');
+        }}
+      >
         <FaPlusSquare />
         <span>답글 달기</span>
       </button>

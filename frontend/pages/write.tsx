@@ -10,6 +10,7 @@ import { RegistOrEditTypes } from '../interfaces';
 import { useRecoilState, useRecoilValue } from 'recoil'; // 훅 import
 import { darkMode, userInfo } from '../store/atom';
 import RegistModal from '../components/Write/RegistModal';
+import CustomAlert from '../components/Common/CustomAlert';
 
 interface WriteTypes {
   modifyTitle?: string;
@@ -21,6 +22,8 @@ const EditorBox = dynamic(() => import('../components/Common/EditorBox'), {
 });
 
 const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [isModal, setIsModal] = useState(false);
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');
@@ -60,7 +63,8 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
         );
       },
       onError: (error: any) => {
-        alert(error.response.data);
+        setIsAlert(true);
+        setAlertText(`😂 ${error.response.data}`);
       },
     });
   };
@@ -82,7 +86,8 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
         );
       },
       onError: (error: any) => {
-        alert(error.response.data);
+        setIsAlert(true);
+        setAlertText(`😂 ${error.response.data}`);
       },
     });
   };
@@ -141,6 +146,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
           />
         )}
       </form>
+      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </Styled.Wrap>
   );
 };

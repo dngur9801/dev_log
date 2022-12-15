@@ -8,12 +8,15 @@ import Loading from '../../Common/Loading';
 import Link from 'next/link';
 import { LocalLoginTypes } from '../../../interfaces';
 import { apiAddress } from '../../../config';
+import CustomAlert from '../../Common/CustomAlert';
 
 interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const LoginModal = ({ setLoginModal }: LoginModalProps) => {
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({});
 
@@ -33,7 +36,8 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
         window.location.reload();
       },
       onError: (error: any) => {
-        alert(error.response.data);
+        setIsAlert(true);
+        setAlertText(`😂 ${error.response.data}`);
       },
     });
   };
@@ -82,6 +86,7 @@ const LoginModal = ({ setLoginModal }: LoginModalProps) => {
           </div>
         </S.Content>
       </div>
+      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </S.Wrap>
   );
 };

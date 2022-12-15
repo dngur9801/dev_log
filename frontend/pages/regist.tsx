@@ -8,6 +8,7 @@ import { UserRegistTypes } from '../interfaces/index';
 import { apiAddress } from '../config';
 import styled from 'styled-components';
 import { reg } from '../utils';
+import CustomAlert from '../components/Common/CustomAlert';
 
 // interface RegisterPropTypes {
 //   data: {
@@ -16,6 +17,8 @@ import { reg } from '../utils';
 // }
 
 const Register = () => {
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [nickName, setNickName] = useState('');
   const [name, setName] = useState('');
   const [introduce, setIntroduce] = useState('');
@@ -33,11 +36,14 @@ const Register = () => {
       introduce,
     };
     if (nickName === '') {
-      alert('닉네임을 입력해주세요');
+      setIsAlert(true);
+      setAlertText('😁 닉네임을 입력해주세요');
     } else if (name === '') {
-      alert('아이디를 입력해주세요');
+      setIsAlert(true);
+      setAlertText('😁 아이디를 입력해주세요');
     } else if (!reg.isId(name)) {
-      alert('아이디는 영문자로 시작하는 영문자 또는 숫자 6~20자를 입력하세요');
+      setIsAlert(true);
+      setAlertText('😁 아이디는 영문자로 시작하는 영문자 또는 숫자 6~20자를 입력해주세요');
     } else {
       regist(data, {
         onSuccess: () => {
@@ -48,7 +54,8 @@ const Register = () => {
           }
         },
         onError: (error: any) => {
-          alert(error.response.data);
+          setIsAlert(true);
+          setAlertText(`😂 ${error.response.data}`);
         },
       });
     }
@@ -81,6 +88,7 @@ const Register = () => {
           완료
         </button>
       </div>
+      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </Styled.Wrap>
   );
 };
