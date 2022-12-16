@@ -25,7 +25,6 @@ const location =
       'http://localhost:3000';
 
 console.log(222);
-console.log('process.env.DB_PASSWORD : ', process.env.DB_PASSWORD);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
