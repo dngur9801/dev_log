@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const dotenv = require('dotenv');
 
-console.log(0000);
+console.log('hihihihihihi');
 
 const db = require('./models');
 const passportConfig = require('./passport');
