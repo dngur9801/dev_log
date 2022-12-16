@@ -13,6 +13,7 @@ const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
 const commentRouter = require('./routes/comment');
 
+console.log(111);
 dotenv.config();
 passportConfig();
 const app = express();
@@ -22,6 +23,8 @@ const location =
     ? process.env.CLIENT_ADDRESS
     : // : 'https://main--imaginative-sunburst-7e031b.netlify.app/';
       'http://localhost:3000';
+
+console.log(222);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
