@@ -20,8 +20,8 @@ const port = 5000;
 const location =
   process.env.NODE_ENV === 'production'
     ? process.env.CLIENT_ADDRESS
-    : // : 'http://localhost:3000';
-      'https://639c77d0d1618713a9de435e--gregarious-sable-965f3b.netlify.app/';
+    : 'http://localhost:3000';
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
