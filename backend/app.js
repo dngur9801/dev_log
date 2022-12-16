@@ -20,7 +20,8 @@ const port = 5000;
 const location =
   process.env.NODE_ENV === 'production'
     ? process.env.CLIENT_ADDRESS
-    : 'http://localhost:3000';
+    : // : 'https://main--imaginative-sunburst-7e031b.netlify.app/';
+      'http://localhost:3000';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +31,7 @@ app.use(
     credentials: true,
   })
 );
+console.log(333);
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({

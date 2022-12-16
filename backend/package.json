@@ -30,6 +30,7 @@
     "passport-naver": "^1.0.6",
     "passport-naver-v2": "^2.0.8",
     "sequelize": "^6.23.2",
-    "sequelize-cli": "^6.5.1"
+    "sequelize-cli": "^6.5.1",
+    "vercel": "^28.9.0"
   }
 }
