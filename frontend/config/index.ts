@@ -18,7 +18,7 @@ export const seoConfig = {
       href: '/favicon.ico',
     },
     {
-      rel: 'manifest',
+      rel: '/manifest',
       href: '/manifest.json',
     },
   ],
