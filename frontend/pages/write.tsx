@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { FaImage, FaArrowCircleLeft } from 'react-icons/fa';
 import { useMutation } from 'react-query';
+import { NextSeo } from 'next-seo';
 import { postAPI } from '../api';
 import { Editor } from '@toast-ui/react-editor';
 import { useRouter } from 'next/router';
@@ -107,47 +108,57 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
     setTitle(modifyTitle || '');
   }, [modifyTitle]);
   return (
-    <Styled.Wrap>
-      <form encType="multipart/form-data">
-        <Styled.Subject>
-          <input
-            type="text"
-            name="title"
-            placeholder="제목을 입력하세요."
-            className="subject_input"
-            maxLength={100}
-            onChange={(e) => setTitle(e.target.value)}
-            defaultValue={title}
-          />
-          <div className="subject_img">
-            <input className="upload_name" defaultValue={fileName} readOnly />
-            <label htmlFor="file">
-              <FaImage />
-              표지 이미지
-            </label>
-            <input type="file" accept="image/*" id="file" name="file" onChange={(e) => onUploadImage(e)} />
-          </div>
-        </Styled.Subject>
-        <EditorBox editorRef={editorRef} value={modifyContent} darkmode={darkmode} />
-        <Styled.ButtonWrap>
-          <button type="button" onClick={() => router.back()}>
-            <FaArrowCircleLeft />
-            나가기
-          </button>
-          <button type="button" onClick={() => setIsModal(true)}>
-            글 {modifyTitle ? '수정' : '발행'}하기
-          </button>
-        </Styled.ButtonWrap>
-        {isModal && (
-          <RegistModal
-            onSubmit={id ? onSubmitModify : onSubmitRegist}
-            setIsModal={setIsModal}
-            setIsPrivate={setIsPrivate}
-          />
-        )}
-      </form>
-      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
-    </Styled.Wrap>
+    <>
+      <NextSeo
+        title="새 글 작성"
+        description="새 글 작성 description"
+        canonical="https://example.com"
+        openGraph={{
+          url: 'https://example.com',
+        }}
+      />
+      <Styled.Wrap>
+        <form encType="multipart/form-data">
+          <Styled.Subject>
+            <input
+              type="text"
+              name="title"
+              placeholder="제목을 입력하세요."
+              className="subject_input"
+              maxLength={100}
+              onChange={(e) => setTitle(e.target.value)}
+              defaultValue={title}
+            />
+            <div className="subject_img">
+              <input className="upload_name" defaultValue={fileName} readOnly />
+              <label htmlFor="file">
+                <FaImage />
+                표지 이미지
+              </label>
+              <input type="file" accept="image/*" id="file" name="file" onChange={(e) => onUploadImage(e)} />
+            </div>
+          </Styled.Subject>
+          <EditorBox editorRef={editorRef} value={modifyContent} darkmode={darkmode} />
+          <Styled.ButtonWrap>
+            <button type="button" onClick={() => router.back()}>
+              <FaArrowCircleLeft />
+              나가기
+            </button>
+            <button type="button" onClick={() => setIsModal(true)}>
+              글 {modifyTitle ? '수정' : '발행'}하기
+            </button>
+          </Styled.ButtonWrap>
+          {isModal && (
+            <RegistModal
+              onSubmit={id ? onSubmitModify : onSubmitRegist}
+              setIsModal={setIsModal}
+              setIsPrivate={setIsPrivate}
+            />
+          )}
+        </form>
+        {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
+      </Styled.Wrap>
+    </>
   );
 };
 

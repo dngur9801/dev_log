@@ -48,6 +48,29 @@ router.get(
   }
 );
 
+// naver 로그인
+router.get(
+  '/naver',
+  isNotLoggedIn,
+  passport.authenticate('naver', { scope: ['profile', 'email'] })
+);
+
+router.get(
+  '/naver/callback',
+  passport.authenticate('naver', {
+    failureRedirect: 'http://localhost:3000',
+  }),
+  (req, res) => {
+    if (!req._user.name) {
+      res.redirect(
+        `http://localhost:3000/regist?auth=naver&id=${req._user.id}`
+      );
+    } else {
+      res.redirect('http://localhost:3000');
+    }
+  }
+);
+
 // kakao 로그인
 router.get(
   '/kakao',

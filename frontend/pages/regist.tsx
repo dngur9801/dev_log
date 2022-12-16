@@ -1,20 +1,12 @@
-import { GetServerSideProps } from 'next';
+import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useMutation } from 'react-query';
 import { userAPI } from '../api';
 import { UserRegistTypes } from '../interfaces/index';
-import { apiAddress } from '../config';
 import styled from 'styled-components';
 import { reg } from '../utils';
 import CustomAlert from '../components/Common/CustomAlert';
-
-// interface RegisterPropTypes {
-//   data: {
-//     id: number;
-//   };
-// }
 
 const Register = () => {
   const [isAlert, setIsAlert] = useState(false);
@@ -47,11 +39,7 @@ const Register = () => {
     } else {
       regist(data, {
         onSuccess: () => {
-          if (auth === 'github') {
-            window.location.href = `${apiAddress()}/auth/github`;
-          } else if (auth === 'google') {
-            window.location.href = `${apiAddress()}/auth/google`;
-          }
+          window.location.href = 'http://localhost:3000';
         },
         onError: (error: any) => {
           setIsAlert(true);
@@ -61,35 +49,45 @@ const Register = () => {
     }
   };
   return (
-    <Styled.Wrap>
-      <h1>환영합니다!</h1>
-      <h2>기본 정보를 입력해주세요</h2>
-      <p>닉네임</p>
-      <input
-        type="text"
-        placeholder="닉네임을 입력하세요"
-        maxLength={30}
-        onChange={(e) => setNickName(e.target.value)}
+    <>
+      <NextSeo
+        title="회원가입"
+        description="회원가입 description"
+        canonical="https://example.com"
+        openGraph={{
+          url: 'https://example.com',
+        }}
       />
-      <p>아이디</p>
-      <input type="text" placeholder="아이디를 입력하세요" maxLength={30} onChange={(e) => setName(e.target.value)} />
-      <p>블로그 소개</p>
-      <input
-        type="text"
-        placeholder="소개글을 입력하세요"
-        maxLength={50}
-        onChange={(e) => setIntroduce(e.target.value)}
-      />
-      <div className="actions">
-        <button type="button" onClick={() => router.push('/')}>
-          취소
-        </button>
-        <button type="button" onClick={onClickRegist}>
-          완료
-        </button>
-      </div>
-      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
-    </Styled.Wrap>
+      <Styled.Wrap>
+        <h1>환영합니다!</h1>
+        <h2>기본 정보를 입력해주세요</h2>
+        <p>닉네임</p>
+        <input
+          type="text"
+          placeholder="닉네임을 입력하세요"
+          maxLength={30}
+          onChange={(e) => setNickName(e.target.value)}
+        />
+        <p>아이디</p>
+        <input type="text" placeholder="아이디를 입력하세요" maxLength={30} onChange={(e) => setName(e.target.value)} />
+        <p>블로그 소개</p>
+        <input
+          type="text"
+          placeholder="소개글을 입력하세요"
+          maxLength={50}
+          onChange={(e) => setIntroduce(e.target.value)}
+        />
+        <div className="actions">
+          <button type="button" onClick={() => router.push('/')}>
+            취소
+          </button>
+          <button type="button" onClick={onClickRegist}>
+            완료
+          </button>
+        </div>
+        {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
+      </Styled.Wrap>
+    </>
   );
 };
 
@@ -144,23 +142,4 @@ const Styled = {
   `,
 };
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const userId = context.query.id;
-//   console.log(context.query.id);
-
-//   const res = await axios.get(`http://localhost:5000/user/${userId}`);
-//   const data = res.data;
-
-//   console.log('res : ', res.data);
-//   // if (!data) {
-//   //   return {
-//   //     redirect: {
-//   //       destination: '/',
-//   //       permanent: false,
-//   //     },
-//   //   };
-//   // }
-
-//   return { props: { data: data } };
-// };
 export default Register;

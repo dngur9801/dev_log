@@ -97,7 +97,6 @@ router.get('/detail/:postId', async (req, res, next) => {
     const isLike = post.dataValues.Likers.find(item => item.id === userId)
       ? 1
       : 0;
-    console.log('isLike : ', isLike);
     post.dataValues.isLike = isLike;
     return res.status(200).json(post);
   } catch (error) {
@@ -143,7 +142,6 @@ router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
 // 게시글 삭제
 router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   try {
-    console.log('req.body', req.params.postId);
     await Post.destroy({
       where: {
         id: req.params.postId,
@@ -241,7 +239,6 @@ router.get('/search', async (req, res, next) => {
     posts.forEach((item, idx) => {
       item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
     });
-    console.log('request');
     res.json(posts);
   } catch (error) {
     console.error(error);

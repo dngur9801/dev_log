@@ -9,3 +9,28 @@ export function defaultProfileImage() {
 export function defaultTitleImage() {
   return '/image/noimg.jpeg';
 }
+
+export const seoConfig = {
+  titleTemplate: '%s | Devlog',
+  additionalLinkTags: [
+    {
+      rel: 'icon',
+      href: '/favicon.ico',
+    },
+    {
+      rel: 'manifest',
+      href: '/manifest.json',
+    },
+  ],
+  additionalMetaTags: [
+    {
+      name: 'theme-color',
+      content: '#FFFFFF',
+    },
+  ],
+  openGraph: {
+    type: 'website',
+    site_name: 'Devlog',
+    images: [{ url: 'https://example.com/example_square_image.png' }],
+  },
+};

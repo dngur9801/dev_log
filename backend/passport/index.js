@@ -4,6 +4,7 @@ const local = require('./local');
 const google = require('./google');
 const github = require('./github');
 const kakao = require('./kakao');
+const naver = require('./naver');
 const { User } = require('../models');
 
 module.exports = () => {
@@ -29,4 +30,5 @@ module.exports = () => {
   google();
   github();
   kakao();
+  naver();
 };

@@ -1,15 +1,15 @@
 import { NextPage } from 'next';
-import UserBlogHeader from '../../components/UserBlog/UserBlogHeader';
-import UserBlogContent from '../../components/Common/UserBlogContent';
-import Seo from '../../components/Seo';
-import { userAPI } from '../../api';
 import { useQuery } from 'react-query';
 import { AxiosError } from 'axios';
-import { UserBlogTypes } from '../../interfaces';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { USER_POSTS } from '../../constant/queryKey';
 import { ReactNode } from 'react';
+import { NextSeo } from 'next-seo';
+import UserBlogHeader from '../../components/UserBlog/UserBlogHeader';
+import UserBlogContent from '../../components/Common/UserBlogContent';
+import { userAPI } from '../../api';
+import { UserBlogTypes } from '../../interfaces';
+import { USER_POSTS } from '../../constant/queryKey';
 
 const UserBlog: NextPage = () => {
   const route = useRouter();
@@ -28,7 +28,14 @@ const UserBlog: NextPage = () => {
 
   return (
     <>
-      <Seo>Devlog</Seo>
+      <NextSeo
+        title={data?.nickName}
+        description={`${data?.nickName} description`}
+        canonical="https://example.com"
+        openGraph={{
+          url: 'https://example.com',
+        }}
+      />
       <UserBlogHeader nickName={data?.nickName} profileImage={data?.profileImage} introduce={data?.introduce} />
       <Styled.Wrap>
         <div className="taps">

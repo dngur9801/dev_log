@@ -85,7 +85,6 @@ router.post('/signup', isNotLoggedIn, async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     await User.create({
       email,
-      name: email.split('@')[0],
       password: hashedPassword,
     });
     res.status(201).send('ok');
@@ -103,16 +102,19 @@ router.post('/login', (req, res, next) => {
       return next(err);
     }
     if (info) {
+      if (info.notName) {
+        return res.json({ notName: true, id: user.id });
+      }
       return res.status(401).send(info.reason);
     }
     return req.login(user, async loginErr => {
       if (loginErr) {
         return next(loginErr);
       }
-      const UserWithPost = await User.findOne({
+      const userWithPost = await User.findOne({
         where: { id: user.id },
       });
-      return res.status(200).json(UserWithPost);
+      return res.status(200).json(userWithPost);
     });
   })(req, res, next);
 });
@@ -121,13 +123,20 @@ router.post('/login', (req, res, next) => {
 router.post('/regist', isNotLoggedIn, async (req, res, next) => {
   try {
     const { userId, nickName, name, introduce } = req.body;
-    const user = await User.findOne({
+
+    const isUser = await User.findOne({
+      where: { id: userId },
+    });
+    if (!userId || !name || !isUser || isUser.name) {
+      return res.status(400).send('잘못된 요청입니다.');
+    }
+    const isUserName = await User.findOne({
       where: { name },
     });
     if (nickName === '' || name === '') {
       return res.status(400).send('필수값을 입력해주세요');
     }
-    if (user) {
+    if (isUserName) {
       return res.status(401).send('이미 사용중인 아이디 입니다.');
     }
     await User.update(
@@ -140,6 +149,8 @@ router.post('/regist', isNotLoggedIn, async (req, res, next) => {
         where: { id: userId },
       }
     );
+    req.session.passport = { user: Number(userId) };
+    req.session.save();
     res.status(200).json(null);
   } catch (error) {
     console.error(error);
@@ -187,7 +198,6 @@ router.get('/posts', async (req, res, next) => {
 // 유저 정보 수정
 router.put('/edit/profile', isLoggedIn, async (req, res, next) => {
   try {
-    console.log(req.body);
     const { nickName, introduce } = req.body;
     await User.update(
       {
@@ -231,11 +241,13 @@ router.put(
   upload.single('file'),
   async (req, res, next) => {
     try {
-      console.log('req.file : ', req.file);
       const { blogName } = req.body;
       await User.update(
         {
-          profileImage: req.file.path,
+          profileImage:
+            process.env.NODE_ENV === 'production'
+              ? `${process.env.API_ADDRESS}/${req.file.path}`
+              : `http://localhost:5000/${req.file.path}`,
         },
         {
           where: { id: req.user.id },

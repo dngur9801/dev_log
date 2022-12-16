@@ -1,16 +1,15 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { NextSeo } from 'next-seo';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { userAPI } from '../api';
 import CustomAlert from '../components/Common/CustomAlert';
-import Seo from '../components/Seo';
 import EditProfile from '../components/Setting/EditProfile';
 import EditSubject from '../components/Setting/EditSubject';
 import OutMember from '../components/Setting/OutMember';
-import { apiAddress } from '../config';
 import { USER_INFO } from '../constant/queryKey';
 import { ChangeProfileFormTypes } from '../interfaces';
 import { userInfo } from '../store/atom';
@@ -43,13 +42,14 @@ const Setting: NextPage = () => {
 
   // 프로필 수정 시
   const onClickUpdateForm = () => {
-    setUser((prev) => ({
-      ...prev,
-      nickName: changeForm?.nickName || user.nickName,
-      introduce: changeForm?.introduce ?? user.introduce,
-    }));
     editProfile(changeForm, {
       onSuccess: () => {
+        setUser((prev) => ({
+          ...prev,
+          nickName: changeForm?.nickName || user.nickName,
+          introduce: changeForm?.introduce ?? user.introduce,
+        }));
+        queryClient.invalidateQueries(USER_INFO);
         setIsModifyProfile(false);
       },
       onError: (error: any) => {
@@ -59,7 +59,7 @@ const Setting: NextPage = () => {
     });
   };
 
-  // 이미지 이름 출력
+  // 프로필 이미지 변경
   const onUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
       return;
@@ -70,10 +70,7 @@ const Setting: NextPage = () => {
     formData.append('file', e.target.files[0]);
     upload(formData, {
       onSuccess: (data: any) => {
-        setUser((prev) => ({
-          ...prev,
-          profileImage: `${apiAddress()}/${data.data}`,
-        }));
+        queryClient.invalidateQueries(USER_INFO);
       },
       onError: (error: any) => {
         setIsAlert(true);
@@ -84,14 +81,15 @@ const Setting: NextPage = () => {
 
   // 블로그제목 변경 클릭 시
   const onClickUpdateSubject = () => {
-    setUser((prev) => ({
-      ...prev,
-      blogName: subject || user.blogName,
-    }));
     editSubject(
       { blogName: subject },
       {
         onSuccess: () => {
+          setUser((prev) => ({
+            ...prev,
+            blogName: subject || user.blogName,
+          }));
+          queryClient.invalidateQueries(USER_INFO);
           setIsModifySubject(false);
         },
         onError: (error: any) => {
@@ -118,7 +116,14 @@ const Setting: NextPage = () => {
   };
   return (
     <>
-      <Seo>설정 - Devlog</Seo>
+      <NextSeo
+        title="설정"
+        description="설정 description"
+        canonical="https://example.com"
+        openGraph={{
+          url: 'https://example.com',
+        }}
+      />
       <Styled.Container>
         <EditProfile
           onChangeForm={onChangeForm}
@@ -142,6 +147,23 @@ const Setting: NextPage = () => {
       {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </>
   );
+};
+
+export const getServerSideProps = async () => {
+  const data = await userAPI.info();
+
+  if (!data) {
+    return {
+      redirect: {
+        destination: '/notlogin',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 const Styled = {

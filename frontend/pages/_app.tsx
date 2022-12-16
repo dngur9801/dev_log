@@ -5,9 +5,10 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { RecoilRoot } from 'recoil';
 import { CookiesProvider } from 'react-cookie';
 import CustomThemeProvider from '../styles/CustomThemeProvider';
+import { DefaultSeo } from 'next-seo';
 import axios from 'axios';
 import React from 'react';
-import { apiAddress } from '../config';
+import { apiAddress, seoConfig } from '../config';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Hydrate state={pageProps.dehydratedState}>
           <RecoilRoot>
             <CookiesProvider>
+              <DefaultSeo {...seoConfig} />
               <CustomThemeProvider
                 children={<Component {...pageProps} />}
                 themeCookie={pageProps.themeCookie}

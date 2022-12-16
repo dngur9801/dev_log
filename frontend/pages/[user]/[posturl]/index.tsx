@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { dehydrate, QueryClient, useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
+import { NextSeo } from 'next-seo';
 import { postAPI } from '../../../api';
 import CommentBox from '../../../components/DetailPost/CommentBox';
 import { PostTypes } from '../../../interfaces';
@@ -117,6 +118,14 @@ const DetailPost = () => {
 
   return (
     <>
+      <NextSeo
+        title={postData.title}
+        description={`${postData.title} description`}
+        canonical="https://example.com"
+        openGraph={{
+          url: 'https://example.com',
+        }}
+      />
       <Header data={postData} />
       <Styled.ContentWrap>
         <Content

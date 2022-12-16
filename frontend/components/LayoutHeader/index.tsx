@@ -15,6 +15,7 @@ import ProfileImage from '../Common/ProfileImage';
 import { USER_INFO } from '../../constant/queryKey';
 import useScroll from '../../hooks/useScroll';
 import { useCookies } from 'react-cookie';
+import CustomAlert from '../Common/CustomAlert';
 
 interface Props {
   ssrUserData: UserInfoTypes;
@@ -22,6 +23,8 @@ interface Props {
 }
 
 const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
+  const [isAlert, setIsAlert] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const [menuToggle, setMenuToggle] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [user, setUser] = useRecoilState(userInfo);
@@ -71,7 +74,6 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
     setUser(userData);
     userData || queryClient.removeQueries(USER_INFO);
   }, []);
-  console.log('userData:', userData);
 
   // 스크롤시 헤더 감지
   useEffect(() => {
@@ -79,80 +81,87 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
     return () => window.removeEventListener('scroll', throttleScroll);
   }, [pageY]);
 
+  // 팝업 창 뒤 스크롤 막기
+  useEffect(() => {
+    const body = document.getElementsByTagName('body')[0];
+    body.style.overflow = loginModal ? 'hidden' : '';
+  }, [loginModal]);
+
   if (status === 'error') {
     return <span>{error.response.data}</span>;
   }
   return (
-    <>
-      <Styled.Wrap>
-        <Styled.HeaderBox hide={hide}>
-          <Styled.Header>
-            <div className="blog_name">
-              <Link href="/">
-                <a>Devlog</a>
+    <Styled.Wrap>
+      <Styled.HeaderBox hide={hide}>
+        <Styled.Header>
+          <div className="blog_name">
+            <Link href="/">
+              <a>Devlog</a>
+            </Link>
+          </div>
+          <Styled.MyTitle>
+            {userData?.email && (
+              <Link href="/[user]" as={`/@${userData?.name}`}>
+                <a>{userData?.blogName || userData?.name}.log</a>
               </Link>
-            </div>
-            <Styled.MyTitle>
-              {userData?.email && (
-                <Link href="/[user]" as={`/@${userData?.name}`}>
-                  <a>{userData?.blogName || userData?.name}.log</a>
-                </Link>
-              )}
-            </Styled.MyTitle>
-            <Styled.HeaderRight>
-              {toggleDarkMode ? (
-                <FaMoon size="24px" onClick={onClickSetMode} />
-              ) : (
-                <FaSun size="24px" onClick={onClickSetMode} />
-              )}
-              <FaSearch size="24px" onClick={() => router.push('/search')} />
-              {userData?.email ? (
-                <>
-                  <Styled.WriteBtn>
-                    <Link href="/write">
-                      <a>새 글 작성</a>
-                    </Link>
-                  </Styled.WriteBtn>
-                  <Styled.MyPageWrap onClick={() => setMenuToggle(!menuToggle)}>
-                    <ProfileImage width={50} height={50} src={userData?.profileImage} />
-                    <FaListUl size="24px" />
-                    {menuToggle && (
-                      <div className="my_list">
-                        <div>
-                          <Link href="/[user]" as={`/@${userData?.name}`}>
-                            <a>마이페이지</a>
-                          </Link>
-                        </div>
-                        <div>
-                          <Link href="/write">
-                            <a>새 글 작성</a>
-                          </Link>
-                        </div>
-                        <div>
-                          <Link href="/setting">
-                            <a>설정</a>
-                          </Link>
-                        </div>
-                        <div>
-                          <a onClick={onClickLogout}>로그아웃</a>
-                        </div>
+            )}
+          </Styled.MyTitle>
+          <Styled.HeaderRight>
+            {toggleDarkMode ? (
+              <FaMoon size="24px" onClick={onClickSetMode} />
+            ) : (
+              <FaSun size="24px" onClick={onClickSetMode} />
+            )}
+            <FaSearch size="24px" onClick={() => router.push('/search')} />
+            {userData?.email ? (
+              <>
+                <Styled.WriteBtn>
+                  <Link href="/write">
+                    <a>새 글 작성</a>
+                  </Link>
+                </Styled.WriteBtn>
+                <Styled.MyPageWrap onClick={() => setMenuToggle(!menuToggle)}>
+                  <ProfileImage width={50} height={50} src={userData?.profileImage} />
+                  <FaListUl size="24px" />
+                  {menuToggle && (
+                    <div className="my_list">
+                      <div>
+                        <Link href="/[user]" as={`/@${userData?.name}`}>
+                          <a>마이페이지</a>
+                        </Link>
                       </div>
-                    )}
-                  </Styled.MyPageWrap>
-                </>
-              ) : (
-                <Styled.HeaderRight>
-                  <button className="login" onClick={() => setLoginModal(true)}>
-                    로그인
-                  </button>
-                  {loginModal && <LoginModal setLoginModal={setLoginModal} />}
-                </Styled.HeaderRight>
-              )}
-            </Styled.HeaderRight>
-          </Styled.Header>
-        </Styled.HeaderBox>
-      </Styled.Wrap>
-    </>
+                      <div>
+                        <Link href="/write">
+                          <a>새 글 작성</a>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href="/setting">
+                          <a>설정</a>
+                        </Link>
+                      </div>
+                      <div>
+                        <a onClick={onClickLogout}>로그아웃</a>
+                      </div>
+                    </div>
+                  )}
+                </Styled.MyPageWrap>
+              </>
+            ) : (
+              <Styled.HeaderRight>
+                <button className="login" onClick={() => setLoginModal(true)}>
+                  로그인
+                </button>
+                {loginModal && (
+                  <LoginModal setLoginModal={setLoginModal} setIsAlert={setIsAlert} setAlertText={setAlertText} />
+                )}
+              </Styled.HeaderRight>
+            )}
+          </Styled.HeaderRight>
+        </Styled.Header>
+      </Styled.HeaderBox>
+      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
+    </Styled.Wrap>
   );
 };
 export default LayoutHeader;

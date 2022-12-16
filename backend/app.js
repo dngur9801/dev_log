@@ -19,7 +19,7 @@ const app = express();
 const port = 5000;
 const location =
   process.env.NODE_ENV === 'production'
-    ? process.env.API_ADDRESS
+    ? process.env.CLIENT_ADDRESS
     : 'http://localhost:3000';
 
 app.use(express.json());

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { apiAddress, defaultProfileImage } from '../../config';
+import { defaultProfileImage } from '../../config';
 import { userInfo } from '../../store/atom';
 
 interface ProfileImagePropTypes {
@@ -15,11 +15,7 @@ const ProfileImage = ({ width, height, src }: ProfileImagePropTypes) => {
 
   const profileImage = () => {
     if (user?.profileImage) {
-      if (user?.profileImage.indexOf('http') === 0) {
-        return user?.profileImage;
-      } else {
-        return `${apiAddress()}/${user?.profileImage}`;
-      }
+      return user?.profileImage;
     } else {
       return defaultProfileImage();
     }

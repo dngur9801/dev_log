@@ -44,7 +44,6 @@ router.put('/', isLoggedIn, async (req, res, next) => {
   try {
     const { commentId, content } = req.body;
 
-    console.log('commentId : ', commentId, 'content :', content);
     await Comment.update(
       {
         content: content,
@@ -75,7 +74,6 @@ router.put('/', isLoggedIn, async (req, res, next) => {
 // 댓글 삭제
 router.delete('/:commentId', isLoggedIn, async (req, res, next) => {
   try {
-    console.log('req.params', req.params);
     await Comment.destroy({
       where: {
         id: req.params.commentId,

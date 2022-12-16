@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import UserBlogContent from '../components/Common/UserBlogContent';
+import { NextSeo } from 'next-seo';
 import { useQuery } from 'react-query';
 import { PostTypes } from '../interfaces';
 import { AxiosError } from 'axios';
@@ -30,15 +31,25 @@ const Search = () => {
     return <span>{error.response.data}</span>;
   }
   return (
-    <Styled.Wrap>
-      <div className="search_input">
-        <FaSearch />
-        <input type="text" placeholder="검색어를 입력하세요." onChange={onChangeInput} />
-      </div>
-      {searchData?.map((item) => (
-        <UserBlogContent key={item.id} item={item} />
-      ))}
-    </Styled.Wrap>
+    <>
+      <NextSeo
+        title="검색"
+        description="검색 description"
+        canonical="https://example.com"
+        openGraph={{
+          url: 'https://example.com',
+        }}
+      />
+      <Styled.Wrap>
+        <div className="search_input">
+          <FaSearch />
+          <input type="text" placeholder="검색어를 입력하세요." onChange={onChangeInput} />
+        </div>
+        {searchData?.map((item) => (
+          <UserBlogContent key={item.id} item={item} />
+        ))}
+      </Styled.Wrap>
+    </>
   );
 };
 

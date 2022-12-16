@@ -2,10 +2,10 @@ import { AxiosError } from 'axios';
 import { NextPage } from 'next';
 import { ReactNode } from 'react';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
+import { NextSeo } from 'next-seo';
 import { postAPI } from '../api';
 import MainContent from '../components/Main/MainContent';
 import MainContentHeader from '../components/Main/MainContentHeader';
-import Seo from '../components/Seo';
 import { LATEST_LISTS } from '../constant/queryKey';
 import { PostTypes } from '../interfaces';
 
@@ -20,7 +20,14 @@ const Latest: NextPage = () => {
 
   return (
     <>
-      <Seo>Devlog</Seo>
+      <NextSeo
+        title="home"
+        description="home description"
+        canonical="https://example.com"
+        openGraph={{
+          url: 'https://example.com',
+        }}
+      />
       <MainContentHeader />
       <MainContent data={data} />
     </>
@@ -28,9 +35,8 @@ const Latest: NextPage = () => {
 };
 
 export const getServerSideProps = async () => {
-  console.log('getServerSideProps start');
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(LATEST_LISTS, postAPI.popular);
+  await queryClient.prefetchQuery(LATEST_LISTS, postAPI.latest);
 
   return {
     props: {

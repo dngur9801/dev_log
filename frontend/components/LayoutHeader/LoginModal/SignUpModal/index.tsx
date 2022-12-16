@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useMutation } from 'react-query';
 import { userAPI } from '../../../../api';
 import Loading from '../../../Common/Loading';
 import { SignUpTypes } from '../../../../interfaces';
-import CustomAlert from '../../../Common/CustomAlert';
 
 interface SignUpModalProps {
-  setIsSignUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSignUp: Dispatch<React.SetStateAction<boolean>>;
+  setIsAlert: Dispatch<SetStateAction<boolean>>;
+  setAlertText: Dispatch<SetStateAction<string>>;
 }
 
-const SignUpModal = ({ setIsSignUp }: SignUpModalProps) => {
-  const [isAlert, setIsAlert] = useState(false);
-  const [alertText, setAlertText] = useState('');
+const SignUpModal = ({ setIsSignUp, setIsAlert, setAlertText }: SignUpModalProps) => {
   const [formData, setFormData] = useState({});
 
   const { mutate, isLoading }: any = useMutation((data: SignUpTypes) => userAPI.signUp(data));
@@ -53,7 +52,6 @@ const SignUpModal = ({ setIsSignUp }: SignUpModalProps) => {
       <div className="not_member_text">
         <span onClick={() => setIsSignUp(false)}>이미 회원 이신가요?</span>
       </div>
-      {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </>
   );
 };

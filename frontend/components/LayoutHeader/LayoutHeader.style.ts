@@ -10,7 +10,7 @@ export const HeaderBox = styled.div<{ hide: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 1000;
   transition: 0.4s ease;
   font-size: ${({ theme }) => theme.fontSizes.xl};
   background-color: ${({ theme }) => theme.backgroundColors.white2};

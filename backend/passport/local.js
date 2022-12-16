@@ -20,6 +20,9 @@ module.exports = () => {
           }
           const result = await bcrypt.compare(password, user.password);
           if (result) {
+            if (!user.name) {
+              return done(null, user, { notName: true });
+            }
             return done(null, user);
           }
           return done(null, false, { reason: '비밀번호가 일치하지 않습니다.' });

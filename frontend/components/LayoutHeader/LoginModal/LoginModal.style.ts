@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrap = styled.div`
   position: fixed;
@@ -14,7 +14,7 @@ export const Wrap = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 800px;
+    width: 750px;
     background-color: white;
     padding: 20px;
     box-shadow: 0 0 10px;
@@ -36,12 +36,27 @@ export const Wrap = styled.div`
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ darkmode: boolean }>`
   display: flex;
   align-items: center;
 
   .left_content {
     flex: 5;
+    display: flex;
+    justify-content: center;
+    img {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      ${({ darkmode }) =>
+        darkmode &&
+        css`
+          filter: opacity(0.5) drop-shadow(0 0 0 white);
+        `}
+    }
+    @media ${({ theme }) => theme.device.tablet} {
+      display: none;
+    }
   }
 
   .right_content {
