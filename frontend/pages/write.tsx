@@ -8,7 +8,7 @@ import { postAPI } from '../api';
 import { Editor } from '@toast-ui/react-editor';
 import { useRouter } from 'next/router';
 import { RegistOrEditTypes } from '../interfaces';
-import { useRecoilState, useRecoilValue } from 'recoil'; // 훅 import
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { darkMode, userInfo } from '../store/atom';
 import RegistModal from '../components/Write/RegistModal';
 import CustomAlert from '../components/Common/CustomAlert';
@@ -21,7 +21,6 @@ interface WriteTypes {
 const EditorBox = dynamic(() => import('../components/Common/EditorBox'), {
   ssr: false,
 });
-
 const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState('');

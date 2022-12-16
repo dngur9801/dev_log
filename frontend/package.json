@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -16,6 +17,7 @@
     "axios": "^0.21.4",
     "next": "12.2.0",
     "next-seo": "^5.15.0",
+    "next-sitemap": "^3.1.42",
     "prismjs": "^1.29.0",
     "react": "18.2.0",
     "react-cookie": "^4.1.1",
