@@ -21,7 +21,7 @@ const port = 5000;
 const location =
   process.env.NODE_ENV === 'production'
     ? process.env.CLIENT_ADDRESS
-    : 'http://localhost:3000';
+    : 'https://localhost:3000';
 
 // TODO:보안관련 모듈 hpp,helmet 필요시 추가
 if (process.env.NODE_ENV === 'production') {
@@ -45,7 +45,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'None',
       domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
     },
@@ -61,6 +61,7 @@ app.get('/', (req, res) => {
   res.send('express server');
 });
 
+console.log('수정33333');
 // routers
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
