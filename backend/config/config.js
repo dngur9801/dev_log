@@ -5,7 +5,7 @@ module.exports = {
     username: 'root',
     password: process.env.DB_PASSWORD,
     database: 'devlog',
-    // host: '127.0.0.1',
+    host: '127.0.0.1',
     dialect: 'mysql',
   },
   production: {
