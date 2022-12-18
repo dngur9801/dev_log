@@ -31,13 +31,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   cors({
     origin: location,
     credentials: true,
   })
 );
-app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
     saveUninitialized: false,
@@ -47,8 +47,8 @@ app.use(
       httpOnly: true,
       secure: true,
       sameSite: 'None',
-      domain: true,
-      // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      // domain:
+      //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
