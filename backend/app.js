@@ -46,6 +46,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: false,
+      sameSite: 'None',
       domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
     },
   })
