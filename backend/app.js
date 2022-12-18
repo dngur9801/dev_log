@@ -37,23 +37,18 @@ app.use(
     credentials: true,
   })
 );
-app.use(
-  cookieParser(process.env.COOKIE_SECRET, {
-    sameSite: 'None',
-    secure: 'auto',
-  })
-);
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
-      // httpOnly: false,
-      secure: 'auto',
+      httpOnly: true,
+      secure: true,
       sameSite: 'None',
-      // domain:
-      //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      domain: true,
+      // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
