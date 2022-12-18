@@ -43,6 +43,8 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
     initialData: ssrUserData,
     refetchOnWindowFocus: false,
   });
+
+  console.log('userData : ', userData);
   const router = useRouter();
   const queryClient = useQueryClient();
 

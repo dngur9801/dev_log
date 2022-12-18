@@ -13,7 +13,6 @@ const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
 const commentRouter = require('./routes/comment');
 
-console.log('수정111');
 dotenv.config();
 passportConfig();
 const app = express();
@@ -21,8 +20,7 @@ const port = 5000;
 const location =
   process.env.NODE_ENV === 'production'
     ? process.env.CLIENT_ADDRESS
-    : // : 'https://main--imaginative-sunburst-7e031b.netlify.app/';
-      'http://localhost:3000';
+    : 'http://localhost:3000';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -50,6 +48,10 @@ app.use(passport.session()); //세션에서 로그인정보 복구
 app.use('/uploads', express.static('uploads'));
 
 db.sequelize.sync().then(() => console.log('db connect'));
+
+app.get('/', (req, res) => {
+  res.send('express server');
+});
 
 // routers
 app.use('/user', userRouter);
