@@ -52,8 +52,8 @@ app.use(
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain:
-        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      // domain:
+      //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
