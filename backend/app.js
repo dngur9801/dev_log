@@ -44,10 +44,10 @@ app.use(
     resave: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
-      sameSite: 'None',
-      domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
+      sameSite: 'none',
+      // domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
     },
   })
 );
