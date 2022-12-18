@@ -44,7 +44,7 @@ app.use(
     resave: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
       sameSite: 'None',
       domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
   res.send('express server');
 });
 
-console.log('수정33333');
+console.log('수정33333444');
 // routers
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
