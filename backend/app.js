@@ -13,7 +13,7 @@ const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
 const commentRouter = require('./routes/comment');
 
-console.log(111);
+console.log('수정111');
 dotenv.config();
 passportConfig();
 const app = express();
@@ -24,8 +24,6 @@ const location =
     : // : 'https://main--imaginative-sunburst-7e031b.netlify.app/';
       'http://localhost:3000';
 
-console.log(222);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
@@ -34,7 +32,6 @@ app.use(
     credentials: true,
   })
 );
-console.log(333);
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
@@ -52,7 +49,7 @@ app.use(passport.initialize()); //초기화
 app.use(passport.session()); //세션에서 로그인정보 복구
 app.use('/uploads', express.static('uploads'));
 
-// db.sequelize.sync().then(() => console.log('db connect'));
+db.sequelize.sync().then(() => console.log('db connect'));
 
 // routers
 app.use('/user', userRouter);

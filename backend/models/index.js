@@ -1,4 +1,8 @@
-const dbConfig = require('../config/config')['development'];
+const dotenv = require('dotenv');
+dotenv.config();
+
+const env = process.env.NODE_ENV || 'development';
+const dbConfig = require('../config/config')[env];
 
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
@@ -10,6 +14,7 @@ const sequelize = new Sequelize(
     dialect: dbConfig.dialect,
     operatorsAliases: false,
     timezone: '+09:00',
+    port: env === 'production' ? '31571' : '3306',
   }
 );
 
