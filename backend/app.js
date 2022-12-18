@@ -37,10 +37,12 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser(process.env.COOKIE_SECRET), {
-  sameSite: 'none',
-  secure: true,
-});
+app.use(
+  cookieParser(process.env.COOKIE_SECRET, {
+    sameSite: 'none',
+    secure: true,
+  })
+);
 app.use(
   session({
     saveUninitialized: false,
