@@ -40,7 +40,7 @@ app.use(
 app.use(
   cookieParser(process.env.COOKIE_SECRET, {
     sameSite: 'None',
-    secure: true,
+    secure: auto,
   })
 );
 app.use(
@@ -49,8 +49,8 @@ app.use(
     resave: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
-      httpOnly: false,
-      secure: true,
+      // httpOnly: false,
+      secure: auto,
       sameSite: 'None',
       // domain:
       //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
