@@ -17,7 +17,7 @@ console.log(111);
 dotenv.config();
 passportConfig();
 const app = express();
-const port = process.env.NODE_ENV === 'production' ? 80 : 5000;
+const port = 5000;
 const location =
   process.env.NODE_ENV === 'production'
     ? process.env.CLIENT_ADDRESS
