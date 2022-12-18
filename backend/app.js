@@ -49,7 +49,7 @@ app.use(
     resave: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
       sameSite: 'none',
       // domain:
