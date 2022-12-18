@@ -37,7 +37,10 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser(process.env.COOKIE_SECRET), {
+  sameSite: 'none',
+  secure: true,
+});
 app.use(
   session({
     saveUninitialized: false,
@@ -46,9 +49,9 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: true,
-      sameSite: 'None',
-      // domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
-      domain: '.localhost',
+      sameSite: 'none',
+      domain:
+        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
