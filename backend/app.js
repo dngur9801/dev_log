@@ -45,10 +45,10 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      // domain:
-      //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      secure: process.env.NODE_ENV === 'production',
+      // sameSite: 'None',
+      domain:
+        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );

@@ -10,29 +10,29 @@ const handle = app.getRequestHandler();
 const PORT = 3000;
 
 app.prepare().then(() => {
-  //   http
-  //     .createServer((req, res) => {
-  //       const parsedUrl = parse(req.url, true);
-  //       handle(req, res, parsedUrl);
-  //     })
-  //     .listen(PORT, (err) => {
-  //       if (err) throw err;
-  //       console.log(`> Ready on http://localhost:${PORT}`);
-  //     });
-
-  const https = require('https');
-  const fs = require('fs');
-  const options = {
-    key: fs.readFileSync('./key/localhost-key.pem'),
-    cert: fs.readFileSync('./key/localhost.pem'),
-  };
-  https
-    .createServer(options, function (req, res) {
+  http
+    .createServer((req, res) => {
       const parsedUrl = parse(req.url, true);
       handle(req, res, parsedUrl);
     })
     .listen(PORT, (err) => {
       if (err) throw err;
-      console.log(`> Ready on https://localhost:${PORT}`);
+      console.log(`> Ready on http://localhost:${PORT}`);
     });
+
+  // const https = require('https');
+  // const fs = require('fs');
+  // const options = {
+  //   key: fs.readFileSync('./key/localhost-key.pem'),
+  //   cert: fs.readFileSync('./key/localhost.pem'),
+  // };
+  // https
+  //   .createServer(options, function (req, res) {
+  //     const parsedUrl = parse(req.url, true);
+  //     handle(req, res, parsedUrl);
+  //   })
+  //   .listen(PORT, (err) => {
+  //     if (err) throw err;
+  //     console.log(`> Ready on https://localhost:${PORT}`);
+  //   });
 });
