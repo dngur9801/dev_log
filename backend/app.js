@@ -62,7 +62,6 @@ app.get('/', (req, res) => {
   res.send('express server');
 });
 
-console.log('수정33333444');
 // routers
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
