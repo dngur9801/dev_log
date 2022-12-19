@@ -46,9 +46,9 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'None',
-      domain:
-        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      // sameSite: 'None',
+      domain: false,
+      // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
