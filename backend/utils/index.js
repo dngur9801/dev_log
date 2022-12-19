@@ -22,4 +22,10 @@ module.exports = {
     // 모든 단위가 맞지 않을 시
     return '방금 전';
   },
+
+  location() {
+    return (process.env.NODE_ENV = 'production'
+      ? process.env.API_ADDRESS
+      : 'http://localhost:5000');
+  },
 };

@@ -3,6 +3,9 @@ const passport = require('passport');
 const { isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
+const location = (process.env.NODE_ENV = 'production'
+  ? process.env.CLIENT_ADDRESS
+  : 'http://localhost:3000');
 
 // google 로그인
 router.get(
@@ -13,14 +16,12 @@ router.get(
 
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
+  passport.authenticate('google', { failureRedirect: location }),
   (req, res) => {
     if (!req._user.name) {
-      res.redirect(
-        `http://localhost:3000/regist?auth=google&id=${req._user.id}`
-      );
+      res.redirect(`${location}/regist?auth=google&id=${req._user.id}`);
     } else {
-      res.redirect('http://localhost:3000');
+      res.redirect(location);
     }
   }
 );
@@ -35,15 +36,13 @@ router.get(
 router.get(
   '/github/callback',
   passport.authenticate('github', {
-    failureRedirect: 'http://localhost:3000',
+    failureRedirect: location,
   }),
   (req, res) => {
     if (!req._user.name) {
-      res.redirect(
-        `http://localhost:3000/regist?auth=github&id=${req._user.id}`
-      );
+      res.redirect(`${location}/regist?auth=github&id=${req._user.id}`);
     } else {
-      res.redirect('http://localhost:3000');
+      res.redirect(location);
     }
   }
 );
@@ -58,15 +57,13 @@ router.get(
 router.get(
   '/naver/callback',
   passport.authenticate('naver', {
-    failureRedirect: 'http://localhost:3000',
+    failureRedirect: location,
   }),
   (req, res) => {
     if (!req._user.name) {
-      res.redirect(
-        `http://localhost:3000/regist?auth=naver&id=${req._user.id}`
-      );
+      res.redirect(`${location}/regist?auth=naver&id=${req._user.id}`);
     } else {
-      res.redirect('http://localhost:3000');
+      res.redirect(location);
     }
   }
 );
@@ -80,9 +77,9 @@ router.get(
 
 router.get(
   '/kakao/callback',
-  passport.authenticate('kakao', { failureRedirect: 'http://localhost:3000' }),
+  passport.authenticate('kakao', { failureRedirect: location }),
   (req, res) => {
-    res.redirect('http://localhost:3000'); // 로그인 인증후 돌아올 주소
+    res.redirect(location); // 로그인 인증후 돌아올 주소
   }
 );
 

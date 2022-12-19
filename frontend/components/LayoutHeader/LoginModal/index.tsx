@@ -51,7 +51,6 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
       },
     });
   };
-  console.log('apiAddress :', apiAddress());
   const { mutate, isLoading }: any = useMutation((data: LocalLoginTypes) => userAPI.localLogin(data));
 
   return (

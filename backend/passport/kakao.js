@@ -2,6 +2,7 @@ const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
 const { User } = require('../models');
 const dotenv = require('dotenv');
+const { location } = require('../utils');
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ module.exports = () => {
     new KakaoStrategy(
       {
         clientID: process.env.KAKAO_ID,
-        callbackURL: 'http://localhost:5000/auth/kakao/callback',
+        callbackURL: `${location}/auth/kakao/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

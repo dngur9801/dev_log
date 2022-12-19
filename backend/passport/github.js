@@ -2,6 +2,7 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const { User } = require('../models');
 const dotenv = require('dotenv');
+const { location } = require('../utils');
 
 dotenv.config();
 
@@ -11,7 +12,7 @@ module.exports = () => {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: 'http://localhost:5000/auth/github/callback',
+        callbackURL: `${location}/auth/github/callback`,
         passReqToCallback: true,
       },
       async (req, accessToken, refreshToken, profile, done) => {

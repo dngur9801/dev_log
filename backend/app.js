@@ -21,7 +21,7 @@ const port = 5000;
 const location =
   process.env.NODE_ENV === 'production'
     ? process.env.CLIENT_ADDRESS
-    : 'https://localhost:3000';
+    : 'http://localhost:3000';
 
 // TODO:보안관련 모듈 hpp,helmet 필요시 추가
 if (process.env.NODE_ENV === 'production') {
@@ -46,7 +46,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      // sameSite: 'None',
+      sameSite: 'None',
       domain:
         process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
