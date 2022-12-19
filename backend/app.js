@@ -36,6 +36,8 @@ app.use(
   cors({
     origin: location,
     credentials: true,
+    allowedHeaders:
+      'Origin, X-Requested-With, Content-Type, Accept, authorization',
   })
 );
 app.use(
@@ -47,8 +49,8 @@ app.use(
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       // sameSite: 'None',
-      domain: false,
-      // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      domain:
+        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
