@@ -53,8 +53,7 @@ app.use(
       httpOnly: true,
       sameSite: process.env.NODE_ENV === 'production' && 'None',
       secure: process.env.NODE_ENV === 'production',
-      domain:
-        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
       path: '/',
     },
   })
