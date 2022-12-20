@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const hpp = require('hpp');
-const sameSiteCookieMiddleware = require('express-samesite-default');
 
 const db = require('./models');
 const passportConfig = require('./passport');
@@ -36,7 +35,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(sameSiteCookieMiddleware.sameSiteCookieMiddleware());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   cors({
@@ -53,9 +51,12 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      SameSite: 'none',
+      sameSite: 'none',
       domain:
         process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+    },
+    setCookie: {
+      sameSite: 'none',
     },
   })
 );
