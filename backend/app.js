@@ -39,7 +39,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   cors({
-    origin: location,
+    origin:
+      'https://63a18b4ee972d96cee88449c--imaginative-sunburst-7e031b.netlify.app',
     credentials: true,
   })
 );
@@ -51,10 +52,10 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      // sameSite: 'none',
+      secure: true,
+      sameSite: 'none',
       domain:
-        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+        'https://63a18b4ee972d96cee88449c--imaginative-sunburst-7e031b.netlify.app',
     },
   })
 );
