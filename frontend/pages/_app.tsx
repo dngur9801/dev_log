@@ -35,6 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 MyApp.getInitialProps = async ({ ctx, Component }: any) => {
+  console.log('getInitialProps START');
   let pageProps: any = {};
   const connectCookie = ctx.req ? ctx.req.headers.cookie : '';
   const themeCookie = ctx.req ? ctx.req.cookies : '';
