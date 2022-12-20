@@ -52,7 +52,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      // secure: true,
+      secure: true,
       sameSite: 'None',
       // domain:
       //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
