@@ -36,7 +36,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(
+  cookieParser(process.env.COOKIE_SECRET, {
+    sameSite: true,
+    secure: true,
+  })
+);
 app.use(
   cors({
     origin:
@@ -54,7 +59,7 @@ app.use(
       httpOnly: true,
       sameSite: 'None',
       // secure: true,
-      domain: '.app',
+      // domain: '.app',
       // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
