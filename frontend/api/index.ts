@@ -13,6 +13,7 @@ import {
   UserBlogTypes,
 } from '../interfaces';
 
+axios.defaults.withCredentials = true;
 const request = axios.create({
   baseURL: apiAddress(),
   withCredentials: true,

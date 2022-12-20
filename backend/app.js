@@ -25,7 +25,7 @@ const location =
     ? process.env.CLIENT_ADDRESS
     : 'http://localhost:3000';
 
-// TODO:보안관련 모듈 hpp,helmet 필요시 추가
+console.log('location :', location);
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
   app.use(hpp());

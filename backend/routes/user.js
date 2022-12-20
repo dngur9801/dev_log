@@ -10,11 +10,10 @@ const { location } = require('../utils');
 
 const router = express.Router();
 
+//TODO: 쿠키전송이 가능해지면 아이디값직접넣기??
 router.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-
+  res.header('Access-Control-Allow-Origin', process.env.CLIENT_ADDRESS);
   res.header('Access-Control-Allow-Credentials', true);
-
   res.setHeader('Set-Cookie', 'key=123; HttpOnly; SameSite=None; Secure;');
   next();
 });
