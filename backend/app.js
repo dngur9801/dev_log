@@ -54,8 +54,8 @@ app.use(
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      domain:
-        'https://63a18b4ee972d96cee88449c--imaginative-sunburst-7e031b.netlify.app',
+      // domain:
+      //   'https://63a18b4ee972d96cee88449c--imaginative-sunburst-7e031b.netlify.app',
     },
   })
 );
