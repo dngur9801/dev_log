@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const helmet = require('helmet');
+const hpp = require('hpp');
 
 const db = require('./models');
 const passportConfig = require('./passport');
@@ -26,6 +28,8 @@ const location =
 // TODO:보안관련 모듈 hpp,helmet 필요시 추가
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet({ contentSecurityPolicy: false }));
 } else {
   app.use(morgan('dev'));
 }
@@ -46,7 +50,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'normal',
+      // sameSite: 'none',
       domain:
         process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
