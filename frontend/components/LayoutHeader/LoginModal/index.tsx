@@ -11,6 +11,7 @@ import { apiAddress } from '../../../config';
 import { useRecoilValue } from 'recoil';
 import { darkMode } from '../../../store/atom';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;
@@ -41,7 +42,9 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
         if (data.data?.notName) {
           router.push(`/regist?auth=local&id=${data.data.id}`);
         } else {
-          window.location.reload();
+          console.log(data);
+          console.log(document.cookie);
+          // window.location.reload();
         }
         setLoginModal(false);
       },

@@ -10,14 +10,6 @@ const { location } = require('../utils');
 
 const router = express.Router();
 
-//TODO: 쿠키전송이 가능해지면 아이디값직접넣기??
-router.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', process.env.CLIENT_ADDRESS);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.setHeader('Set-Cookie', 'key=123; HttpOnly; SameSite=None; Secure;');
-  next();
-});
-
 // multer 셋팅
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -61,7 +53,7 @@ router.get('/', async (req, res, next) => {
 router.post('/logout', isLoggedIn, (req, res) => {
   req.session.destroy(function (err) {
     if (err) throw err;
-    res.clearCookie('connect.sid');
+    res.clearCookie('session_cookie_user_auth');
     res.send('ok');
   });
 });
@@ -120,10 +112,13 @@ router.post('/login', (req, res, next) => {
       if (loginErr) {
         return next(loginErr);
       }
-      const userWithPost = await User.findOne({
+      const userData = await User.findOne({
         where: { id: user.id },
+        attributes: {
+          exclude: ['password'],
+        },
       });
-      return res.status(200).json(userWithPost);
+      return res.status(200).json(userData);
     });
   })(req, res, next);
 });

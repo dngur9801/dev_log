@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import LoginModal from './LoginModal';
 import * as Styled from './LayoutHeader.style';
 import { darkMode, userInfo } from '../../store/atom';
@@ -75,6 +75,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
   useEffect(() => {
     setUser(userData);
     userData || queryClient.removeQueries(USER_INFO);
+    console.log('document.cookie : ', document.cookie);
   }, []);
 
   // 스크롤시 헤더 감지
