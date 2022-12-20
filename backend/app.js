@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
   app.use(helmet({ contentSecurityPolicy: false }));
 } else {
-  app.use(morgan('dev'));
+  // app.use(morgan('dev'));
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -39,12 +39,11 @@ app.use(
   cors({
     origin: location,
     credentials: true,
-    exposedHeaders: ['Set-Cookie'],
   })
 );
 app.use(
   session({
-    key: 'session_cookie_user_auth',
+    key: 'user_auth',
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
@@ -54,7 +53,7 @@ app.use(
       sameSite: process.env.NODE_ENV === 'production' && 'None',
       secure: process.env.NODE_ENV === 'production',
       domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
-      path: '',
+      maxAge: new Date(Date.now() + 1000 * 60 * 60 * 24),
     },
   })
 );

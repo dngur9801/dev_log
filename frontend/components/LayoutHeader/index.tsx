@@ -75,7 +75,6 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
   useEffect(() => {
     setUser(userData);
     userData || queryClient.removeQueries(USER_INFO);
-    console.log('document.cookie : ', document.cookie);
   }, []);
 
   // 스크롤시 헤더 감지

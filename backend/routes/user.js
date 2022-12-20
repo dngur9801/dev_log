@@ -25,6 +25,7 @@ const upload = multer({ storage: storage });
 // 유저 정보
 router.get('/', async (req, res, next) => {
   try {
+    console.log('req.headers :', req.headers);
     if (req.user) {
       const userInfo = await User.findOne({
         where: { id: req.user.id },
@@ -51,9 +52,9 @@ router.get('/', async (req, res, next) => {
 
 // 로그아웃
 router.post('/logout', isLoggedIn, (req, res) => {
-  req.session.destroy(function (err) {
+  req.session.destroy(err => {
     if (err) throw err;
-    res.clearCookie('session_cookie_user_auth');
+    res.clearCookie('user_auth');
     res.send('ok');
   });
 });

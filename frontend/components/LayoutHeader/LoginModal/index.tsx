@@ -42,9 +42,7 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
         if (data.data?.notName) {
           router.push(`/regist?auth=local&id=${data.data.id}`);
         } else {
-          console.log(data);
-          console.log(document.cookie);
-          // window.location.reload();
+          window.location.reload();
         }
         setLoginModal(false);
       },
