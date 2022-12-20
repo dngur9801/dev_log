@@ -53,8 +53,7 @@ app.use(
       secure: process.env.NODE_ENV === 'production',
       // sameSite: 'none',
       domain:
-        process.env.NODE_ENV === 'production' &&
-        'main--imaginative-sunburst-7e031b.netlify.app',
+        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
