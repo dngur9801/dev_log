@@ -55,6 +55,7 @@ app.use(
       secure: process.env.NODE_ENV === 'production',
       domain:
         process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      path: '/',
     },
   })
 );
