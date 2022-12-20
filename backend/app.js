@@ -46,13 +46,14 @@ app.use(
 );
 app.use(
   session({
+    key: 'session_cookie_user_auth',
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      // sameSite: 'none',
+      SameSite: 'none',
       domain:
         process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
