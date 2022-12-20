@@ -25,8 +25,6 @@ const location =
     ? process.env.CLIENT_ADDRESS
     : 'http://localhost:3000';
 
-console.log('location :', location);
-console.log('process.env.NODE_ENV :', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
   app.use(hpp());
@@ -39,8 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   cors({
-    origin:
-      'https://63a18b4ee972d96cee88449c--imaginative-sunburst-7e031b.netlify.app',
+    origin: location,
     credentials: true,
   })
 );
@@ -50,13 +47,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
-    proxy: true,
+    proxy: process.env.NODE_ENV === 'production',
     cookie: {
       httpOnly: true,
-      sameSite: 'None',
-      secure: true,
-      // domain: '.app',
-      // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      sameSite: process.env.NODE_ENV === 'production' && 'None',
+      secure: process.env.NODE_ENV === 'production',
     },
   })
 );

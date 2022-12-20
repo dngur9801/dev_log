@@ -3,9 +3,10 @@ const passport = require('passport');
 const { isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
-const location = (process.env.NODE_ENV = 'production'
-  ? process.env.CLIENT_ADDRESS
-  : 'http://localhost:3000');
+const location =
+  process.env.NODE_ENV === 'production'
+    ? process.env.CLIENT_ADDRESS
+    : 'http://localhost:3000';
 
 // google 로그인
 router.get(
