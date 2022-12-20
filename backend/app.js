@@ -26,6 +26,7 @@ const location =
     : 'http://localhost:3000';
 
 console.log('location :', location);
+console.log('process.env.NODE_ENV :', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));
   app.use(hpp());
