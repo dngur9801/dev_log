@@ -49,10 +49,10 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      // secure: process.env.NODE_ENV === 'production',
       // sameSite: 'none',
-      domain:
-        process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
+      domain: false,
+      // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
   })
 );
