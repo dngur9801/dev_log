@@ -53,7 +53,7 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: 'None',
-      secure: true,
+      // secure: true,
       domain:
         'https://63a18b4ee972d96cee88449c--imaginative-sunburst-7e031b.netlify.app',
       // process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
