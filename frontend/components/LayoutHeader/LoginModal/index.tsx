@@ -73,7 +73,7 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
                   <a className="blue">GitHub 계정으로 로그인</a>
                 </Link>
                 <Link href={`${apiAddress()}/auth/naver`}>
-                  <a className="blue">Naver 계정으로 로그인</a>
+                  <a className="green">Naver 계정으로 로그인</a>
                 </Link>
                 <div className="line_wrap">
                   <div className="line"></div>

@@ -59,6 +59,7 @@ const lightBackgroundColors = {
   red1: '#ff4e4e',
   purple1: '#7e2db2',
   yellow1: '#f9e000',
+  green1: '#19ce60',
 };
 
 const darkBackgroundColors = {
@@ -75,6 +76,7 @@ const darkBackgroundColors = {
   red1: '#ff4e4e',
   purple1: '#7e2db2',
   yellow1: '#f9e000',
+  green1: '#19ce60',
 };
 
 const deviceWrapSizes = {

@@ -80,6 +80,9 @@ export const Content = styled.div<{ darkmode: boolean }>`
       &.blue {
         background-color: ${({ theme }) => theme.backgroundColors.basic1};
       }
+      &.green {
+        background-color: ${({ theme }) => theme.backgroundColors.green1};
+      }
       &.black {
         background-color: ${({ theme }) => theme.backgroundColors.basic2};
       }

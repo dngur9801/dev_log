@@ -24,8 +24,8 @@ module.exports = {
   },
 
   location() {
-    return (process.env.NODE_ENV = 'production'
+    return process.env.NODE_ENV === 'production'
       ? process.env.API_ADDRESS
-      : 'http://localhost:5000');
+      : 'http://localhost:5000';
   },
 };

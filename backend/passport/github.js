@@ -12,7 +12,7 @@ module.exports = () => {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: `${location}/auth/github/callback`,
+        callbackURL: `${location()}/auth/github/callback`,
         passReqToCallback: true,
       },
       async (req, accessToken, refreshToken, profile, done) => {
