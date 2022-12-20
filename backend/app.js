@@ -53,7 +53,7 @@ app.use(
     cookie: {
       httpOnly: true,
       // secure: true,
-      // SameSite: 'None',
+      sameSite: 'None',
       // domain:
       //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
