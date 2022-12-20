@@ -6,6 +6,7 @@ const multer = require('multer');
 const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const utils = require('../utils');
+const { location } = require('../utils');
 
 const router = express.Router();
 
