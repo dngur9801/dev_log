@@ -52,8 +52,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: true,
-      SameSite: 'None',
+      // secure: true,
+      // SameSite: 'None',
       // domain:
       //   process.env.NODE_ENV === 'production' && process.env.CLIENT_ADDRESS,
     },
