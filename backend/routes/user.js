@@ -15,7 +15,7 @@ router.use(function (req, res, next) {
 
   res.header('Access-Control-Allow-Credentials', true);
 
-  res.setHeader('Set-Cookie', 'key=123; HttpOnly; SameSite=None; Secure=true');
+  res.setHeader('Set-Cookie', 'key=123; HttpOnly; SameSite=None; Secure;');
   next();
 });
 
