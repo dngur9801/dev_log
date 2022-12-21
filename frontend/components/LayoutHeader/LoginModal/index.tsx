@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import * as S from './LoginModal.style';
 import { FaRegWindowClose } from 'react-icons/fa';
 import SignUpModal from './SignUpModal';
@@ -22,6 +23,10 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({});
   const darkmode = useRecoilValue(darkMode);
+  const { data: session } = useSession();
+
+  // 사용자 정보 있으면, 이메일과 로그아웃 버튼 출력
+  console.log('session :', session);
 
   const router = useRouter();
 
@@ -66,7 +71,7 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
           <div className="right_content">
             {!isSignUp ? (
               <>
-                <Link href={`${apiAddress()}/auth/google`}>
+                {/* <Link href={`${apiAddress()}/auth/google`}>
                   <a className="purple">Google 계정으로 로그인</a>
                 </Link>
                 <Link href={`${apiAddress()}/auth/github`}>
@@ -74,7 +79,19 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
                 </Link>
                 <Link href={`${apiAddress()}/auth/naver`}>
                   <a className="green">Naver 계정으로 로그인</a>
-                </Link>
+                </Link> */}
+                <button onClick={() => signIn('kakao')} className="yellow">
+                  Kakao 계정으로 로그인
+                </button>
+                <button onClick={() => signIn('google')} className="gray">
+                  Google 계정으로 로그인
+                </button>
+                <button onClick={() => signIn('naver')} className="green">
+                  Naver 계정으로 로그인
+                </button>
+                <button onClick={() => signIn('github')} className="blue">
+                  GitHub 계정으로 로그인
+                </button>
                 <div className="line_wrap">
                   <div className="line"></div>
                   <span>또는</span>

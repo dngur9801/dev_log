@@ -13,6 +13,7 @@ import {
   UserBlogTypes,
 } from '../interfaces';
 
+// axios.defaults.headers = '';
 const request = axios.create({
   baseURL: apiAddress(),
   withCredentials: true,
