@@ -11,7 +11,6 @@ import { apiAddress } from '../../../config';
 import { useRecoilValue } from 'recoil';
 import { darkMode } from '../../../store/atom';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 
 interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;

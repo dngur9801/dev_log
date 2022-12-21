@@ -47,12 +47,14 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    secure: true,
     proxy: process.env.NODE_ENV === 'production',
     cookie: {
       httpOnly: true,
       sameSite: process.env.NODE_ENV === 'production' && 'None',
       secure: process.env.NODE_ENV === 'production',
-      domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
+      domain: 'imaginative',
+      // process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
       maxAge: new Date(Date.now() + 1000 * 60 * 60 * 24),
     },
   })
