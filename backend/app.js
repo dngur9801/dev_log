@@ -8,13 +8,14 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const hpp = require('hpp');
 
+// const db = require('./models');
 const passportConfig = require('./passport');
 const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
 const commentRouter = require('./routes/comment');
-console.log(123);
+
 dotenv.config();
 passportConfig();
 const app = express();
@@ -40,7 +41,6 @@ app.use(
     credentials: true,
   })
 );
-const db = require('./models');
 app.set('trust proxy', 1);
 app.use(
   session({
