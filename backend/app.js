@@ -51,7 +51,8 @@ app.use(
       httpOnly: true,
       sameSite: process.env.NODE_ENV === 'production' && 'None',
       secure: process.env.NODE_ENV === 'production',
-      domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
+      domain:
+        process.env.NODE_ENV === 'production' && 'devlog-murex.vercel.app',
       maxAge: new Date(Date.now() + 1000 * 60 * 60 * 24),
     },
   })

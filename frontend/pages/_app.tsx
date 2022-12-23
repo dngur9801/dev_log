@@ -11,6 +11,7 @@ import React from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { apiAddress, seoConfig } from '../config';
 
+axios.defaults.withCredentials = true;
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
   console.log('pageProps.userData : ', pageProps.userData);
