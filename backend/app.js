@@ -43,14 +43,13 @@ app.use(
 );
 app.use(
   session({
-    key: 'user_auth',
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
     proxy: process.env.NODE_ENV === 'production',
     cookie: {
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' && 'None',
+      // sameSite: process.env.NODE_ENV === 'production' && 'None',
       secure: process.env.NODE_ENV === 'production',
       domain: process.env.NODE_ENV === 'production' && process.env.API_ADDRESS,
       maxAge: new Date(Date.now() + 1000 * 60 * 60 * 24),

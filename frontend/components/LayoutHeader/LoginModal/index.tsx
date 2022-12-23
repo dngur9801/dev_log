@@ -1,32 +1,34 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
 import * as S from './LoginModal.style';
 import { FaRegWindowClose } from 'react-icons/fa';
 import SignUpModal from './SignUpModal';
 import { useMutation } from 'react-query';
 import { userAPI } from '../../../apis';
 import Loading from '../../Common/Loading';
-import Link from 'next/link';
 import { LocalLoginTypes } from '../../../interfaces';
-import { apiAddress } from '../../../config';
 import { useRecoilValue } from 'recoil';
 import { darkMode } from '../../../store/atom';
 import { useRouter } from 'next/router';
+import { LiteralUnion, SignInAuthorisationParams, SignInOptions, SignInResponse } from 'next-auth/react';
+import { BuiltInProviderType, RedirectableProviderType } from 'next-auth/providers';
+import { apiAddress } from '../../../config';
+import Link from 'next/link';
 
 interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;
   setIsAlert: Dispatch<SetStateAction<boolean>>;
   setAlertText: Dispatch<SetStateAction<string>>;
+  signIn: <P extends RedirectableProviderType = undefined>(
+    provider?: LiteralUnion<BuiltInProviderType>,
+    options?: SignInOptions,
+    authorizationParams?: SignInAuthorisationParams,
+  ) => Promise<P extends RedirectableProviderType ? SignInResponse | undefined : undefined>;
 }
 
-const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps) => {
+const LoginModal = ({ setLoginModal, setIsAlert, setAlertText, signIn }: LoginModalProps) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({});
   const darkmode = useRecoilValue(darkMode);
-  const { data: session } = useSession();
-
-  // 사용자 정보 있으면, 이메일과 로그아웃 버튼 출력
-  console.log('session :', session);
 
   const router = useRouter();
 
@@ -71,7 +73,7 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
           <div className="right_content">
             {!isSignUp ? (
               <>
-                {/* <Link href={`${apiAddress()}/auth/google`}>
+                <Link href={`${apiAddress()}/auth/google`}>
                   <a className="purple">Google 계정으로 로그인</a>
                 </Link>
                 <Link href={`${apiAddress()}/auth/github`}>
@@ -79,8 +81,8 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
                 </Link>
                 <Link href={`${apiAddress()}/auth/naver`}>
                   <a className="green">Naver 계정으로 로그인</a>
-                </Link> */}
-                <button onClick={() => signIn('kakao')} className="yellow">
+                </Link>
+                {/* <button onClick={() => signIn('kakao')} className="yellow">
                   Kakao 계정으로 로그인
                 </button>
                 <button onClick={() => signIn('google')} className="gray">
@@ -91,7 +93,7 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
                 </button>
                 <button onClick={() => signIn('github')} className="blue">
                   GitHub 계정으로 로그인
-                </button>
+                </button> */}
                 <div className="line_wrap">
                   <div className="line"></div>
                   <span>또는</span>
