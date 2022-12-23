@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const hpp = require('hpp');
 
-// const db = require('./models');
+const db = require('./models');
 const passportConfig = require('./passport');
 const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
