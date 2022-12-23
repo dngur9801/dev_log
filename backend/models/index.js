@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
   {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
+    dialectModule: env === 'production' ? 'mariadb' : 'mysql',
     operatorsAliases: false,
     timezone: '+09:00',
     port: env === 'production' ? '31571' : '3306',
