@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { FaImage, FaArrowCircleLeft } from 'react-icons/fa';
 import { useMutation } from 'react-query';
 import { NextSeo } from 'next-seo';
-import { postAPI } from '../api';
+import { postAPI } from '../apis';
 import { Editor } from '@toast-ui/react-editor';
 import { useRouter } from 'next/router';
 import { RegistOrEditTypes } from '../interfaces';

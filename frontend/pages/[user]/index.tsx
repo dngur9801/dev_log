@@ -7,7 +7,7 @@ import { ReactNode } from 'react';
 import { NextSeo } from 'next-seo';
 import UserBlogHeader from '../../components/UserBlog/UserBlogHeader';
 import UserBlogContent from '../../components/Common/UserBlogContent';
-import { userAPI } from '../../api';
+import { userAPI } from '../../apis';
 import { UserBlogTypes } from '../../interfaces';
 import { USER_POSTS } from '../../constant/queryKey';
 

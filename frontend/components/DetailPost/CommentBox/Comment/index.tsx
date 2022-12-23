@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 import { AxiosError } from 'axios';
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation } from 'react-query';
 import { userInfo } from '../../../../store/atom';
-import { commentAPI } from '../../../../api';
+import { commentAPI } from '../../../../apis';
 import { CommentEditTypes, CommentTypes, PostTypes } from '../../../../interfaces';
 import ProfileImage from '../../../Common/ProfileImage';
 

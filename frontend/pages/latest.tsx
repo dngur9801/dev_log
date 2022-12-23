@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { ReactNode } from 'react';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { NextSeo } from 'next-seo';
-import { postAPI } from '../api';
+import { postAPI } from '../apis';
 import MainContent from '../components/Main/MainContent';
 import MainContentHeader from '../components/Main/MainContentHeader';
 import { LATEST_LISTS } from '../constant/queryKey';

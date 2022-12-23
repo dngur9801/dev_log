@@ -5,7 +5,7 @@ import { NextSeo } from 'next-seo';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { userAPI } from '../api';
+import { userAPI } from '../apis';
 import CustomAlert from '../components/Common/CustomAlert';
 import EditProfile from '../components/Setting/EditProfile';
 import EditSubject from '../components/Setting/EditSubject';

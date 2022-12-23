@@ -5,7 +5,7 @@ import { dehydrate, QueryClient, useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
 import { NextSeo } from 'next-seo';
-import { postAPI } from '../../../api';
+import { postAPI } from '../../../apis';
 import CommentBox from '../../../components/DetailPost/CommentBox';
 import { PostTypes } from '../../../interfaces';
 import { DETAIL_POST } from '../../../constant/queryKey';

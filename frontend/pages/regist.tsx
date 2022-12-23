@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';
-import { userAPI } from '../api';
+import { userAPI } from '../apis';
 import { UserRegistTypes } from '../interfaces/index';
 import styled from 'styled-components';
 import { reg } from '../utils';

@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import MainContentHeader from '../components/Main/MainContentHeader';
 import { NextSeo } from 'next-seo';
-import { postAPI } from '../api';
+import { postAPI } from '../apis';
 import MainContent from '../components/Main/MainContent';
 import { POPULAR_LISTS } from '../constant/queryKey';
 import { PostTypes } from '../interfaces';

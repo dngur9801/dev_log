@@ -6,7 +6,7 @@ import { NextSeo } from 'next-seo';
 import { useQuery } from 'react-query';
 import { PostTypes } from '../interfaces';
 import { AxiosError } from 'axios';
-import { postAPI } from '../api';
+import { postAPI } from '../apis';
 import { debounce } from '../utils';
 import { SEARCH_POST } from '../constant/queryKey';
 const Search = () => {

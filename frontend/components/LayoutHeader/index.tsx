@@ -8,7 +8,7 @@ import axios, { AxiosError } from 'axios';
 import LoginModal from './LoginModal';
 import * as Styled from './LayoutHeader.style';
 import { darkMode, userInfo } from '../../store/atom';
-import { userAPI } from '../../api';
+import { userAPI } from '../../apis';
 import { initUserInfoData } from '../../utils';
 import { UserInfoTypes } from '../../interfaces';
 import ProfileImage from '../Common/ProfileImage';

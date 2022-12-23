@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useMutation } from 'react-query';
-import { userAPI } from '../../../../api';
+import { userAPI } from '../../../../apis';
 import Loading from '../../../Common/Loading';
 import { SignUpTypes } from '../../../../interfaces';
 

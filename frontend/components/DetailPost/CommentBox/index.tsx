@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import React, { useRef, useState } from 'react';
 import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation } from 'react-query';
-import { commentAPI } from '../../../api';
+import { commentAPI } from '../../../apis';
 import { CommentTypes, PostTypes, registCommentTypes } from '../../../interfaces';
 import CustomAlert from '../../Common/CustomAlert';
 import Comment from './Comment';
