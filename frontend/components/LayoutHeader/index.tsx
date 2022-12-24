@@ -5,7 +5,6 @@ import { useRecoilState } from 'recoil';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { AxiosError } from 'axios';
-import { getSession, useSession, signIn, signOut } from 'next-auth/react';
 import LoginModal from './LoginModal';
 import * as Styled from './LayoutHeader.style';
 import { darkMode, userInfo } from '../../store/atom';
@@ -33,9 +32,6 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
   const [darkmode, setDarkmode] = useRecoilState(darkMode);
   const { hide, pageY, throttleScroll } = useScroll(100);
   const [cookies, setCookie] = useCookies(['theme']);
-
-  const { data: session } = useSession();
-  console.log('session :', session);
 
   const { mutate }: any = useMutation(() => userAPI.logout());
   const {
@@ -159,12 +155,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
                   로그인
                 </button>
                 {loginModal && (
-                  <LoginModal
-                    setLoginModal={setLoginModal}
-                    setIsAlert={setIsAlert}
-                    setAlertText={setAlertText}
-                    signIn={signIn}
-                  />
+                  <LoginModal setLoginModal={setLoginModal} setIsAlert={setIsAlert} setAlertText={setAlertText} />
                 )}
               </Styled.HeaderRight>
             )}

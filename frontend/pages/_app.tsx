@@ -8,7 +8,6 @@ import CustomThemeProvider from '../styles/CustomThemeProvider';
 import { DefaultSeo } from 'next-seo';
 import axios from 'axios';
 import React from 'react';
-import { SessionProvider } from 'next-auth/react';
 import { apiAddress, seoConfig } from '../config';
 
 axios.defaults.withCredentials = true;
@@ -23,13 +22,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <RecoilRoot>
             <CookiesProvider>
               <DefaultSeo {...seoConfig} />
-              <SessionProvider session={pageProps.session}>
-                <CustomThemeProvider
-                  children={<Component {...pageProps} />}
-                  themeCookie={pageProps.themeCookie}
-                  ssrUserData={pageProps.userData}
-                />
-              </SessionProvider>
+              <CustomThemeProvider
+                children={<Component {...pageProps} />}
+                themeCookie={pageProps.themeCookie}
+                ssrUserData={pageProps.userData}
+              />
             </CookiesProvider>
           </RecoilRoot>
         </Hydrate>

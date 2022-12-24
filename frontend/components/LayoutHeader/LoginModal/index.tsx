@@ -9,8 +9,6 @@ import { LocalLoginTypes } from '../../../interfaces';
 import { useRecoilValue } from 'recoil';
 import { darkMode } from '../../../store/atom';
 import { useRouter } from 'next/router';
-import { LiteralUnion, SignInAuthorisationParams, SignInOptions, SignInResponse } from 'next-auth/react';
-import { BuiltInProviderType, RedirectableProviderType } from 'next-auth/providers';
 import { apiAddress } from '../../../config';
 import Link from 'next/link';
 
@@ -18,14 +16,9 @@ interface LoginModalProps {
   setLoginModal: Dispatch<SetStateAction<boolean>>;
   setIsAlert: Dispatch<SetStateAction<boolean>>;
   setAlertText: Dispatch<SetStateAction<string>>;
-  signIn: <P extends RedirectableProviderType = undefined>(
-    provider?: LiteralUnion<BuiltInProviderType>,
-    options?: SignInOptions,
-    authorizationParams?: SignInAuthorisationParams,
-  ) => Promise<P extends RedirectableProviderType ? SignInResponse | undefined : undefined>;
 }
 
-const LoginModal = ({ setLoginModal, setIsAlert, setAlertText, signIn }: LoginModalProps) => {
+const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({});
   const darkmode = useRecoilValue(darkMode);
@@ -82,18 +75,6 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText, signIn }: LoginMo
                 <Link href={`${apiAddress()}/auth/naver`}>
                   <a className="green">Naver 계정으로 로그인</a>
                 </Link>
-                {/* <button onClick={() => signIn('kakao')} className="yellow">
-                  Kakao 계정으로 로그인
-                </button>
-                <button onClick={() => signIn('google')} className="gray">
-                  Google 계정으로 로그인
-                </button>
-                <button onClick={() => signIn('naver')} className="green">
-                  Naver 계정으로 로그인
-                </button>
-                <button onClick={() => signIn('github')} className="blue">
-                  GitHub 계정으로 로그인
-                </button> */}
                 <div className="line_wrap">
                   <div className="line"></div>
                   <span>또는</span>
