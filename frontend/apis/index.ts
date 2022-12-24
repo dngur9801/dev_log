@@ -12,11 +12,10 @@ import {
   PostTypes,
   UserBlogTypes,
 } from '../interfaces';
-
-// axios.defaults.headers = '';
+axios.defaults.withCredentials = true;
 const request = axios.create({
   baseURL: apiAddress(),
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 export const userAPI = {

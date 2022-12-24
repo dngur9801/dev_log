@@ -30,6 +30,10 @@ export const Ahref = styled.a<{ pathName: string }>`
       border-bottom: 2px solid ${({ theme }) => theme.colors.black1};
     `}
 
+  svg {
+    vertical-align: -3px;
+  }
+
   @media ${({ theme }) => theme.device.tablet} {
     padding: 0 2rem 0.5rem;
   }

@@ -20,7 +20,7 @@ const Edit = () => {
   );
 
   if (status === 'error') {
-    return <span>{error.response.data}</span>;
+    return <span>{error?.response?.data}</span>;
   }
 
   return <Write modifyTitle={data?.title} modifyContent={data?.content} id={data?.id} />;

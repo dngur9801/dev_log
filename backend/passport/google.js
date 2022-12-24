@@ -20,8 +20,6 @@ module.exports = () => {
           const exUser = await User.findOne({
             where: { email: profile?.emails[0].value, provider: 'google' },
           });
-          console.log('accessToken', accessToken);
-          console.log('refreshToken', refreshToken);
           if (exUser) {
             req._user = exUser;
             done(null, exUser);

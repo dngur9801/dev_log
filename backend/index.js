@@ -45,6 +45,7 @@ app.use(
 app.set('trust proxy', 1);
 app.use(
   session({
+    key: 'user_auth',
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,

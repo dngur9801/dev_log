@@ -75,7 +75,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
   useEffect(() => {
     setUser(userData);
     userData || queryClient.removeQueries(USER_INFO);
-  }, []);
+  }, [userData]);
 
   // 스크롤시 헤더 감지
   useEffect(() => {
@@ -90,7 +90,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
   }, [loginModal]);
 
   if (status === 'error') {
-    return <span>{error.response.data}</span>;
+    return <span>{error?.response?.data}</span>;
   }
   return (
     <Styled.Wrap>

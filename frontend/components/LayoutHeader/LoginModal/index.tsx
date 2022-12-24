@@ -75,6 +75,9 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
                 <Link href={`${apiAddress()}/auth/naver`}>
                   <a className="green">Naver 계정으로 로그인</a>
                 </Link>
+                <Link href={`${apiAddress()}/auth/kakao`}>
+                  <a className="green">Kakao 계정으로 로그인</a>
+                </Link>
                 <div className="line_wrap">
                   <div className="line"></div>
                   <span>또는</span>

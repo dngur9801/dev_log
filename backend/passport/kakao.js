@@ -10,8 +10,10 @@ module.exports = () => {
   passport.use(
     new KakaoStrategy(
       {
-        clientID: process.env.KAKAO_ID,
+        clientID: process.env.KAKAO_CLIENT_ID,
+        clientSecret: process.env.KAKAO_CLIENT_SECRET,
         callbackURL: `${location()}/auth/kakao/callback`,
+        passReqToCallback: true,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
@@ -20,6 +22,7 @@ module.exports = () => {
           });
 
           if (exUser) {
+            req._user = exUser;
             done(null, exUser);
           } else {
             const newUser = await User.create({
@@ -27,6 +30,7 @@ module.exports = () => {
               name: profile?.emails[0].value.split('@')[0],
               provider: 'kakao',
             });
+            req._user = exUser;
             done(null, newUser);
           }
         } catch (error) {

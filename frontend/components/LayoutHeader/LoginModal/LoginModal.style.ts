@@ -33,6 +33,9 @@ export const Wrap = styled.div`
         }
       }
     }
+    @media ${({ theme }) => theme.device.tablet} {
+      width: 95%;
+    }
   }
 `;
 

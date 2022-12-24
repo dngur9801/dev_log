@@ -31,7 +31,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
   const [isPrivate, setIsPrivate] = useState<'0' | '1'>('0');
   const [user] = useRecoilState(userInfo);
   const darkmode = useRecoilValue(darkMode);
-
+  console.log('user : ', user);
   const editorRef = useRef<Editor>(null);
   const router = useRouter();
 

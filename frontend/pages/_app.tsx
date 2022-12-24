@@ -10,7 +10,6 @@ import axios from 'axios';
 import React from 'react';
 import { apiAddress, seoConfig } from '../config';
 
-axios.defaults.withCredentials = true;
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
   console.log('pageProps.userData : ', pageProps.userData);
@@ -39,11 +38,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 MyApp.getInitialProps = async ({ ctx, Component }: any) => {
   console.log('getInitialProps START');
   let pageProps: any = {};
-  axios.defaults.withCredentials = true;
   const connectCookie = ctx.req ? ctx.req.headers.cookie : '';
   const themeCookie = ctx.req ? ctx.req.cookies : '';
-  console.log('ctx.req.headers.cookie : ', ctx.req.headers.cookie);
-  // axios.defaults.headers.Cookie = '';
+
+  axios.defaults.headers.Cookie = '';
   if (ctx.req && connectCookie) {
     axios.defaults.headers.Cookie = connectCookie;
   }

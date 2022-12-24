@@ -28,7 +28,7 @@ const Search = () => {
   };
 
   if (status === 'error') {
-    return <span>{error.response.data}</span>;
+    return <span>{error?.response?.data}</span>;
   }
   return (
     <>

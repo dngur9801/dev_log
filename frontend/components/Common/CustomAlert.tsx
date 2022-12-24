@@ -37,8 +37,8 @@ const Styled = {
     bottom: 0;
     left: 50%;
     z-index: 9999;
-    transition: 0.5s all;
     bottom: -150px;
+    transition: 0.5s all;
 
     .inner {
       width: 500px;
