@@ -39,6 +39,7 @@ app.use(
   cors({
     origin: location,
     credentials: true,
+    allowedHeaders: 'Content-Type',
   })
 );
 app.set('trust proxy', 1);
