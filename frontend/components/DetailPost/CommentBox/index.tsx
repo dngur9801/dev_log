@@ -4,6 +4,7 @@ import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation }
 import { commentAPI } from '../../../apis';
 import { CommentTypes, PostTypes, registCommentTypes } from '../../../interfaces';
 import CustomAlert from '../../Common/CustomAlert';
+import Loading from '../../Common/Loading';
 import Comment from './Comment';
 import * as Styled from './CommentBox.style';
 
@@ -22,7 +23,7 @@ const CommentBox = ({ comments, postId, refetch }: CommentBoxPropTypes) => {
   const [selectedCommentIndex, setSelectedCommentIndex] = useState<number>();
 
   const textRef = useRef<HTMLTextAreaElement>(null);
-  const { mutate: create }: any = useMutation((data: registCommentTypes) => commentAPI.regist(data));
+  const { mutate: create, isLoading }: any = useMutation((data: registCommentTypes) => commentAPI.regist(data));
 
   // 댓글 입력 시
   const onInputComment = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -62,6 +63,7 @@ const CommentBox = ({ comments, postId, refetch }: CommentBoxPropTypes) => {
       </h4>
       <textarea ref={textRef} placeholder="댓글을 작성하세요" maxLength={400} onInput={onInputComment}></textarea>
       <div className="button_wrap">
+        {isLoading && <Loading width="small" />}
         <button type="button" onClick={onClickRegistComment}>
           댓글 작성
         </button>

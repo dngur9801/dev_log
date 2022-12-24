@@ -75,9 +75,9 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
                 <Link href={`${apiAddress()}/auth/naver`}>
                   <a className="green">Naver 계정으로 로그인</a>
                 </Link>
-                <Link href={`${apiAddress()}/auth/kakao`}>
+                {/* <Link href={`${apiAddress()}/auth/kakao`}>
                   <a className="green">Kakao 계정으로 로그인</a>
-                </Link>
+                </Link> */}
                 <div className="line_wrap">
                   <div className="line"></div>
                   <span>또는</span>
@@ -89,7 +89,7 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
                   name="password"
                   onChange={(e) => onChangeForm(e)}
                 />
-                {isLoading && <Loading width="36px" />}
+                {isLoading && <Loading width="mid" />}
                 <button type="button" className="black" onClick={onClickLocalLogin}>
                   Devlog 아이디로 로그인
                 </button>

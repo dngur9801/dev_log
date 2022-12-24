@@ -9,6 +9,7 @@ import { userInfo } from '../../../../store/atom';
 import { commentAPI } from '../../../../apis';
 import { CommentEditTypes, CommentTypes, PostTypes } from '../../../../interfaces';
 import ProfileImage from '../../../Common/ProfileImage';
+import Loading from '../../../Common/Loading';
 
 interface Props {
   item: CommentTypes;
@@ -25,7 +26,7 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setIsAlert, s
   const [editComment, setEditComment] = useState('');
   const [user] = useRecoilState(userInfo);
 
-  const { mutate: edit } = useMutation((data: CommentEditTypes) => commentAPI.edit(data));
+  const { mutate: edit, isLoading: editLoading } = useMutation((data: CommentEditTypes) => commentAPI.edit(data));
   const { mutate: remove } = useMutation((data: string) => commentAPI.delete(data));
 
   // 댓글 수정 클릭 시
@@ -105,6 +106,7 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setIsAlert, s
             <button type="button" onClick={() => onClickModify(item.id)}>
               수정 완료
             </button>
+            {editLoading && <Loading />}
           </div>
         </Styled.EditForm>
       ) : (

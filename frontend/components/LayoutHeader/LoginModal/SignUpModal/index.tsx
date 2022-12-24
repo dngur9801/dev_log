@@ -45,7 +45,7 @@ const SignUpModal = ({ setIsSignUp, setIsAlert, setAlertText }: SignUpModalProps
       <input type="text" placeholder="이메일" name="email" onChange={(e) => onChangeForm(e)} />
       <input type="password" placeholder="비밀번호" name="password" onChange={(e) => onChangeForm(e)} />
       <input type="password" placeholder="비밀번호 확인 " name="re_password" onChange={(e) => onChangeForm(e)} />
-      {isLoading && <Loading width="32px" />}
+      {isLoading && <Loading width="small" />}
       <button type="button" className="signup_btn black" onClick={onClickSignUp}>
         회원가입
       </button>
