@@ -31,9 +31,9 @@ const UserBlog: NextPage = () => {
       <NextSeo
         title={data?.nickName}
         description={`${data?.nickName} description`}
-        canonical="https://example.com"
+        canonical="https://devlog.shop"
         openGraph={{
-          url: 'https://example.com',
+          url: 'https://devlog.shop',
         }}
       />
       <UserBlogHeader nickName={data?.nickName} profileImage={data?.profileImage} introduce={data?.introduce} />

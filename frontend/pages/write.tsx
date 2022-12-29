@@ -111,9 +111,9 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
       <NextSeo
         title="새 글 작성"
         description="새 글 작성 description"
-        canonical="https://example.com"
+        canonical="https://devlog.shop"
         openGraph={{
-          url: 'https://example.com',
+          url: 'https://devlog.shop',
         }}
       />
       <Styled.Wrap>
@@ -139,13 +139,15 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
           </Styled.Subject>
           <EditorBox editorRef={editorRef} value={modifyContent} darkmode={darkmode} />
           <Styled.ButtonWrap>
-            <button type="button" onClick={() => router.back()}>
-              <FaArrowCircleLeft />
-              나가기
-            </button>
-            <button type="button" onClick={() => setIsModal(true)}>
-              글 {modifyTitle ? '수정' : '발행'}하기
-            </button>
+            <div className="btns">
+              <button type="button" onClick={() => router.back()}>
+                <FaArrowCircleLeft />
+                나가기
+              </button>
+              <button type="button" onClick={() => setIsModal(true)}>
+                글 {modifyTitle ? '수정' : '발행'}하기
+              </button>
+            </div>
           </Styled.ButtonWrap>
           {isModal && (
             <RegistModal
@@ -213,34 +215,37 @@ const Styled = {
     }
   `,
   ButtonWrap: styled.div`
-    display: flex;
-    position: fixed;
-    justify-content: space-between;
-    align-items: center;
-    bottom: 0;
-    width: 100%;
-    padding: 15px;
-    background-color: ${({ theme }) => theme.backgroundColors.white1};
+    height: 70px;
+    .btns {
+      display: flex;
+      position: fixed;
+      justify-content: space-between;
+      align-items: center;
+      bottom: 0;
+      width: 100%;
+      padding: 15px;
+      background-color: ${({ theme }) => theme.backgroundColors.white1};
 
-    button:nth-of-type(1) {
-      background: transparent;
-      margin-left: 30px;
-      font-size: ${({ theme }) => theme.fontSizes.xl};
-      color: ${({ theme }) => theme.colors.black1};
+      button:nth-of-type(1) {
+        background: transparent;
+        margin-left: 30px;
+        font-size: ${({ theme }) => theme.fontSizes.xl};
+        color: ${({ theme }) => theme.colors.black1};
 
-      svg {
-        vertical-align: -3px;
-        margin-right: 8px;
+        svg {
+          vertical-align: -3px;
+          margin-right: 8px;
+        }
       }
-    }
 
-    button:nth-of-type(2) {
-      padding: 10px 15px;
-      margin-right: 30px;
-      border-radius: 10px;
-      background-color: ${({ theme }) => theme.backgroundColors.basic1};
-      color: white;
-      font-size: ${({ theme }) => theme.fontSizes.xl};
+      button:nth-of-type(2) {
+        padding: 10px 15px;
+        margin-right: 30px;
+        border-radius: 10px;
+        background-color: ${({ theme }) => theme.backgroundColors.basic1};
+        color: white;
+        font-size: ${({ theme }) => theme.fontSizes.xl};
+      }
     }
   `,
 };

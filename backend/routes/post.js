@@ -108,6 +108,7 @@ router.get('/detail/:postId', async (req, res, next) => {
 // 게시글 수정
 router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
   try {
+    console.log('req.file : ', req.file);
     const { title, content, id, private } = req.body;
     if (title === '') {
       return res.status(401).json('제목을 입력하세요.');
@@ -121,12 +122,22 @@ router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
       { where: { id } }
     );
     if (req.file) {
-      await Image.update(
-        {
+      const image = await Image.findOne({
+        where: { postId: id },
+      });
+      if (image) {
+        await Image.update(
+          {
+            src: req.file.path,
+          },
+          { where: { postId: id } }
+        );
+      } else {
+        await Image.create({
           src: req.file.path,
-        },
-        { where: { postId: id } }
-      );
+          postId: id,
+        });
+      }
     }
     const post = await Post.findOne({
       where: { id },

@@ -56,9 +56,9 @@ const Register = () => {
       <NextSeo
         title="회원가입"
         description="회원가입 description"
-        canonical="https://example.com"
+        canonical="https://devlog.shop"
         openGraph={{
-          url: 'https://example.com',
+          url: 'https://devlog.shop',
         }}
       />
       <Styled.Wrap>

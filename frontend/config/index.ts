@@ -7,7 +7,7 @@ export function defaultProfileImage() {
 }
 
 export function defaultTitleImage() {
-  return '/image/noimg.jpeg';
+  return '/image/noimg.png';
 }
 
 export const seoConfig = {
@@ -31,6 +31,6 @@ export const seoConfig = {
   openGraph: {
     type: 'website',
     site_name: 'Devlog',
-    images: [{ url: 'https://example.com/example_square_image.png' }],
+    images: [{ url: 'https://devlog.shop/noimg.png' }],
   },
 };

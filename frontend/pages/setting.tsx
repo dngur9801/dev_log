@@ -119,9 +119,9 @@ const Setting: NextPage = () => {
       <NextSeo
         title="설정"
         description="설정 description"
-        canonical="https://example.com"
+        canonical="https://devlog.shop"
         openGraph={{
-          url: 'https://example.com',
+          url: 'https://devlog.shop',
         }}
       />
       <Styled.Container>

@@ -23,9 +23,9 @@ const Latest: NextPage = () => {
       <NextSeo
         title="home"
         description="home description"
-        canonical="https://example.com"
+        canonical="https://devlog.shop"
         openGraph={{
-          url: 'https://example.com',
+          url: 'https://devlog.shop',
         }}
       />
       <MainContentHeader />

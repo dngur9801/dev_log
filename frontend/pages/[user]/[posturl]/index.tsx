@@ -15,11 +15,10 @@ import { GetServerSidePropsContext } from 'next';
 import { useCookies } from 'react-cookie';
 import CustomAlert from '../../../components/Common/CustomAlert';
 
+const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
+  ssr: false,
+});
 const DetailPost = () => {
-  const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
-    ssr: false,
-  });
-
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
   const [cookies, setCookies, deleteCookies] = useCookies(['postId']);
@@ -121,9 +120,9 @@ const DetailPost = () => {
       <NextSeo
         title={postData.title}
         description={`${postData.title} description`}
-        canonical="https://example.com"
+        canonical="https://devlog.shop"
         openGraph={{
-          url: 'https://example.com',
+          url: 'https://devlog.shop',
         }}
       />
       <Header data={postData} />
