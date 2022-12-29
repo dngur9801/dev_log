@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+/* eslint-disable prefer-const */
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import * as S from './LoginModal.style';
 import { FaRegWindowClose } from 'react-icons/fa';
 import SignUpModal from './SignUpModal';
@@ -19,6 +20,7 @@ interface LoginModalProps {
 }
 
 const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps) => {
+  const [animation, setAnimation] = useState<'openAnimation' | 'closeAnimation'>('openAnimation');
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({});
   const darkmode = useRecoilValue(darkMode);
@@ -53,11 +55,30 @@ const LoginModal = ({ setLoginModal, setIsAlert, setAlertText }: LoginModalProps
   };
   const { mutate, isLoading }: any = useMutation((data: LocalLoginTypes) => userAPI.localLogin(data));
 
+  const close = () => {
+    setAnimation('closeAnimation');
+    setTimeout(() => {
+      setLoginModal(false);
+    }, 300);
+  };
+
+  useEffect(() => {
+    let timer1: NodeJS.Timeout;
+
+    timer1 = setTimeout(() => {
+      setAnimation(null);
+    }, 300);
+
+    return () => {
+      clearTimeout(timer1);
+    };
+  }, []);
+
   return (
     <S.Wrap>
-      <div className="content_wrap">
+      <div className={`content_wrap ${animation}`}>
         <div className="close">
-          <FaRegWindowClose onClick={() => setLoginModal(false)} />
+          <FaRegWindowClose onClick={close} />
         </div>
         <S.Content darkmode={darkmode}>
           <div className="left_content">

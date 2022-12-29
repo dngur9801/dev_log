@@ -1,4 +1,25 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const openSlide = keyframes`
+  from {
+    transform: translate(-50%, 100%) scale(0.1);
+    opacity:0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity:1;
+  }
+`;
+const closeSlide = keyframes`
+  from {
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity:1;
+  }
+  to {
+    transform: translate(-50%, 100%) scale(0.1);
+    opacity:0;
+  }
+`;
 
 export const Wrap = styled.div`
   position: fixed;
@@ -16,9 +37,17 @@ export const Wrap = styled.div`
     transform: translate(-50%, -50%);
     width: 750px;
     background-color: white;
+    transition: all 1s;
     padding: 20px;
     box-shadow: 0 0 10px;
     background-color: ${({ theme }) => theme.backgroundColors.default};
+
+    &.openAnimation {
+      animation: ${openSlide} 0.3s;
+    }
+    &.closeAnimation {
+      animation: ${closeSlide} 0.3s;
+    }
 
     .close {
       text-align: right;
