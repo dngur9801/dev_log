@@ -9,7 +9,7 @@ export const reg = {
 
   isId(string: string) {
     const regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
-    return regxp.test(string);
+    return regExp.test(string);
   },
 
   changeHyphen(string: string) {
