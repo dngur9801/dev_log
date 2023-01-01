@@ -12,8 +12,6 @@ import { apiAddress, seoConfig } from '../config';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
-  console.log('pageProps.userData : ', pageProps.userData);
-  console.log('pageProps.themeCookie : ', pageProps.themeCookie);
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -36,7 +34,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 MyApp.getInitialProps = async ({ ctx, Component }: any) => {
-  console.log('getInitialProps START');
   let pageProps: any = {};
   const connectCookie = ctx.req ? ctx.req.headers.cookie : '';
   const themeCookie = ctx.req ? ctx.req.cookies : '';

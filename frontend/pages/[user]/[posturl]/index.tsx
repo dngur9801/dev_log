@@ -92,7 +92,6 @@ const DetailPost = () => {
       return;
     }
     if (window.scrollY > likeTop) {
-      console.log(444);
       likeRef.current.style.top = window.scrollY - likeTop + 111 + 'px';
     } else {
       likeRef.current.style.top = '111px';
@@ -100,7 +99,7 @@ const DetailPost = () => {
   };
   useEffect(() => {
     likeTop = likeRef.current.getBoundingClientRect().top + window.scrollY - (111 + 90);
-    window.addEventListener('scroll', handleScroll, { capture: true });
+    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -111,9 +110,6 @@ const DetailPost = () => {
 
     return () => deleteCookies('postId');
   }, []);
-  if (status === 'error') {
-    return <span>{error?.response?.data}</span>;
-  }
 
   return (
     <>

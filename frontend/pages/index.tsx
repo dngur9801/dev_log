@@ -12,9 +12,7 @@ const Home = () => {
   const { data, error, status } = useQuery<PostTypes[], AxiosError<ReactNode>>(POPULAR_LISTS, postAPI.popular, {
     refetchOnWindowFocus: false,
   });
-  if (status === 'error') {
-    return <span>{error?.response?.data}</span>;
-  }
+
   return (
     <>
       <NextSeo

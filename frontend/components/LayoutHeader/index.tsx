@@ -46,6 +46,7 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
 
   const router = useRouter();
   const queryClient = useQueryClient();
+  console.log('userData:', userData);
 
   // 로그아웃
   const onClickLogout = () => {
@@ -70,11 +71,10 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
     setDarkmode(!darkmode);
   };
 
-  // 유저 정보 요청
   useEffect(() => {
     setUser(userData);
     userData || queryClient.removeQueries(USER_INFO);
-  }, [userData]);
+  }, []);
 
   // 스크롤시 헤더 감지
   useEffect(() => {
@@ -88,9 +88,6 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
     body.style.overflow = loginModal ? 'hidden' : '';
   }, [loginModal]);
 
-  if (status === 'error') {
-    return <span>{error?.response?.data}</span>;
-  }
   return (
     <Styled.Wrap>
       <Styled.HeaderBox hide={hide}>

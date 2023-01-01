@@ -22,9 +22,6 @@ const UserBlog: NextPage = () => {
       refetchOnWindowFocus: false,
     },
   );
-  if (status === 'error') {
-    return <span>{error?.response?.data}</span>;
-  }
 
   return (
     <>
