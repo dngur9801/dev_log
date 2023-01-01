@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LikeBox = styled.div`
   position: absolute;
   left: -7rem;
-  top: 40px;
+  top: 111px;
   border-radius: 20px;
   border: 1px solid ${({ theme }) => theme.colors.gray3};
   background-color: ${({ theme }) => theme.backgroundColors.white1};

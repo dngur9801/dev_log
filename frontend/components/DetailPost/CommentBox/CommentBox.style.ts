@@ -25,6 +25,7 @@ export const Wrap = styled.div`
     overflow: hidden;
     line-height: 1.5;
     caret-color: ${({ theme }) => theme.colors.black1};
+    color: ${({ theme }) => theme.colors.default};
     &:focus {
       outline: none;
     }

@@ -18,6 +18,7 @@ import CustomAlert from '../../../components/Common/CustomAlert';
 const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
   ssr: false,
 });
+let likeTop: number;
 const DetailPost = () => {
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
@@ -90,18 +91,17 @@ const DetailPost = () => {
     if (!likeRef.current) {
       return;
     }
-    if (window.scrollY > 1300) {
-      likeRef.current.style.top = String(`${window.scrollY - 1260 + 'px'}`);
+    if (window.scrollY > likeTop) {
+      console.log(444);
+      likeRef.current.style.top = window.scrollY - likeTop + 111 + 'px';
     } else {
-      if (likeRef.current) likeRef.current.style.top = '40px';
+      likeRef.current.style.top = '111px';
     }
   };
   useEffect(() => {
-    const timer = setInterval(() => {
-      window.addEventListener('scroll', handleScroll);
-    }, 100);
+    likeTop = likeRef.current.getBoundingClientRect().top + window.scrollY - (111 + 90);
+    window.addEventListener('scroll', handleScroll, { capture: true });
     return () => {
-      clearInterval(timer);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -134,6 +134,7 @@ const DetailPost = () => {
           Viewer={Viewer}
           onClickSetLike={onClickSetLike}
           isLike={isLike}
+          likeRef={likeRef}
         />
         <CommentBox comments={postData?.comments} postId={postData.id} refetch={refetch} />
       </Styled.ContentWrap>

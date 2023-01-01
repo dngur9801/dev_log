@@ -13,9 +13,10 @@ interface Props {
   onClickSetLike: () => void;
   Viewer: React.ComponentType<any>;
   isLike: boolean;
+  likeRef: React.MutableRefObject<HTMLDivElement>;
 }
 
-const Content = ({ data, postId, onClickDelete, onClickSetLike, Viewer, isLike }: Props) => {
+const Content = ({ data, postId, onClickDelete, onClickSetLike, Viewer, isLike, likeRef }: Props) => {
   const me = useRecoilValue(userInfo);
   const darkmode = useRecoilValue(darkMode);
 
@@ -36,7 +37,7 @@ const Content = ({ data, postId, onClickDelete, onClickSetLike, Viewer, isLike }
       )}
       <Styled.Content>
         <Viewer content={data?.content} darkmode={darkmode} />
-        <Like onClickSetLike={onClickSetLike} isLike={isLike} likeCount={data?.likeCount} />
+        <Like onClickSetLike={onClickSetLike} isLike={isLike} likeCount={data?.likeCount} likeRef={likeRef} />
       </Styled.Content>
     </>
   );

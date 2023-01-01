@@ -45,6 +45,7 @@ const CommentBox = ({ comments, postId, refetch }: CommentBoxPropTypes) => {
     };
     create(data, {
       onSuccess: () => {
+        textRef.current.value = '';
         setIsAlert(true);
         setAlertText('😁 댓글이 작성되었습니다.');
         refetch();

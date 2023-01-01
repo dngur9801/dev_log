@@ -6,11 +6,12 @@ interface Props {
   onClickSetLike: () => void;
   isLike: boolean;
   likeCount: number;
+  likeRef: React.MutableRefObject<HTMLDivElement>;
 }
 
-const Like = ({ onClickSetLike, isLike, likeCount }: Props) => {
+const Like = ({ onClickSetLike, isLike, likeCount, likeRef }: Props) => {
   return (
-    <Styled.LikeBox onClick={onClickSetLike}>
+    <Styled.LikeBox onClick={onClickSetLike} ref={likeRef}>
       <div className="inner">
         {isLike ? <FaHeart size={'36px'} color={'red'} /> : <FaRegHeart size={'36px'} />}
         <div>{likeCount}</div>
