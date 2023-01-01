@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { NextSeo } from 'next-seo';
@@ -13,6 +13,7 @@ import OutMember from '../components/Setting/OutMember';
 import { USER_INFO } from '../constant/queryKey';
 import { ChangeProfileFormTypes } from '../interfaces';
 import { userInfo } from '../store/atom';
+import axios from 'axios';
 
 const Setting: NextPage = () => {
   const [isAlert, setIsAlert] = useState(false);
@@ -149,7 +150,13 @@ const Setting: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
   const data = await userAPI.info();
 
   if (!data) {
