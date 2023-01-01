@@ -23,6 +23,18 @@ module.exports = {
     return '방금 전';
   },
 
+  changeHyphen(string) {
+    // 공백과 특수문자를 "-"로 치환
+    const regex = /[\s\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]+/g;
+    const regex2 = string.replace(regex, '-');
+    const title = regex2.replace(/-$/, '');
+    return title;
+  },
+
+  randomStr() {
+    return Math.random().toString(36).substring(2, 8);
+  },
+
   location() {
     return process.env.NODE_ENV === 'production'
       ? process.env.API_ADDRESS

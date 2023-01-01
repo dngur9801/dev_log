@@ -12,6 +12,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { darkMode, userInfo } from '../store/atom';
 import RegistModal from '../components/Write/RegistModal';
 import CustomAlert from '../components/Common/CustomAlert';
+import { reg } from '../utils';
 
 interface WriteTypes {
   modifyTitle?: string;
@@ -55,11 +56,8 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
         router.push(
           {
             pathname: '/[user]/[posturl]',
-            query: {
-              id: data.data.id,
-            },
           },
-          `/@${user.name}/${data.data.title}`,
+          `/@${user.name}/${data.data.urlTitle}`,
         );
       },
       onError: (error: any) => {
@@ -78,11 +76,8 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
         router.push(
           {
             pathname: '/[user]/[posturl]',
-            query: {
-              id: data.data.id,
-            },
           },
-          `/@${user.name}/${data.data.title}`,
+          `/@${user.name}/${data.data.urlTitle}`,
         );
       },
       onError: (error: any) => {

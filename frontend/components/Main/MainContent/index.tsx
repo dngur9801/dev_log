@@ -20,11 +20,8 @@ const MainContent = ({ data }: MainContentProps) => {
               <Link
                 href={{
                   pathname: '/[user]/[posturl]',
-                  query: {
-                    id: item.id,
-                  },
                 }}
-                as={`/@${item.user?.name}/${reg.changeHyphen(item.title)}`}
+                as={`/@${item.user?.name}/${item.urlTitle}`}
               >
                 <a>
                   <div className="content_img">
@@ -40,11 +37,8 @@ const MainContent = ({ data }: MainContentProps) => {
               <Link
                 href={{
                   pathname: '/[user]/[posturl]',
-                  query: {
-                    id: item.id,
-                  },
                 }}
-                as={`/@${item.user?.name}/${reg.changeHyphen(item.title)}`}
+                as={`/@${item.user?.name}/${item.urlTitle}`}
               >
                 <a>
                   <h4 className="title">{item.title}</h4>

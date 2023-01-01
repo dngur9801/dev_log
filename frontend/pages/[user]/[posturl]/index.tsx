@@ -12,7 +12,6 @@ import { DETAIL_POST } from '../../../constant/queryKey';
 import Header from '../../../components/DetailPost/Header';
 import Content from '../../../components/DetailPost/Content';
 import { GetServerSidePropsContext } from 'next';
-import { useCookies } from 'react-cookie';
 import CustomAlert from '../../../components/Common/CustomAlert';
 
 const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
@@ -22,20 +21,19 @@ let likeTop: number;
 const DetailPost = () => {
   const [isAlert, setIsAlert] = useState(false);
   const [alertText, setAlertText] = useState('');
-  const [cookies, setCookies, deleteCookies] = useCookies(['postId']);
 
   const router = useRouter();
-  const { id } = router.query;
+  const { posturl } = router.query;
   const {
     data: postData,
     error,
     status,
     refetch,
-  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI.detail(cookies.postId), {
+  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI?.detail(posturl), {
     refetchOnWindowFocus: false,
-    enabled: !!cookies.postId,
+    enabled: !!posturl,
   });
-  const [isLike, setIsLike] = useState(postData.isLike === 1 ? true : false);
+  const [isLike, setIsLike] = useState(postData?.isLike === 1 ? true : false);
   const likeRef = useRef<HTMLDivElement>(null);
 
   const { mutate: removePost } = useMutation((data: number) => postAPI.delete(data));
@@ -105,18 +103,11 @@ const DetailPost = () => {
     };
   }, []);
 
-  useEffect(() => {
-    deleteCookies('postId');
-    setCookies('postId', id || postData.id);
-
-    return () => deleteCookies('postId');
-  }, []);
-
   return (
     <>
       <NextSeo
-        title={postData.title}
-        description={`${postData.title} description`}
+        title={postData?.title}
+        description={`${postData?.title} description`}
         canonical="https://devlog.shop"
         openGraph={{
           url: 'https://devlog.shop',
@@ -126,14 +117,14 @@ const DetailPost = () => {
       <Styled.ContentWrap>
         <Content
           data={postData}
-          postId={postData.id}
+          postId={postData?.id}
           onClickDelete={onClickDelete}
           Viewer={Viewer}
           onClickSetLike={onClickSetLike}
           isLike={isLike}
           likeRef={likeRef}
         />
-        <CommentBox comments={postData?.comments} postId={postData.id} refetch={refetch} />
+        <CommentBox comments={postData?.comments} postId={postData?.id} refetch={refetch} />
       </Styled.ContentWrap>
       {isAlert && <CustomAlert text={alertText} setIsAlert={setIsAlert} />}
     </>
@@ -141,19 +132,15 @@ const DetailPost = () => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const id = context.query?.id;
-  const cookie = context.req.cookies;
   console.log('context.query', context.query);
-
-  const postId = id || cookie.postId;
-
-  if (!id && !postId) {
+  const postUrl = context.query?.posturl;
+  if (!postUrl) {
     return {
       notFound: true,
     };
   }
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(DETAIL_POST, () => postAPI.detail(postId));
+  await queryClient.prefetchQuery(DETAIL_POST, () => postAPI.detail(postUrl));
 
   return {
     props: {

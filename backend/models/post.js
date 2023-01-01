@@ -2,6 +2,10 @@ module.exports = (sequelize, Sequelize) => {
   const Post = sequelize.define(
     'post',
     {
+      urlTitle: {
+        type: Sequelize.STRING(150),
+        unique: true,
+      },
       title: {
         type: Sequelize.STRING(100),
       },

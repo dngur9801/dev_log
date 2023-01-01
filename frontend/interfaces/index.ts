@@ -54,6 +54,7 @@ export interface PostTypes {
   image: null | {
     src: string;
   };
+  urlTitle: string;
   title: string;
   user: UserInfoTypes;
   viewCnt: string;

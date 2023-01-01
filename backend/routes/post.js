@@ -29,7 +29,15 @@ router.post(
       if (title === '') {
         return res.status(401).send('제목을 입력하세요.');
       }
+      let urlTitle = utils.changeHyphen(title);
+      const exPost = await Post.findOne({
+        where: { urlTitle },
+      });
+      if (exPost) {
+        urlTitle = utils.changeHyphen(title) + '-' + utils.randomStr();
+      }
       const post = await Post.create({
+        urlTitle,
         title,
         content,
         private,
@@ -52,12 +60,11 @@ router.post(
 );
 
 // 게시글 상세페이지
-router.get('/detail/:postId', async (req, res, next) => {
+router.get('/detail/:postUrl', async (req, res, next) => {
   try {
     const userId = req.user?.id;
-    console.log('req.body :', req.body);
     const post = await Post.findOne({
-      where: { id: req.params.postId },
+      where: { urlTitle: req.params.postUrl },
       include: [
         {
           model: Image,
@@ -86,10 +93,6 @@ router.get('/detail/:postId', async (req, res, next) => {
         },
       ],
     });
-    await Post.increment(
-      { view_cnt: +1 },
-      { where: { id: req.params.postId } }
-    );
     // 날짜 변환
     post.dataValues.createdAt = utils.elapsedTime(post.dataValues.createdAt);
     post.dataValues.comments.forEach((item, idx) => {
