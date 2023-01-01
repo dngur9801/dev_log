@@ -24,7 +24,7 @@ const MainContent = ({ data }: MainContentProps) => {
                     id: item.id,
                   },
                 }}
-                as={`/@${item.user?.name}/${item.title}`}
+                as={`/@${item.user?.name}/${reg.changeHyphen(item.title)}`}
               >
                 <a>
                   <div className="content_img">
@@ -44,7 +44,7 @@ const MainContent = ({ data }: MainContentProps) => {
                     id: item.id,
                   },
                 }}
-                as={`/@${item.user?.name}/${item.title}`}
+                as={`/@${item.user?.name}/${reg.changeHyphen(item.title)}`}
               >
                 <a>
                   <h4 className="title">{item.title}</h4>

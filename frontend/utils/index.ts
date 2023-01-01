@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { UserInfoTypes } from '../interfaces';
 
 export const reg = {
@@ -8,7 +9,15 @@ export const reg = {
 
   isId(string: string) {
     const regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
-    return regExp.test(string);
+    return regxp.test(string);
+  },
+
+  changeHyphen(string: string) {
+    // 공백과 특수문자를 "-"로 치환
+    const regex = /[\s\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]+/g;
+    const regex2 = string.replace(regex, '-');
+    const title = regex2.replace(/-$/, '');
+    return title;
   },
 };
 

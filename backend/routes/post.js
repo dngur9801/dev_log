@@ -55,6 +55,7 @@ router.post(
 router.get('/detail/:postId', async (req, res, next) => {
   try {
     const userId = req.user?.id;
+    console.log('req.body :', req.body);
     const post = await Post.findOne({
       where: { id: req.params.postId },
       include: [

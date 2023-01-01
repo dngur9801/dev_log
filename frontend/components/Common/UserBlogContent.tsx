@@ -20,7 +20,7 @@ const UserBlogContent = ({ item }: UserBlogContentPropTypes) => {
               id: item.id,
             },
           }}
-          as={`/@${item.user?.name}/${item.title}`}
+          as={`/@${item.user?.name}/${reg.changeHyphen(item.title)}`}
         >
           <a className="image_box">
             <img src={item.image?.src ? `${apiAddress()}/${item.image?.src}` : defaultTitleImage()} alt="" />
@@ -33,7 +33,7 @@ const UserBlogContent = ({ item }: UserBlogContentPropTypes) => {
               id: item.id,
             },
           }}
-          as={`/@${item.user?.name}/${item.title}`}
+          as={`/@${item.user?.name}/${reg.changeHyphen(item.title)}`}
         >
           <a>
             <p className="subject">{item.title}</p>

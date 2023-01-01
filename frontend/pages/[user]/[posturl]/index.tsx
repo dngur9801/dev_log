@@ -106,6 +106,7 @@ const DetailPost = () => {
   }, []);
 
   useEffect(() => {
+    deleteCookies('postId');
     setCookies('postId', id || postData.id);
 
     return () => deleteCookies('postId');
@@ -142,6 +143,7 @@ const DetailPost = () => {
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const id = context.query?.id;
   const cookie = context.req.cookies;
+  console.log('context.query', context.query);
 
   const postId = id || cookie.postId;
 

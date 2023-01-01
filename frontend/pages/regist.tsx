@@ -40,9 +40,7 @@ const Register = () => {
       regist(data, {
         onSuccess: () => {
           window.location.href =
-            process.env.NODE_ENV === 'production'
-              ? 'https://main--imaginative-sunburst-7e031b.netlify.app/'
-              : 'http://localhost:3000';
+            process.env.NODE_ENV === 'production' ? 'https://devlog.shop' : 'http://localhost:3000';
         },
         onError: (error: any) => {
           setIsAlert(true);
