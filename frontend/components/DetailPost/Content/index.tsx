@@ -8,7 +8,7 @@ import Like from './Like';
 
 interface Props {
   data: PostTypes;
-  postId: number;
+  posturl: string | string[];
   onClickDelete: () => void;
   onClickSetLike: () => void;
   Viewer: React.ComponentType<any>;
@@ -16,7 +16,7 @@ interface Props {
   likeRef: React.MutableRefObject<HTMLDivElement>;
 }
 
-const Content = ({ data, postId, onClickDelete, onClickSetLike, Viewer, isLike, likeRef }: Props) => {
+const Content = ({ data, posturl, onClickDelete, onClickSetLike, Viewer, isLike, likeRef }: Props) => {
   const me = useRecoilValue(userInfo);
   const darkmode = useRecoilValue(darkMode);
 
@@ -27,7 +27,7 @@ const Content = ({ data, postId, onClickDelete, onClickSetLike, Viewer, isLike, 
     <>
       {me?.id === data?.user.id && (
         <Styled.ContentBtn>
-          <button type="button" onClick={() => router.push(`/${user}/${postId}/edit`)}>
+          <button type="button" onClick={() => router.push(`/${user}/${posturl}/edit`)}>
             포스트 수정
           </button>
           <button type="button" onClick={onClickDelete}>

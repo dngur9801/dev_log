@@ -112,13 +112,20 @@ router.get('/detail/:postUrl', async (req, res, next) => {
 // 게시글 수정
 router.put('/', isLoggedIn, upload.single('file'), async (req, res, next) => {
   try {
-    console.log('req.file : ', req.file);
     const { title, content, id, private } = req.body;
     if (title === '') {
       return res.status(401).json('제목을 입력하세요.');
     }
+    let urlTitle = utils.changeHyphen(title);
+    const exPost = await Post.findOne({
+      where: { urlTitle },
+    });
+    if (exPost) {
+      urlTitle = utils.changeHyphen(title) + '-' + utils.randomStr();
+    }
     await Post.update(
       {
+        urlTitle,
         title,
         content,
         private,

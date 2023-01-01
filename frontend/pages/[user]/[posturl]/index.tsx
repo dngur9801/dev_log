@@ -117,7 +117,7 @@ const DetailPost = () => {
       <Styled.ContentWrap>
         <Content
           data={postData}
-          postId={postData?.id}
+          posturl={posturl}
           onClickDelete={onClickDelete}
           Viewer={Viewer}
           onClickSetLike={onClickSetLike}
