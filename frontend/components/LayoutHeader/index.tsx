@@ -46,7 +46,6 @@ const LayoutHeader = ({ ssrUserData, themeCookie }: Props) => {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  console.log('userData:', userData);
 
   // 로그아웃
   const onClickLogout = () => {

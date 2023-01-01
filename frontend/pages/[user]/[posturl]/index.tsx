@@ -29,7 +29,7 @@ const DetailPost = () => {
     error,
     status,
     refetch,
-  } = useQuery<PostTypes, AxiosError<ReactNode>>(DETAIL_POST, () => postAPI?.detail(posturl), {
+  } = useQuery<PostTypes, AxiosError<ReactNode>>([DETAIL_POST, posturl], () => postAPI?.detail(posturl), {
     refetchOnWindowFocus: false,
     enabled: !!posturl,
   });
@@ -132,15 +132,15 @@ const DetailPost = () => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  console.log('context.query', context.query);
   const postUrl = context.query?.posturl;
-  if (!postUrl) {
+  const post = await postAPI.detail(postUrl);
+  if (!post) {
     return {
       notFound: true,
     };
   }
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(DETAIL_POST, () => postAPI.detail(postUrl));
+  await queryClient.prefetchQuery([DETAIL_POST, postUrl], () => postAPI.detail(postUrl));
 
   return {
     props: {
