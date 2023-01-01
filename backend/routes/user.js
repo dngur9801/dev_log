@@ -165,12 +165,17 @@ router.post('/regist', isNotLoggedIn, async (req, res, next) => {
 // 유저블로그 정보
 router.get('/posts', async (req, res, next) => {
   try {
+    let postWhere;
+    if (req.user?.name !== req.query.name) {
+      postWhere = { private: 0 };
+    }
     const user = await User.findOne({
       where: { name: req.query.name },
       include: [
         {
           model: Post,
           order: [['createdAt', 'DESC']],
+          where: postWhere,
           include: [
             {
               model: Image,
