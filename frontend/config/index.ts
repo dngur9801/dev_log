@@ -11,7 +11,7 @@ export function defaultTitleImage() {
 }
 
 export const seoConfig = {
-  titleTemplate: '%s | Devlog',
+  titleTemplate: '%s',
   additionalLinkTags: [
     {
       rel: 'icon',
