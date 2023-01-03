@@ -33,7 +33,7 @@ export const seoConfig = {
     },
     {
       name: 'google-site-verification',
-      content: 'vtm76vnjCcUjmjxcS3CRY45',
+      content: 'vtm76vnjCcUjmjxcS3CRY45-ZuWcOuJM7CWLUneSTRM',
     },
   ],
   openGraph: {
