@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: undefined
+Host: https://devlog.shop
 
 # Sitemaps
-Sitemap: undefined/sitemap.xml
+Sitemap: https://devlog.shop/sitemap.xml
