@@ -27,6 +27,14 @@ export const seoConfig = {
       name: 'theme-color',
       content: '#FFFFFF',
     },
+    {
+      name: 'naver-site-verification',
+      content: '02859dbeebe8b61676e6b1c929cab7db7edaa535',
+    },
+    {
+      name: 'google-site-verification',
+      content: 'vtm76vnjCcUjmjxcS3CRY45',
+    },
   ],
   openGraph: {
     type: 'website',
