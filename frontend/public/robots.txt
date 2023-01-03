@@ -7,3 +7,4 @@ Host: https://devlog.shop
 
 # Sitemaps
 Sitemap: https://devlog.shop/sitemap.xml
+Sitemap: https://devlog.shop/server-sitemap.xml
