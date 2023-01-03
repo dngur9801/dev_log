@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <>
       <NextSeo
-        title="home"
+        title="Devlog"
         description="개발자들을 위한 마크다운 블로그 서비스"
         canonical="https://devlog.shop"
         openGraph={{
