@@ -61,6 +61,7 @@ export const ContentMiddle = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    padding: 7px 0;
     margin-bottom: ${({ theme }) => theme.calcRem(10)};
     font-weight: ${({ theme }) => theme.fontWeights.xl};
     font-size: ${({ theme }) => theme.fontSizes.xl};
