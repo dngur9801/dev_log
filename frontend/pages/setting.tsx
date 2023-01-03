@@ -119,7 +119,7 @@ const Setting: NextPage = () => {
     <>
       <NextSeo
         title="설정"
-        description="설정 description"
+        description="설정"
         canonical="https://devlog.shop"
         openGraph={{
           url: 'https://devlog.shop',

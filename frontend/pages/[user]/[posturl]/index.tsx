@@ -107,7 +107,7 @@ const DetailPost = () => {
     <>
       <NextSeo
         title={postData?.title}
-        description={`${postData?.title} description`}
+        description={`${postData?.title}`}
         canonical="https://devlog.shop"
         openGraph={{
           url: 'https://devlog.shop',

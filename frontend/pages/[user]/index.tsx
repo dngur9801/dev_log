@@ -27,7 +27,7 @@ const UserBlog: NextPage = () => {
     <>
       <NextSeo
         title={data?.nickName}
-        description={`${data?.nickName} description`}
+        description={`${data?.nickName}`}
         canonical="https://devlog.shop"
         openGraph={{
           url: 'https://devlog.shop',

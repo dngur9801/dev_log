@@ -105,7 +105,7 @@ const Write = ({ modifyTitle, modifyContent, id }: WriteTypes) => {
     <>
       <NextSeo
         title="새 글 작성"
-        description="새 글 작성 description"
+        description="새 글 작성"
         canonical="https://devlog.shop"
         openGraph={{
           url: 'https://devlog.shop',

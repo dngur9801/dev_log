@@ -31,7 +31,7 @@ const Search = () => {
     <>
       <NextSeo
         title="검색"
-        description="검색 description"
+        description="검색"
         canonical="https://devlog.shop"
         openGraph={{
           url: 'https://devlog.shop',
