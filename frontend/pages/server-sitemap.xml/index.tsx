@@ -6,7 +6,7 @@ import { postAPI } from '../../apis';
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const posts = await postAPI.popular();
   const newsSitemaps = posts.map((item) => ({
-    loc: `${process.env.NEXT_PUBLIC_CLIENT_ADDRESS}${item.id.toString()}`,
+    loc: `${process.env.NEXT_PUBLIC_CLIENT_ADDRESS}/@${item.user.name}/${item.urlTitle}`,
     lastmod: new Date().toISOString(),
   }));
 
