@@ -45,8 +45,8 @@ const DetailPost = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       removePost(postData.id, {
         onSuccess: () => {
-          setIsAlert(true);
-          setAlertText('😁 삭제가 완료되었습니다.');
+          // setIsAlert(true);
+          // setAlertText('😁 삭제가 완료되었습니다.');
           router.replace('/');
         },
         onError: (error: any) => {
