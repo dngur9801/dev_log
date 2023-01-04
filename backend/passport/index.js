@@ -29,6 +29,6 @@ module.exports = () => {
   local();
   google();
   github();
-  kakao();
   naver();
+  // kakao();
 };
