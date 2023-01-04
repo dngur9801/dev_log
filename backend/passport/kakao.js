@@ -17,7 +17,6 @@ module.exports = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log('profile :', profile);
           const exUser = await User.findOne({
             where: { email: profile?.emails[0].value, provider: 'kakao' },
           });
