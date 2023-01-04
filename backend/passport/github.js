@@ -7,7 +7,6 @@ const { location } = require('../utils');
 dotenv.config();
 
 module.exports = () => {
-  console.log('location() :', location());
   passport.use(
     new GitHubStrategy(
       {
