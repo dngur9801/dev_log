@@ -75,7 +75,7 @@ const Comment = ({ item, idx, isSelected, setSelectedCommentIndex, setIsAlert, s
         <div className="profile">
           <Link href={`/@${item?.user?.name}`}>
             <a>
-              <ProfileImage width={50} height={50} />
+              <ProfileImage width={50} height={50} src={item?.user?.profileImage} />
             </a>
           </Link>
           <div className="comment_info">
