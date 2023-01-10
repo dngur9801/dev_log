@@ -25,7 +25,7 @@ const Content = ({ data, posturl, onClickDelete, onClickSetLike, Viewer, isLike,
 
   return (
     <>
-      {me?.id === data?.user.id && (
+      {me?.id === data?.user?.id && (
         <Styled.ContentBtn>
           <button type="button" onClick={() => router.push(`/${user}/${posturl}/edit`)}>
             포스트 수정

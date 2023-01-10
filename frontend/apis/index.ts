@@ -14,7 +14,11 @@ import {
 } from '../interfaces';
 
 const request = axios.create({
-  baseURL: apiAddress(),
+  baseURL:
+    process.env.NODE_ENV === 'production'
+      ? `${process.env.NEXT_PUBLIC_CLIENT_ADDRESS}/api`
+      : 'http://localhost:3000/api',
+  // baseURL: apiAddress(),
   withCredentials: true,
 });
 
