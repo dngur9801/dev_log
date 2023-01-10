@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 import { dehydrate, QueryClient, useMutation, useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { NextSeo } from 'next-seo';
 import { postAPI } from '../../../apis';
 import CommentBox from '../../../components/DetailPost/CommentBox';
@@ -13,6 +13,7 @@ import Header from '../../../components/DetailPost/Header';
 import Content from '../../../components/DetailPost/Content';
 import { GetServerSidePropsContext } from 'next';
 import CustomAlert from '../../../components/Common/CustomAlert';
+import { apiAddress } from '../../../config';
 
 const Viewer = dynamic(() => import('../../../components/Common/ViewerBox'), {
   ssr: false,
@@ -29,10 +30,11 @@ const DetailPost = () => {
     error,
     status,
     refetch,
-  } = useQuery<PostTypes, AxiosError<ReactNode>>([DETAIL_POST, posturl], () => postAPI?.detail(posturl), {
+  } = useQuery<PostTypes, AxiosError<ReactNode>>([DETAIL_POST, posturl], () => postAPI.detail(posturl), {
     refetchOnWindowFocus: false,
     enabled: !!posturl,
   });
+
   const [isLike, setIsLike] = useState(postData?.isLike === 1 ? true : false);
   const likeRef = useRef<HTMLDivElement>(null);
 

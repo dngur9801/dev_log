@@ -14,6 +14,7 @@ import { USER_INFO } from '../constant/queryKey';
 import { ChangeProfileFormTypes } from '../interfaces';
 import { userInfo } from '../store/atom';
 import axios from 'axios';
+import { apiAddress } from '../config';
 
 const Setting: NextPage = () => {
   const [isAlert, setIsAlert] = useState(false);

@@ -19,7 +19,11 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5000/:path*',
+        destination:
+          process.env.NODE_ENV === 'production'
+            ? `${process.env.NEXT_PUBLIC_API_ADDRESS}/:path*`
+            : 'http://localhost:5000/:path*',
+
         basePath: false,
       },
     ];
