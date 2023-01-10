@@ -1,11 +1,18 @@
 const express = require('express');
 const multer = require('multer');
 const { Op } = require('sequelize');
+const fs = require('fs');
 const { User, Post, Image, Comment, sequelize } = require('../models');
 const utils = require('../utils');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
+try {
+  fs.readdirSync('uploads');
+} catch (error) {
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('uploads');
+}
 // multer 셋팅
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
