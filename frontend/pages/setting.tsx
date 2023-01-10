@@ -151,28 +151,6 @@ const Setting: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const cookie = context.req ? context.req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
-  if (context.req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
-  const data = await userAPI.info();
-
-  if (!data) {
-    return {
-      redirect: {
-        destination: '/notlogin',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
-
 const Styled = {
   Container: styled.div`
     width: ${({ theme }) => theme.deviceWrapSizes.tablet};
