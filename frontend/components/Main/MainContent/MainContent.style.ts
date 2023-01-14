@@ -78,6 +78,12 @@ export const ContentMiddle = styled.div`
     line-height: 1.5;
     margin-bottom: ${({ theme }) => theme.calcRem(30)};
     font-size: ${({ theme }) => theme.fontSizes.small};
+    @media ${({ theme }) => theme.device.tabletL} {
+      padding: 10px 0;
+    }
+    @media ${({ theme }) => theme.device.tablet} {
+      height: 60px;
+    }
   }
 
   .sub_info {

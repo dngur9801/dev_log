@@ -18,6 +18,11 @@ const MainContentHeader = () => {
           <FaRedo /> 최신
         </S.Ahref>
       </Link>
+      <Link href="/liked" passHref>
+        <S.Ahref pathName={router.pathname}>
+          <FaRedo /> 북마크
+        </S.Ahref>
+      </Link>
     </S.Wrap>
   );
 };
