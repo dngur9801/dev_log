@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   cors({
-    origin: location + '/api',
+    origin: location,
     credentials: true,
     allowedHeaders: 'Content-Type',
   })
