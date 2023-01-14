@@ -39,6 +39,7 @@ app.use(
   cors({
     origin: location,
     credentials: true,
+    methods: 'PUT, GET, POST, DELETE, OPTIONS',
     allowedHeaders: 'Content-Type',
   })
 );
