@@ -7,7 +7,7 @@ export const Container = styled.div`
   padding-bottom: 40px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray3};
 
-  @media ${({ theme }) => theme.device.laptop} {
+  @media ${({ theme }) => theme.device.tablet} {
     width: calc(100% - 2rem);
   }
 
