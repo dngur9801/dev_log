@@ -55,7 +55,6 @@ app.use(
       sameSite: process.env.NODE_ENV === 'production' && 'None',
       secure: process.env.NODE_ENV === 'production',
       domain: process.env.NODE_ENV === 'production' && '.devlog.shop',
-      maxAge: new Date(Date.now() + 1000 * 60 * 60 * 24),
     },
   })
 );
