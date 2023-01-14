@@ -18,8 +18,12 @@ const request = axios.create({
     process.env.NODE_ENV === 'production'
       ? `${process.env.NEXT_PUBLIC_CLIENT_ADDRESS}/api`
       : 'http://localhost:3000/api',
-  // baseURL: apiAddress(),
   withCredentials: true,
+  headers: {
+    'Cache-Control': 'no-store',
+    Pragma: 'no-store',
+    Expires: '0',
+  },
 });
 
 export const userAPI = {
