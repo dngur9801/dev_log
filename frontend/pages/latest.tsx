@@ -19,9 +19,9 @@ const Latest: NextPage = () => {
       <NextSeo
         title="home"
         description="개발자들을 위한 마크다운 블로그 서비스"
-        canonical="https://devlog.shop"
+        canonical="https://devlog.shop/latest"
         openGraph={{
-          url: 'https://devlog.shop',
+          url: 'https://devlog.shop/latest',
         }}
       />
       <MainContentHeader />

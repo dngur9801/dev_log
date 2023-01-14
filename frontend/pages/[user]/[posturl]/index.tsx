@@ -25,15 +25,14 @@ const DetailPost = () => {
 
   const router = useRouter();
   const { posturl } = router.query;
-  const {
-    data: postData,
-    error,
-    status,
-    refetch,
-  } = useQuery<PostTypes, AxiosError<ReactNode>>([DETAIL_POST, posturl], () => postAPI.detail(posturl), {
-    refetchOnWindowFocus: false,
-    enabled: !!posturl,
-  });
+  const { data: postData, refetch } = useQuery<PostTypes, AxiosError<ReactNode>>(
+    [DETAIL_POST, posturl],
+    () => postAPI.detail(posturl),
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!posturl,
+    },
+  );
 
   const [isLike, setIsLike] = useState(postData?.isLike === 1 ? true : false);
   const likeRef = useRef<HTMLDivElement>(null);
@@ -47,8 +46,6 @@ const DetailPost = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       removePost(postData.id, {
         onSuccess: () => {
-          // setIsAlert(true);
-          // setAlertText('😁 삭제가 완료되었습니다.');
           router.replace('/');
         },
         onError: (error: any) => {
@@ -110,9 +107,9 @@ const DetailPost = () => {
       <NextSeo
         title={postData?.title}
         description={`${postData?.title}`}
-        canonical="https://devlog.shop"
+        canonical={`https://devlog.shop/@${postData?.user?.name}/${postData?.urlTitle}`}
         openGraph={{
-          url: 'https://devlog.shop',
+          url: `https://devlog.shop/@${postData?.user?.name}/${postData?.urlTitle}`,
         }}
       />
       <Header data={postData} />

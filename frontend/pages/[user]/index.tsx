@@ -22,15 +22,14 @@ const UserBlog: NextPage = () => {
       refetchOnWindowFocus: false,
     },
   );
-
   return (
     <>
       <NextSeo
         title={data?.nickName}
         description={`${data?.nickName}`}
-        canonical="https://devlog.shop"
+        canonical={`https://devlog.shop/@${data?.name}`}
         openGraph={{
-          url: 'https://devlog.shop',
+          url: `https://devlog.shop/@${data?.name}`,
         }}
       />
       <UserBlogHeader nickName={data?.nickName} profileImage={data?.profileImage} introduce={data?.introduce} />
