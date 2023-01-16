@@ -29,15 +29,6 @@ const liked = () => {
 };
 
 export const getServerSideProps = async () => {
-  const posts = await postAPI.liked();
-  if (!posts) {
-    return {
-      redirect: {
-        destination: '/',
-      },
-      props: {},
-    };
-  }
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(LIKED_LISTS, postAPI.liked);
 
