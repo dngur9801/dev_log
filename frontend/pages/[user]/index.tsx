@@ -52,9 +52,7 @@ const UserBlog: NextPage = () => {
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const userName = (context.query.user as string)?.replace('@', '');
-  console.log(userName);
   const user = await axios.get(`${apiAddress()}/user/posts?name=${userName}`).then((res) => res.data);
-  console.log(user);
   if (!user) {
     return {
       notFound: true,

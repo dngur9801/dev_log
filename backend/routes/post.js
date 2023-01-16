@@ -100,6 +100,10 @@ router.get('/detail/:postUrl', async (req, res, next) => {
         },
       ],
     });
+    if (!post) {
+      return res.status(200).json(null);
+    }
+
     // 날짜 변환
     post.dataValues.createdAt = utils.elapsedTime(post.dataValues.createdAt);
     post.dataValues.comments.forEach((item, idx) => {
