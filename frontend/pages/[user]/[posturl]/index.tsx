@@ -40,7 +40,6 @@ const DetailPost = () => {
   const { mutate: removePost } = useMutation((data: number) => postAPI.delete(data));
   const { mutate: addLike } = useMutation((data: number) => postAPI.addLike(data));
   const { mutate: removeLike } = useMutation((data: number) => postAPI.removeLike(data));
-  console.log(postData);
 
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
@@ -83,10 +82,6 @@ const DetailPost = () => {
       });
     }
   };
-
-  // useEffect(() => {
-  //   setIsLike(postData?.isLike === 1 ? true : false);
-  // }, []);
 
   // 사이드바 스크롤시 위치고정
   const handleScroll = () => {

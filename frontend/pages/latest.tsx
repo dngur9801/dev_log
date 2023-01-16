@@ -30,15 +30,15 @@ const Latest: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async () => {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(LATEST_LISTS, postAPI.latest);
+// export const getServerSideProps = async () => {
+//   const queryClient = new QueryClient();
+//   await queryClient.prefetchQuery(LATEST_LISTS, postAPI.latest);
 
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-};
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// };
 
 export default Latest;
