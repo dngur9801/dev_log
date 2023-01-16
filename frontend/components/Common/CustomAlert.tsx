@@ -70,12 +70,11 @@ const Styled = {
     }
 
     .inner {
-      width: 500px;
+      padding: 40px 120px;
       background-color: ${({ theme }) => theme.backgroundColors.basic1};
       color: white;
       text-align: center;
       border-radius: 10px 10px 0 0;
-      padding: 60px;
     }
   `,
 };

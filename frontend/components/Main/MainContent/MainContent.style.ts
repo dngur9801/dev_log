@@ -25,8 +25,8 @@ export const Wrap = styled.div`
 export const Content = styled.div`
   width: 20rem;
   margin: 1rem;
-  background-color: white;
-  border-radius: 10px;
+  box-shadow: 0px 0px 15px -4px rgb(0 0 0 / 50%);
+  border-radius: 15px;
 
   @media ${({ theme }) => theme.device.tabletL} {
     width: calc(50% - 2rem);
@@ -49,6 +49,7 @@ export const ContentTop = styled.div`
       height: 100%;
       display: block;
       object-fit: cover;
+      border-radius: 15px 15px 0 0;
     }
   }
 `;
@@ -102,6 +103,7 @@ export const ContentBottom = styled.div`
   padding: 0 15px;
   font-size: ${({ theme }) => theme.fontSizes.small};
   background-color: ${({ theme }) => theme.backgroundColors.white1};
+  border-radius: 0 0 15px 15px;
 
   .profile {
     display: flex;
