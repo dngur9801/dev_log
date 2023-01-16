@@ -48,8 +48,12 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/liked', isLoggedIn, async (req, res, next) => {
+router.get('/liked', async (req, res, next) => {
   try {
+    if (!req.user) {
+      return res.json(null);
+    }
+
     const posts = await Post.findAll({
       where: { private: 0 },
       order: [['likeCount', 'DESC']],
