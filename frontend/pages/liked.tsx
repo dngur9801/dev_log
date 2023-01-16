@@ -33,6 +33,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   axios.defaults.headers.Cookie = '';
   const connectCookie = context.req ? context.req.headers.cookie : null;
   if (context.req && connectCookie) {
+    console.log(112121121212);
     axios.defaults.headers.Cookie = connectCookie;
   }
   console.log('connectCookie : ', connectCookie);
