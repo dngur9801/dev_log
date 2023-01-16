@@ -84,6 +84,10 @@ const DetailPost = () => {
     }
   };
 
+  // useEffect(() => {
+  //   setIsLike(postData?.isLike === 1 ? true : false);
+  // }, []);
+
   // 사이드바 스크롤시 위치고정
   const handleScroll = () => {
     if (!likeRef.current) {
@@ -133,7 +137,6 @@ const DetailPost = () => {
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const postUrl = context.query?.posturl;
-  // const post = await postAPI.detail(postUrl);
   const post = await axios.get(encodeURI(`${apiAddress()}/post/detail/${postUrl}`)).then((res) => res.data);
 
   if (!post) {
@@ -141,8 +144,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       notFound: true,
     };
   }
+
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery([DETAIL_POST, postUrl], () => postAPI.detail(postUrl));
+  await queryClient.prefetchQuery([DETAIL_POST, postUrl], () =>
+    axios.get(encodeURI(`${apiAddress()}/post/detail/${postUrl}`)).then((res) => res.data),
+  );
 
   return {
     props: {
