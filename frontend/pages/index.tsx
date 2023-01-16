@@ -9,7 +9,7 @@ import { POPULAR_LISTS } from '../constant/queryKey';
 import { PostTypes } from '../interfaces';
 
 const Home = () => {
-  const { data, error, status } = useQuery<PostTypes[], AxiosError<ReactNode>>(POPULAR_LISTS, postAPI.popular, {
+  const { data } = useQuery<PostTypes[], AxiosError<ReactNode>>(POPULAR_LISTS, postAPI.popular, {
     refetchOnWindowFocus: false,
   });
 

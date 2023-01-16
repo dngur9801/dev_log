@@ -20,13 +20,13 @@ const MainContentHeader = () => {
           <FaRedo /> 최신
         </S.Ahref>
       </Link>
-      {/* {user?.name && (
+      {user?.name && (
         <Link href="/liked" passHref>
           <S.Ahref pathName={router.pathname}>
             <FaBookmark /> 북마크
           </S.Ahref>
         </Link>
-      )} */}
+      )}
     </S.Wrap>
   );
 };

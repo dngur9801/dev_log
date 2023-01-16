@@ -42,6 +42,7 @@ export const userAPI = {
 export const postAPI = {
   popular: (): Promise<PostTypes[]> => request.get('/posts?sort=popular').then((res) => res.data),
   latest: (): Promise<PostTypes[]> => request.get('/posts?sort=latest').then((res) => res.data),
+  liked: (): Promise<PostTypes[]> => request.get('/posts/liked').then((res) => res.data),
   detail: (data: string | string[]): Promise<PostTypes> =>
     request.get(encodeURI(`/post/detail/${data}`)).then((res) => res.data),
   search: (data: string | string[]): Promise<PostTypes[]> =>

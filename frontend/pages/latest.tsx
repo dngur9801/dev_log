@@ -10,7 +10,7 @@ import { LATEST_LISTS } from '../constant/queryKey';
 import { PostTypes } from '../interfaces';
 
 const Latest: NextPage = () => {
-  const { data, error, status } = useQuery<PostTypes[], AxiosError<ReactNode>>(LATEST_LISTS, postAPI.latest, {
+  const { data } = useQuery<PostTypes[], AxiosError<ReactNode>>(LATEST_LISTS, postAPI.latest, {
     refetchOnWindowFocus: false,
   });
 
