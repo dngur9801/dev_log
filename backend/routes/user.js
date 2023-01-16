@@ -193,6 +193,10 @@ router.get('/posts', async (req, res, next) => {
         },
       ],
     });
+    if (!user) {
+      return res.status(200).json(null);
+    }
+
     user.dataValues.posts.forEach((item, idx) => {
       item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
     });

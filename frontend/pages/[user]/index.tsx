@@ -1,6 +1,6 @@
-import { NextPage } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useQuery } from 'react-query';
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { ReactNode } from 'react';
@@ -10,6 +10,7 @@ import UserBlogContent from '../../components/Common/UserBlogContent';
 import { userAPI } from '../../apis';
 import { UserBlogTypes } from '../../interfaces';
 import { USER_POSTS } from '../../constant/queryKey';
+import { apiAddress } from '../../config';
 
 const UserBlog: NextPage = () => {
   const route = useRouter();
@@ -37,12 +38,32 @@ const UserBlog: NextPage = () => {
         <div className="taps">
           <span>글</span>
         </div>
-        {data?.posts?.map((item) => (
-          <UserBlogContent key={item.id} item={item} />
-        ))}
+        {data?.posts.length === 0 ? (
+          <div className="none_post">
+            <span>작성된 글이 없습니다.</span>
+          </div>
+        ) : (
+          data?.posts?.map((item) => <UserBlogContent key={item.id} item={item} />)
+        )}
       </Styled.Wrap>
     </>
   );
+};
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const userName = (context.query.user as string)?.replace('@', '');
+  console.log(userName);
+  const user = await axios.get(`${apiAddress()}/user/posts?name=${userName}`).then((res) => res.data);
+  console.log(user);
+  if (!user) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 const Styled = {
@@ -66,6 +87,18 @@ const Styled = {
         border-bottom: 2px solid ${({ theme }) => theme.colors.basic2};
         color: ${({ theme }) => theme.colors.basic2};
         font-weight: ${({ theme }) => theme.fontWeights.xl};
+      }
+    }
+
+    .none_post {
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+
+      span {
+        font-size: ${({ theme }) => theme.fontSizes.xxl};
+        font-weight: ${({ theme }) => theme.fontWeights.xl};
+        color: ${({ theme }) => theme.colors.basic2};
       }
     }
   `,
