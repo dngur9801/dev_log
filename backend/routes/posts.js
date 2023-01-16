@@ -50,6 +50,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/liked', async (req, res, next) => {
   try {
+    console.log('req.user : ', req.user);
     if (!req.user) {
       return res.json(null);
     }
