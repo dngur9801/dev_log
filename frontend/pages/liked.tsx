@@ -35,6 +35,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (context.req && connectCookie) {
     axios.defaults.headers.Cookie = connectCookie;
   }
+  console.log(connectCookie);
   const posts = await postAPI.liked();
   if (!posts) {
     return {
