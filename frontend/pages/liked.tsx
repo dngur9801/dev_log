@@ -1,4 +1,5 @@
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
+import { GetServerSidePropsContext } from 'next';
 import { NextSeo } from 'next-seo';
 import React, { ReactNode } from 'react';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
@@ -28,7 +29,12 @@ const liked = () => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  axios.defaults.headers.Cookie = '';
+  const connectCookie = context.req ? context.req.headers.cookie : null;
+  if (context.req && connectCookie) {
+    axios.defaults.headers.Cookie = connectCookie;
+  }
   const posts = await postAPI.liked();
   if (!posts) {
     return {
