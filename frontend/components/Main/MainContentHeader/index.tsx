@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FaChartLine, FaRedo } from 'react-icons/fa';
+import { FaChartLine, FaRedo, FaBookmark } from 'react-icons/fa';
 import * as S from './MainContentHeader.style';
 
 const MainContentHeader = () => {
@@ -20,7 +20,7 @@ const MainContentHeader = () => {
       </Link>
       <Link href="/liked" passHref>
         <S.Ahref pathName={router.pathname}>
-          <FaRedo /> 북마크
+          <FaBookmark /> 북마크
         </S.Ahref>
       </Link>
     </S.Wrap>
