@@ -40,6 +40,7 @@ const DetailPost = () => {
   const { mutate: removePost } = useMutation((data: number) => postAPI.delete(data));
   const { mutate: addLike } = useMutation((data: number) => postAPI.addLike(data));
   const { mutate: removeLike } = useMutation((data: number) => postAPI.removeLike(data));
+  console.log(postData);
 
   // 포스트 삭제 클릭 시
   const onClickDelete = () => {
@@ -132,7 +133,9 @@ const DetailPost = () => {
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const postUrl = context.query?.posturl;
-  const post = await postAPI.detail(postUrl);
+  // const post = await postAPI.detail(postUrl);
+  const post = await axios.get(encodeURI(`${apiAddress()}/post/detail/${postUrl}`)).then((res) => res.data);
+
   if (!post) {
     return {
       notFound: true,
