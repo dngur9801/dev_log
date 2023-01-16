@@ -151,6 +151,26 @@ const Setting: NextPage = () => {
   );
 };
 
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const connectCookie = context.req ? context.req.headers.cookie : null;
+  axios.defaults.headers.Cookie = '';
+  if (context.req && connectCookie) {
+    axios.defaults.headers.Cookie = connectCookie;
+  }
+  const userData = await axios.get(`${apiAddress()}/user`).then((res) => res.data);
+  if (!userData) {
+    return {
+      redirect: {
+        destination: '/',
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
 const Styled = {
   Container: styled.div`
     width: ${({ theme }) => theme.deviceWrapSizes.tablet};
