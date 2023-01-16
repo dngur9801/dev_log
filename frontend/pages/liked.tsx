@@ -6,6 +6,7 @@ import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { postAPI } from '../apis';
 import MainContent from '../components/Main/MainContent';
 import MainContentHeader from '../components/Main/MainContentHeader';
+import { apiAddress } from '../config';
 import { LIKED_LISTS } from '../constant/queryKey';
 import { PostTypes } from '../interfaces';
 
@@ -30,15 +31,12 @@ const liked = () => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  axios.defaults.headers.Cookie = '';
   const connectCookie = context.req ? context.req.headers.cookie : null;
+  axios.defaults.headers.Cookie = '';
   if (context.req && connectCookie) {
-    console.log(112121121212);
     axios.defaults.headers.Cookie = connectCookie;
   }
-  console.log('connectCookie : ', connectCookie);
-  const posts = await postAPI.liked();
-  console.log('posts : ', posts);
+  const posts = await axios.get(`${apiAddress()}/posts/liked`).then((res) => res.data);
   if (!posts) {
     return {
       redirect: {
