@@ -105,9 +105,10 @@ router.get('/detail/:postUrl', async (req, res, next) => {
     post.dataValues.comments.forEach((item, idx) => {
       item.dataValues.createdAt = utils.elapsedTime(item.dataValues.createdAt);
     });
-    const isLike = post.dataValues.Likers.find(item => item.id === userId)
+    const isLike = post.dataValues.Likers.find(item => item.id == userId)
       ? 1
       : 0;
+    console.log('isLike : ', isLike);
     post.dataValues.isLike = isLike;
     return res.status(200).json(post);
   } catch (error) {
