@@ -14,6 +14,8 @@ const liked = () => {
   const { data } = useQuery<PostTypes[], AxiosError<ReactNode>>(LIKED_LISTS, postAPI.liked, {
     refetchOnWindowFocus: false,
   });
+
+  console.log(data);
   return (
     <>
       <NextSeo

@@ -13,7 +13,6 @@ const Latest: NextPage = () => {
   const { data } = useQuery<PostTypes[], AxiosError<ReactNode>>(LATEST_LISTS, postAPI.latest, {
     refetchOnWindowFocus: false,
   });
-
   return (
     <>
       <NextSeo
