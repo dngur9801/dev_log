@@ -39,6 +39,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     axios.defaults.headers.Cookie = connectCookie;
   }
   const posts = await axios.get(`${apiAddress()}/posts/liked`).then((res) => res.data);
+  console.log('posts : ', posts);
   if (!posts) {
     return {
       redirect: {
