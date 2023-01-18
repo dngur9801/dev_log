@@ -10,12 +10,18 @@ import { apiAddress } from '../config';
 import { LIKED_LISTS } from '../constant/queryKey';
 import { PostTypes } from '../interfaces';
 
-const liked = () => {
+interface Props {
+  postData: PostTypes[];
+}
+
+const liked = ({ postData }: Props) => {
   const { data } = useQuery<PostTypes[], AxiosError<ReactNode>>(LIKED_LISTS, postAPI.liked, {
     refetchOnWindowFocus: false,
+    initialData: postData,
   });
 
-  console.log(data);
+  console.log(postData);
+
   return (
     <>
       <NextSeo
@@ -47,12 +53,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       },
     };
   }
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(LIKED_LISTS, postAPI.liked);
+  // const queryClient = new QueryClient();
+  // await queryClient.prefetchQuery(LIKED_LISTS, postAPI.liked);
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      postData: posts,
     },
   };
 };
