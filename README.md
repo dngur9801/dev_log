@@ -6,9 +6,9 @@
 
 
 ## # 프로젝트 배포
-- front-end : Vercel ([https://www.devlog.shop/](https://www.devlog.shop/))
-- back-end : Vercel
-- MariaDB : cloudtype
+- front-end : vercel ([https://www.devlog.shop/](https://www.devlog.shop/))
+- back-end : cloudetype
+- MariaDB : cloudetype
 
 ## # 사용 기술
 - front-end : TypeScript, Next.js, react-query, recoil, styled-component, toast-ui
